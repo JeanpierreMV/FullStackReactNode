@@ -12,3 +12,110 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Cliente {
+  id            Int       @id @default(autoincrement())
+  nombre        String
+  apellido      String
+  dni           String     @unique
+  celular       String
+  email         String
+  direccion     String
+  fechaRegistro DateTime   @default(now())
+  mascotas      Mascota[]  
+  atenciones    Atencion[] 
+  boletas       Boleta[]   
+  proformas     ProformaServicio[]
+}
+
+model Mascota {
+  id            Int        @id @default(autoincrement())
+  codigo        String      @unique
+  nombre        String
+  genero        String
+  raza          String
+  especie       TipoMascota @relation(fields: [tipoMascotaId], references: [id])
+  edad          Int
+  peso          Float
+  fechaRegistro DateTime    @default(now())
+  cliente       Cliente     @relation(fields: [clienteId], references: [id])
+  clienteId     Int
+  tipoMascotaId Int
+  atenciones    Atencion[] 
+  proformas     ProformaServicio[] 
+}
+
+model TipoMascota {
+  id       Int       @id @default(autoincrement())
+  nombre   String
+  mascotas Mascota[] 
+  proformas ProformaServicio[] 
+  
+}
+
+model Servicio {
+  id             Int       @id @default(autoincrement())
+  nombre         String
+  descripcion    String
+  costo          Float
+  consideraciones String
+  atenciones     Atencion[]      
+  detallesBoleta DetalleBoleta[] 
+  proformas     ProformaServicio[]
+}
+
+model ProformaServicio {
+  id           Int        @id @default(autoincrement())
+  cliente      Cliente     @relation(fields: [clienteId], references: [id])
+  clienteId    Int
+  mascota      Mascota     @relation(fields: [mascotaId], references: [id])
+  mascotaId    Int
+  servicio     Servicio    @relation(fields: [servicioId], references: [id])
+  servicioId   Int
+  sizeMascota String
+  tipoMascota  TipoMascota @relation(fields: [tipoMascotaId], references: [id])
+  tipoMascotaId Int
+  costoTotal   Float
+}
+
+model Atencion {
+  id             Int        @id @default(autoincrement())
+  cliente        Cliente     @relation(fields: [clienteId], references: [id])
+  clienteId      Int
+  mascota        Mascota     @relation(fields: [mascotaId], references: [id])
+  mascotaId      Int
+  veterinario    Veterinario @relation(fields: [veterinarioId], references: [id])
+  veterinarioId  Int
+  servicio       Servicio    @relation(fields: [servicioId], references: [id])
+  servicioId     Int
+  fechaCita      DateTime
+  consideraciones String
+  descripcion    String
+}
+
+model Veterinario {
+  id          Int        @id @default(autoincrement())
+  nombre      String
+  atenciones  Atencion[] 
+}
+
+model Boleta {
+  id            Int        @id @default(autoincrement())
+  codigo        String      @unique
+  cliente       Cliente     @relation(fields: [clienteId], references: [id])
+  clienteId     Int
+  fecha         DateTime    @default(now())
+  total         Float
+  detallesBoleta DetalleBoleta[] 
+}
+
+model DetalleBoleta {
+  id            Int        @id @default(autoincrement())
+  boleta        Boleta      @relation(fields: [boletaId], references: [id])
+  boletaId      Int
+  servicio      Servicio    @relation(fields: [servicioId], references: [id])
+  servicioId    Int
+  descripcion   String
+  cantidad      Int
+  costo         Float
+}
