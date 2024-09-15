@@ -22,4 +22,15 @@ router.post('/registrar',async(req,res)=>{
 
 });
 
+
+// Obtener todos los clientes
+router.get('/', async (req, res) => {
+    try {
+      const clientes = await prisma.cliente.findMany();
+      res.status(200).json(clientes);
+    } catch (error) {
+      res.status(400).json({ error: 'Error al obtener clientes' });
+    }
+  });
+
 export default router;
