@@ -71,7 +71,7 @@ Para crear nuevas tablas o realizar migraciones en la base de datos utilizando P
     ```
 2. Ejecuta el siguiente comando para crear una nueva migración:
     ```bash
-    npx prisma migrate dev --name PrimerMigration init
+    npx prisma migrate dev --name PrimerMigration
     ```
 
 ## Contribución
