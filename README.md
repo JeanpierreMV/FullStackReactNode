@@ -78,6 +78,3 @@ Para crear nuevas tablas o realizar migraciones en la base de datos utilizando P
 
 Para contribuir a este proyecto, sigue los pasos estándar de Git para hacer un fork, crear una rama, hacer cambios y enviar un pull request.
 
-## Licencia
-
-Este proyecto está licenciado bajo la [Licencia MIT](LICENSE).
