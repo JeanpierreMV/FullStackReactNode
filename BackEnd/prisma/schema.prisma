@@ -72,7 +72,8 @@ model ProformaServicio {
   mascotaId    Int
   servicio     Servicio    @relation(fields: [servicioId], references: [id])
   servicioId   Int
-  sizeMascota String
+  size         SizeMascota @relation(fields: [sizeId], references: [id])
+  sizeId       Int
   tipoMascota  TipoMascota @relation(fields: [tipoMascotaId], references: [id])
   tipoMascotaId Int
   costoTotal   Float
@@ -118,4 +119,26 @@ model DetalleBoleta {
   descripcion   String
   cantidad      Int
   costo         Float
+}
+
+model Rol {
+  id       Int       @id @default(autoincrement())
+  nombre   String    
+  empleados Empleado[]
+}
+
+model Empleado {
+  id          Int       @id @default(autoincrement())
+  nombre      String
+  email       String    @unique
+  password    String    
+  rol         Rol       @relation(fields: [rolId], references: [id])
+  rolId       Int
+  creadoEn    DateTime  @default(now())
+}
+
+model SizeMascota {
+  id       Int        @id @default(autoincrement())
+  nombre   String     
+  proformas ProformaServicio[] 
 }

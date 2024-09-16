@@ -33,6 +33,27 @@ export const registrarMascota = async (mascotaData) => {
   }
 };
 
+export const registrarEmpleado = async (empleadoData) => {
+  try {
+    const response = await api.post('/empleados/registrar', {
+      ...empleadoData,
+      rol: parseInt(empleadoData.rol, 10) 
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error('Error al registrar empleado');
+  }
+};
+
+export const login = async (credentials) => {
+  try {
+    const response = await api.post('/empleados/login', credentials);
+    return response.data;
+  } catch (error) {
+    throw new Error('Error al iniciar sesión');
+  }
+};
+
 export const obtenerTiposMascota = async () => {
   try {
     const response = await api.get('/tipos-mascota');

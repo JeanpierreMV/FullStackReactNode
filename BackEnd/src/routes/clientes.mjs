@@ -23,7 +23,7 @@ router.post('/registrar',async(req,res)=>{
 });
 
 
-// Obtener todos los clientes
+
 router.get('/', async (req, res) => {
     try {
       const clientes = await prisma.cliente.findMany();
