@@ -14,6 +14,15 @@ export const registrarCliente = async (clienteData) => {
   }
 };
 
+export const agregarServicios = async (servicioData) => {
+  try {
+    const response = await api.post('/agregarServicios', servicioData);
+    return response.data;
+  } catch (error) {
+    throw new Error('Error al registrar servicio');
+  }
+};
+
 export const registrarTipoMascota = async (tipoMascotaData) => {
   try {
     const response = await api.post('/tipos-mascota/registrar', tipoMascotaData);
@@ -40,6 +49,16 @@ export const obtenerTiposMascota = async () => {
   } catch (error) {
     console.log('Error al obtener tipos de mascota:', error);
     throw new Error('Error al obtener tipos de mascota');
+  }
+};
+
+export const obtenerServicios = async () => {
+  try {
+    const response = await api.get('/obtenerServicios');
+    return response.data; // Asegúrate de devolver los datos aquí
+  } catch (error) {
+    console.log('Error al obtener servicios:', error);
+    throw new Error('Error al obtener servicios');
   }
 };
 
