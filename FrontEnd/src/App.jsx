@@ -8,6 +8,7 @@ import Loginxx from './pages/Loginxx';
 import RegisterEmployee from './pages/RegisterEmployee';
 import RegisterAtencion from './pages/RegisterAtencion';
 import BuscarClientesPage from './pages/BuscarClientesPage';
+import RegisterBoleta from './pages/RegisterBoleta';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/register-empleados" element={<RegisterEmployee />} />
         <Route path="/registrar-atencion" element={<RegisterAtencion />} />      
         <Route path="/buscar-clientes" element={<BuscarClientesPage />} />
+        <Route path="/generar-boleta" element={<RegisterBoleta />} />
       </Routes>
     </Router>
   );

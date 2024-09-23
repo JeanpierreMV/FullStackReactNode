@@ -98,3 +98,12 @@ export const obtenerServicios = async () => {
   return response.data;
 };
 
+export const registrarBoleta = async (boletaData) => {
+  try {
+    const response = await api.post('/boletas/generar', boletaData);
+    return response.data;
+  } catch (error) {
+    throw new Error('Error al generar la boleta');
+  }
+};
+
