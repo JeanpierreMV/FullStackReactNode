@@ -33,5 +33,18 @@ router.post('/registrar', async (req, res) => {
   }
 });
 
+router.get('/', async (req, res) => {
+  try {
+      const mascotas = await prisma.mascota.findMany({
+          include: {
+              especie: true, // Incluir tipo de mascota si es necesario
+              cliente: true, // Incluir cliente si es necesario
+          },
+      });
+      res.json(mascotas);
+  } catch (error) {
+      res.status(500).json({ error: 'Error al obtener mascotas' });
+  }
+});
 
 export default router;
