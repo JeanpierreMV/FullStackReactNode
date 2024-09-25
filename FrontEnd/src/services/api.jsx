@@ -73,3 +73,37 @@ export const obtenerClientes = async () => {
     throw new Error('Error al obtener clientes');
   }
 };
+
+export const registrarAtencion = async (atencionData) => {
+  try {
+      const response = await api.post('/atenciones', atencionData);
+      return response.data;
+  } catch (error) {
+      throw new Error('Error al registrar atención');
+  }
+};
+
+export const obtenerMascotas = async () => {
+  const response = await api.get('/mascotas');
+  return response.data;
+};
+
+export const obtenerVeterinarios = async () => {
+  const response = await api.get('/veterinarios');
+  return response.data;
+};
+
+export const obtenerServicios = async () => {
+  const response = await api.get('/servicios');
+  return response.data;
+};
+
+export const registrarBoleta = async (boletaData) => {
+  try {
+    const response = await api.post('/boletas/generar', boletaData);
+    return response.data;
+  } catch (error) {
+    throw new Error('Error al generar la boleta');
+  }
+};
+
