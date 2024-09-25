@@ -1,0 +1,50 @@
+.sidebar {
+    width: 250px;
+    background-color: #343a40;
+    height: 100vh;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+  
+  .sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .logo {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+  }
+  
+  .sidebar-nav .nav-section {
+    margin-bottom: 20px;
+  }
+  
+  .sidebar-nav h2 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .nav-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .nav-item:hover,
+  .nav-item.active {
+    background-color: #495057;
+    border-radius: 5px;
+  }
+  
+  .nav-item svg {
+    margin-right: 10px;
+  }
+  

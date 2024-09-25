@@ -3,13 +3,8 @@ import {PrismaClient} from '@prisma/client'
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-
 const router = express.Router();
-let prisma;
-if (!prisma) {
-  prisma = new PrismaClient();
-}
-
+const prisma = new PrismaClient();
 const SECRET_KEY = process.env.SECRET_KEY;
 
 router.post('/registrar', async (req, res) => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { PawPrint } from 'lucide-react'; 
+
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import RegisterClient from './pages/RegisterClient';
 import RegisterTipoMascota from './pages/RegisterTipoMascota';
@@ -9,6 +9,10 @@ import RegisterEmployee from './pages/RegisterEmployee';
 import RegisterAtencion from './pages/RegisterAtencion';
 import BuscarClientesPage from './pages/BuscarClientesPage';
 import RegisterBoleta from './pages/RegisterBoleta';
+import RegisterMascota from './pages/RegisterMascota';
+import RegisterEmployee from './pages/RegisterEmployee'; 
+
+import Login from './pages/Login';
 
 const App = () => {
   return (
@@ -22,6 +26,9 @@ const App = () => {
         <Route path="/registrar-atencion" element={<RegisterAtencion />} />      
         <Route path="/buscar-clientes" element={<BuscarClientesPage />} />
         <Route path="/generar-boleta" element={<RegisterBoleta />} />
+        <Route path="/registrar-mascota" element={<RegisterMascota />} /> 
+        <Route path="/register-empleados" element={<RegisterEmployee />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
   );
