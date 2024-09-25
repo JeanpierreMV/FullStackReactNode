@@ -1,69 +1,194 @@
+// Importaciones necesarias
 import React, { useEffect, useState } from 'react';
-import MascotaForm from '../components/MascotaForm';
-import useForm from '../hooks/useForm';
 import { registrarMascota, obtenerTiposMascota, obtenerClientes } from '../services/api';
+import { User } from 'lucide-react';
+
+// Importa el archivo CSS
+import '../styles/RegisterMascota.css';
 
 const RegisterMascota = () => {
-  const initialState = {
+  const [formData, setFormData] = useState({
     nombre: '',
     genero: '',
-    raza: '',
-    tipoMascotaId: '',
     edad: '',
     peso: '',
+    raza: '',
+    tipoMascotaId: '',
     clienteId: '',
-  };
+  });
 
-  const { formData, handleChange } = useForm(initialState);
   const [tipoMascotas, setTipoMascotas] = useState([]);
   const [clientes, setClientes] = useState([]);
-  const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const tipos = await obtenerTiposMascota();
-        const clientesData = await obtenerClientes();
+        const clients = await obtenerClientes();
         setTipoMascotas(tipos);
-        setClientes(clientesData);
-      } catch (error) {
-        console.log('Error fetching data:', error);
+        setClientes(clients);
+      } catch (err) {
+        setError('Error al cargar datos');
       }
     };
     fetchData();
   }, []);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const mascotaData = {
-        nombre: formData.nombre,
-        genero: formData.genero,
-        raza: formData.raza,
-        tipoMascotaId: parseInt(formData.tipoMascotaId), // Convertir ID a número
-        edad: parseInt(formData.edad),  // Convertir edad a número
-        peso: parseFloat(formData.peso), // Convertir peso a número decimal
-        clienteId: parseInt(formData.clienteId), // Convertir ID a número
-      };
-  
-      await registrarMascota(mascotaData);
+      await registrarMascota(formData);
       setSuccess(true);
-      setError(null);
-    } catch (error) {
-      console.error('Error al registrar mascota:', error);
-      setError('Error al registrar mascota');
+      setError('');
+      setFormData({
+        nombre: '',
+        genero: '',
+        edad: '',
+        peso: '',
+        raza: '',
+        tipoMascotaId: '',
+        clienteId: '',
+      }); // Limpiar el formulario después del envío
+    } catch (err) {
+      setError('Error al registrar la mascota');
       setSuccess(false);
     }
   };
-  
 
   return (
-    <div>
-      <h1>Registrar Mascota</h1>
-      {success && <p>Mascota registrada exitosamente</p>}
-      {error && <p>{error}</p>}
-      <MascotaForm formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} tipoMascotas={tipoMascotas} clientes={clientes} />
+    <div className="container">
+      <div className="mainContent">
+        <header className="header">
+          <h1 className="headerTitle">REGISTRAR MASCOTA</h1>
+          <div className="userInfo">
+            <span>J Moreno</span>
+            <span className="userRole">Super Usuario</span>
+            <div className="userAvatar">
+              <User size={24} />
+            </div>
+          </div>
+        </header>
+        <main className="formContainer">
+          <div className="dataContainer">
+            <div className="formHeader">
+              <div className="formHeaderGroup">
+                <div className="formGroup">
+                  <label>CÓDIGO</label>
+                  <input type="text" value="DNI" readOnly className="input" />
+                </div>
+                <div className="formGroup">
+                  <label>FECHA</label>
+                  <input type="text" value="19/05/2023" readOnly className="input" />
+                </div>
+              </div>
+            </div>
+            <h2 className="formTitle">Datos de la mascota:</h2>
+            <form onSubmit={handleSubmit} className="form">
+              <div className="formRow">
+                <div className="formGroup">
+                  <label>Nombre:</label>
+                  <input
+                    type="text"
+                    name="nombre"
+                    value={formData.nombre}
+                    onChange={handleChange}
+                    className="input"
+                  />
+                </div>
+                <div className="formGroup">
+                  <label>Género:</label>
+                  <input
+                    type="text"
+                    name="genero"
+                    value={formData.genero}
+                    onChange={handleChange}
+                    className="input"
+                  />
+                </div>
+              </div>
+              <div className="formRow">
+                <div className="formGroup">
+                  <label>Edad:</label>
+                  <input
+                    type="number"
+                    name="edad"
+                    value={formData.edad}
+                    onChange={handleChange}
+                    className="input"
+                  />
+                </div>
+                <div className="formGroup">
+                  <label>Peso:</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    name="peso"
+                    value={formData.peso}
+                    onChange={handleChange}
+                    className="input"
+                  />
+                </div>
+              </div>
+              <div className="formRow">
+                <div className="formGroup">
+                  <label>Raza:</label>
+                  <input
+                    type="text"
+                    name="raza"
+                    value={formData.raza}
+                    onChange={handleChange}
+                    className="input"
+                  />
+                </div>
+                <div className="formGroup">
+                  <label>Tipo de Mascota:</label>
+                  <select
+                    name="tipoMascotaId"
+                    value={formData.tipoMascotaId}
+                    onChange={handleChange}
+                    className="input"
+                  >
+                    <option value="">Seleccione un tipo</option>
+                    {tipoMascotas.map((tipo) => (
+                      <option key={tipo.id} value={tipo.id}>
+                        {tipo.nombre}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div className="formGroup">
+                <label>Cliente:</label>
+                <select
+                  name="clienteId"
+                  value={formData.clienteId}
+                  onChange={handleChange}
+                  className="input"
+                >
+                  <option value="">Seleccione un cliente</option>
+                  {clientes.map((cliente) => (
+                    <option key={cliente.id} value={cliente.id}>
+                      {cliente.nombre}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <button type="submit" className="submitButton">
+                REGISTRAR MASCOTA
+              </button>
+            </form>
+            {success && <p>Mascota registrada exitosamente</p>}
+            {error && <p>{error}</p>}
+          </div>
+        </main>
+      </div>
     </div>
   );
 };
