@@ -32,7 +32,9 @@ const Login = () => {
                     {/* Logo encima del formulario */}
                     <div className="logo-container">
                         <img src="/koala.png" alt="Koala Vet Logo" className="logo" />
+                       
                     </div>
+                    <h1>KOALA VET</h1>
                     <form className="login-form" onSubmit={handleSubmit}>
                         <h2>Iniciar Sesión</h2>
                         <div className="form-group">
@@ -58,7 +60,7 @@ const Login = () => {
                         <button type="submit">Iniciar Sesión xD</button>
                         {error && <p>{error}</p>}
                         <div className="forgot-password">
-                            <a href="#">¿Olvidaste tu contraseña? vuelve a intentarlo</a>
+                            <a href="#">¿Olvidaste tu contraseña?</a>
                         </div>
                     </form>
                 </div>

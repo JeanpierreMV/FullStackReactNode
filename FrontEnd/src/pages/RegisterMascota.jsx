@@ -1,8 +1,7 @@
-// Importaciones necesarias
 import React, { useEffect, useState } from 'react';
 import { registrarMascota, obtenerTiposMascota, obtenerClientes } from '../services/api';
 import { User } from 'lucide-react';
-//import Sidebar from './Sidebar';
+import Sidebar from '../components/SideBar';
 // Importa el archivo CSS
 import '../styles/RegisterMascota.css';
 
@@ -55,7 +54,7 @@ const RegisterMascota = () => {
         raza: '',
         tipoMascotaId: '',
         clienteId: '',
-      }); // Limpiar el formulario después del envío
+      });
     } catch (err) {
       setError('Error al registrar la mascota');
       setSuccess(false);
@@ -64,8 +63,7 @@ const RegisterMascota = () => {
 
   return (
     <div className="container">
-      
-     { /*<Sidebar />*/}
+      <Sidebar />
       <div className="mainContent">
         <header className="header">
           <h1 className="headerTitle">REGISTRAR MASCOTA</h1>

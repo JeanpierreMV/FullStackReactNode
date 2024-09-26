@@ -6,8 +6,8 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="sidebar-header">
-        <img src="/public/koala.png" alt="Koala Vet Logo" className="logo" />
-        <h1>KOALA VET</h1>
+        <img src="/koala2.png" alt="Koala Vet Logo" className="logo" />
+        <h1 className="title">KOALA VET</h1>
       </div>
       <nav className="sidebar-nav">
         <div className="nav-section">
