@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { registrarMascota, obtenerTiposMascota, obtenerClientes } from '../services/api';
 import { User } from 'lucide-react';
-
+//import Sidebar from './Sidebar';
 // Importa el archivo CSS
 import '../styles/RegisterMascota.css';
 
@@ -64,12 +64,14 @@ const RegisterMascota = () => {
 
   return (
     <div className="container">
+      
+     { /*<Sidebar />*/}
       <div className="mainContent">
         <header className="header">
           <h1 className="headerTitle">REGISTRAR MASCOTA</h1>
           <div className="userInfo">
             <span>J Moreno</span>
-            <span className="userRole">Super Usuario</span>
+            <span className="userRole">jean pierre Montalvo</span>
             <div className="userAvatar">
               <User size={24} />
             </div>
