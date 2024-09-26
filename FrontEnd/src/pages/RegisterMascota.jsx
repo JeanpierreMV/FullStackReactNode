@@ -71,7 +71,7 @@ const RegisterMascota = () => {
           <h1 className="headerTitle">REGISTRAR MASCOTA</h1>
           <div className="userInfo">
             <span>J Moreno</span>
-            <span className="userRole">jean pierre Montalvo</span>
+            <span className="userRole">jean pierre Montalvo....</span>
             <div className="userAvatar">
               <User size={24} />
             </div>
