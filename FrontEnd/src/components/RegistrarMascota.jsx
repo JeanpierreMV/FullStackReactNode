@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { registrarMascota, obtenerTiposMascota, obtenerClientes } from '../services/api';
 import '../styles/RegisterMascota.css';
 
@@ -10,7 +11,7 @@ const RegisterMascota = () => {
     peso: '',
     raza: '',
     tipoMascotaId: '',
-    clienteId: '',
+    codigo: ''
   });
 
   const [currentDate, setCurrentDate] = useState('');
@@ -18,6 +19,10 @@ const RegisterMascota = () => {
   const [clientes, setClientes] = useState([]);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
+  const [dniError, setDniError] = useState(''); 
+
+  const location = useLocation();
+  const dniFromLocation = location.state?.dni;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,12 +31,15 @@ const RegisterMascota = () => {
         const clients = await obtenerClientes();
         setTipoMascotas(tipos);
         setClientes(clients);
+        if (dniFromLocation) {
+          setFormData((prevFormData) => ({ ...prevFormData, codigo: dniFromLocation }));
+        }
       } catch (err) {
         setError('Error al cargar datos');
       }
     };
     fetchData();
-  }, []);
+  }, [dniFromLocation]);
 
   useEffect(() => {
     const today = new Date();
@@ -46,6 +54,28 @@ const RegisterMascota = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Verificar si el cliente existe
+    const cliente = clientes.find((c) => c.dni === formData.codigo);
+    if (!cliente) {
+      setDniError('El DNI ingresado no corresponde a ningún cliente registrado.');
+      return; // Evita el envío si el cliente no existe
+    } else {
+      setDniError('');
+    }
+
+    // Validar campos obligatorios
+    if (!formData.nombre || !formData.genero || !formData.raza || !formData.tipoMascotaId || !formData.edad || !formData.peso) {
+      setError('Todos los campos son obligatorios.');
+      return;
+    }
+
+    // Validar tipos de datos
+    if (isNaN(formData.edad) || isNaN(formData.peso) || isNaN(formData.tipoMascotaId)) {
+      setError('Edad, peso y tipo de mascota deben ser numéricos.');
+      return; // Evita el envío si hay valores no numéricos
+    }
+
     try {
       await registrarMascota(formData);
       setSuccess(true);
@@ -57,7 +87,7 @@ const RegisterMascota = () => {
         peso: '',
         raza: '',
         tipoMascotaId: '',
-        clienteId: '',
+        codigo: dniFromLocation || '' // Limpiamos el campo de DNI si no viene de location
       });
     } catch (err) {
       setError('Error al registrar la mascota');
@@ -67,12 +97,23 @@ const RegisterMascota = () => {
 
   return (
     <div className="dataContainer">
-      {/* Bloque de código y fecha */}
       <div className="formHeader">
         <div className="formHeaderGroup">
           <div className="formGroup">
-            <label>CÓDIGO</label>
-            <input type="text" value="DNI" readOnly className="input" />
+            <label>DNI del Cliente</label>
+            {dniFromLocation ? (
+              <p>DNI del Cliente: {dniFromLocation}</p>
+            ) : (
+              <input
+                type="text"
+                name="codigo"
+                value={formData.codigo}
+                onChange={handleChange}
+                className="input"
+                placeholder="Ingresa el DNI del cliente"
+              />
+            )}
+            {dniError && <p className="errorText">{dniError}</p>}
           </div>
           <div className="formGroup">
             <label>FECHA</label>
@@ -159,30 +200,13 @@ const RegisterMascota = () => {
           </div>
         </div>
 
-        <div className="formGroup">
-          <label>Cliente:</label>
-          <select
-            name="clienteId"
-            value={formData.clienteId}
-            onChange={handleChange}
-            className="input"
-          >
-            <option value="">Seleccione un cliente</option>
-            {clientes.map((cliente) => (
-              <option key={cliente.id} value={cliente.id}>
-                {cliente.nombre}
-              </option>
-            ))}
-          </select>
-        </div>
-
         <button type="submit" className="submitButton">
           REGISTRAR MASCOTA
         </button>
       </form>
 
-      {success && <p>Mascota registrada exitosamente</p>}
-      {error && <p>{error}</p>}
+      {success && <p className="successText">Mascota registrada exitosamente</p>}
+      {error && <p className="errorText">{error}</p>}
     </div>
   );
 };

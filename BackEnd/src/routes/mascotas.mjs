@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 // Ruta para registrar una nueva mascota
 router.post('/registrar', async (req, res) => {
-  const { nombre, genero, raza, tipoMascotaId, edad, peso, clienteId } = req.body;
+  const { nombre, genero, raza, tipoMascotaId, edad, peso } = req.body;
 
   // Imprime los datos recibidos para verificar si todo llega correctamente
   console.log(req.body);

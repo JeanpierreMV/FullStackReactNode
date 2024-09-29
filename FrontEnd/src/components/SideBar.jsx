@@ -12,8 +12,8 @@ const Sidebar = () => {
       <nav className="sidebar-nav">
         <div className="nav-section">
           <h2>USUARIO</h2>
-          <a href="#" className="nav-item"><Users size={18} /> Clientes</a>
-          <a href="#" className="nav-item"><Dog size={18} /> Mascotas</a>
+          <a href="/registrar-cliente" className="nav-item"><Users size={18} /> Clientes</a>
+          <a href="/registrar-mascota" className="nav-item"><Dog size={18} /> Mascotas</a>
           <a href="#" className="nav-item active"><FileSpreadsheet size={18} /> Seguimiento de atención</a>
         </div>
         <div className="nav-section">

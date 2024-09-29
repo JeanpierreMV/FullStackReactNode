@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import ClienteForm from '../components/ClienteForm';
 import useForm from '../hooks/useForm';
 import { registrarCliente } from '../services/api';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterClient = () => {
   const initialState = {
@@ -17,6 +18,7 @@ const RegisterClient = () => {
   const { formData, handleChange } = useForm(initialState);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const navigate = useNavigate(); // Hook para la navegación
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,6 +26,8 @@ const RegisterClient = () => {
       await registrarCliente(formData);
       setSuccess(true);
       setError(null);
+      // Navegar a la página de Registrar Mascota pasando el DNI
+      navigate('/registrar-mascota', { state: { dni: formData.dni } });
     } catch (error) {
       setError('Error al registrar cliente');
       setSuccess(false);

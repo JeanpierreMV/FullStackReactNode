@@ -2,6 +2,7 @@
 import React from 'react';
 
 const ClienteForm = ({ formData, handleChange, handleSubmit }) => {
+  
   return (
     <form onSubmit={handleSubmit}>
       <div>

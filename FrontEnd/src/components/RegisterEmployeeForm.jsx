@@ -24,7 +24,7 @@ const RegisterEmployeeForm = ({ formData, handleChange, handleSubmit }) => {
         <label>Email:</label>
         <input
           type="email"
-          name="emaild"
+          name="email"
           value={formData.email}
           onChange={handleChange}
         />
