@@ -6,6 +6,10 @@
     margin: 0;
     padding: 0;
 }
+.login-container h1{
+    color: #2d3a48;
+    font-family: 'Uncial Antiqua';
+}
 
 .main-content {
     flex: 1;
@@ -24,19 +28,13 @@
     text-align: center; /* Centrar contenido dentro del contenedor */
 }
 
-.logo-container {
-    margin-bottom: 20px;
-}
+
 
 .logo {
     width: 100px; /* Ajusta el tamaño del logo */
     height: auto;
 }
 
-.login-form h2 {
-    margin-bottom: 20px;
-    color: #057aa6;
-}
 
 .form-group {
     margin-bottom: 20px;
@@ -52,8 +50,10 @@
 .form-group input {
     width: 100%;
     padding: 8px;
-    border: 1px solid #2d3b48;
+    border: 1.5px solid #030303;
     border-radius: 4px;
+    background-color: #ffffff;
+    color:#030303;
 }
 
 .login-form button {
@@ -68,7 +68,7 @@
 }
 
 .login-form button:hover {
-    background-color: #3b8cb9;
+    background-color: #6988a3;
 }
 
 .forgot-password {
@@ -82,4 +82,7 @@
 
 .forgot-password a:hover {
     text-decoration: underline;
+}
+p{
+    color:#ee1515;
 }

@@ -1,4 +1,3 @@
-// pages/RegisterEmployee.jsx
 
 import React from 'react';
 import RegisterEmployeeForm from '../components/RegisterEmployeeForm';

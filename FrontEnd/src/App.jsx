@@ -8,7 +8,6 @@ import RegisterEmployee from './pages/RegisterEmployee';
 import RegisterAtencion from './pages/RegisterAtencion';
 import BuscarClientesPage from './pages/BuscarClientesPage';
 import RegisterBoleta from './pages/RegisterBoleta';
-
 import Login from './pages/Login';
 
 const App = () => {
@@ -18,7 +17,7 @@ const App = () => {
         <Route path="/registrar-cliente" element={<RegisterClient />} />
         <Route path="/registrar-tipo-mascota" element={<RegisterTipoMascota />} />
         <Route path="/registrar-mascota" element={<RegisterMascota />} /> {/* Añade la nueva ruta */}
-        <Route path="/register-empleados" element={<RegisterEmployee />} />
+        <Route path="/registrar-empleados" element={<RegisterEmployee />} />
         <Route path="/registrar-atencion" element={<RegisterAtencion />} />      
         <Route path="/buscar-clientes" element={<BuscarClientesPage />} />
         <Route path="/generar-boleta" element={<RegisterBoleta />} />

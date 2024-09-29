@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { login } from '../services/api'; // Asegúrate de ajustar la ruta
 import { useNavigate } from 'react-router-dom'; // Importa useNavigate
-
-import '../styles/style.css'; // Asegúrate de tener los estilos bien importados
+import '../styles/login.css'; 
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -25,18 +24,18 @@ const Login = () => {
 
     return (
         <div className="dashboard">
-            {/* Main content area */}
+           
             <div className="main-content">
-                {/* Login form */}
+               
                 <div className="login-container">
-                    {/* Logo encima del formulario */}
-                    <div className="logo-container">
+                    
+                    <div>
                         <img src="/koala.png" alt="Koala Vet Logo" className="logo" />
                        
                     </div>
                     <h1>KOALA VET</h1>
                     <form className="login-form" onSubmit={handleSubmit}>
-                        <h2>Iniciar Sesión</h2>
+                        
                         <div className="form-group">
                             <label htmlFor="email">Correo</label>
                             <input

@@ -1,6 +1,6 @@
 // frontend/src/components/Sidebar.js
 import { Users, FileSpreadsheet, ClipboardList, Receipt, BarChart2, FileText, LogOut, Dog } from 'lucide-react';
-import '../components/Sidebar.css'; // Asegúrate de tener un archivo de estilos para el sidebar
+import '../styles/Sidebar.css'
 
 const Sidebar = () => {
   return (

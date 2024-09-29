@@ -1,0 +1,21 @@
+{
+  "name": "fullstackreactnode",
+  "version": "1.0.0",
+  "description": "Este proyecto utiliza un monorepo para gestionar tanto el backend como el frontend. A continuación, se describen los pasos necesarios para instalar dependencias, ejecutar los servicios y realizar migraciones con Prisma.",
+  "main": "index.js",
+  "scripts": {
+    "start:backend": "cd backend && node --watch src/server.mjs --watch-path src --watch-exclude node_modules",
+    "start:frontend": "cd frontend && npm run dev",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fullstackreactnode": "file:"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
+}
