@@ -1,13 +1,15 @@
 import React from 'react';
 import { User } from 'lucide-react';
+import '../styles/Navbar.css'; // Asegúrate de importar tu archivo CSS
 
 const Navbar = () => {
   return (
     <header className="header">
-      <h1 className="headerTitle">REGISTRAR MASCOTA</h1>
       <div className="userInfo">
-        <span>J Moreno</span>
-        <span className="userRole">jean pierre Montalvo....</span>
+        <div className="userName">
+          <span>J Moreno</span>
+          <span className="userRole">jean pierre Montalvo....</span>
+        </div>
         <div className="userAvatar">
           <User size={24} />
         </div>

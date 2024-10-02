@@ -1,0 +1,24 @@
+.header {
+    display: flex;
+    justify-content: flex-end; /* Alinea el contenido a la derecha */
+    padding: 10px; /* Añade un poco de espacio */
+    background-color: #f8f8f8; /* Cambia el color de fondo si lo deseas */
+  }
+  
+  .userInfo {
+    display: flex;
+    align-items: center; /* Alinea verticalmente el contenido */
+  }
+  
+  .userName {
+    display: flex;
+    flex-direction: column; /* Apila los elementos verticalmente */
+    align-items: flex-end; /* Alinea los textos a la derecha */
+    margin-right: 10px; /* Espacio entre el texto y el avatar */
+  }
+  
+  .userRole {
+    text-align: right; /* Asegura que el texto esté alineado a la derecha */
+  }
+  
+  

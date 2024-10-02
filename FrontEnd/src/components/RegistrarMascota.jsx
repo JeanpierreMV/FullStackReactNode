@@ -11,7 +11,9 @@ const RegisterMascota = () => {
     peso: '',
     raza: '',
     tipoMascotaId: '',
-    codigo: ''
+    codigo: '',
+    especie: '',
+    tamaño: ''
   });
 
   const [currentDate, setCurrentDate] = useState('');
@@ -65,7 +67,7 @@ const RegisterMascota = () => {
     }
 
     // Validar campos obligatorios
-    if (!formData.nombre || !formData.genero || !formData.raza || !formData.tipoMascotaId || !formData.edad || !formData.peso) {
+    if (!formData.nombre || !formData.genero || !formData.raza || !formData.tipoMascotaId || !formData.edad || !formData.peso || !formData.especie || !formData.tamaño) {
       setError('Todos los campos son obligatorios.');
       return;
     }
@@ -87,7 +89,9 @@ const RegisterMascota = () => {
         peso: '',
         raza: '',
         tipoMascotaId: '',
-        codigo: dniFromLocation || '' // Limpiamos el campo de DNI si no viene de location
+        codigo: dniFromLocation || '', // Limpiamos el campo de DNI si no viene de location
+        especie: '',
+        tamaño: ''
       });
     } catch (err) {
       setError('Error al registrar la mascota');
@@ -97,6 +101,7 @@ const RegisterMascota = () => {
 
   return (
     <div className="dataContainer">
+      <h1 className="headerTitle">REGISTRAR MASCOTA</h1>
       <div className="formHeader">
         <div className="formHeaderGroup">
           <div className="formGroup">
@@ -115,10 +120,7 @@ const RegisterMascota = () => {
             )}
             {dniError && <p className="errorText">{dniError}</p>}
           </div>
-          <div className="formGroup">
-            <label>FECHA</label>
-            <input type="text" value={currentDate} readOnly className="input" />
-          </div>
+        
         </div>
       </div>
 
@@ -126,7 +128,7 @@ const RegisterMascota = () => {
       <form onSubmit={handleSubmit} className="form">
         <div className="formRow">
           <div className="formGroup">
-            <label>Nombre:</label>
+            <label>Dueño</label>
             <input
               type="text"
               name="nombre"
@@ -136,7 +138,7 @@ const RegisterMascota = () => {
             />
           </div>
           <div className="formGroup">
-            <label>Género:</label>
+            <label>Nombre</label>
             <input
               type="text"
               name="genero"
@@ -149,7 +151,7 @@ const RegisterMascota = () => {
 
         <div className="formRow">
           <div className="formGroup">
-            <label>Edad:</label>
+            <label>Sexo</label>
             <input
               type="number"
               name="edad"
@@ -159,7 +161,7 @@ const RegisterMascota = () => {
             />
           </div>
           <div className="formGroup">
-            <label>Peso:</label>
+            <label>Edad</label>
             <input
               type="number"
               step="0.01"
@@ -173,17 +175,7 @@ const RegisterMascota = () => {
 
         <div className="formRow">
           <div className="formGroup">
-            <label>Raza:</label>
-            <input
-              type="text"
-              name="raza"
-              value={formData.raza}
-              onChange={handleChange}
-              className="input"
-            />
-          </div>
-          <div className="formGroup">
-            <label>Tipo de Mascota:</label>
+            <label>Elegir Especie:</label>
             <select
               name="tipoMascotaId"
               value={formData.tipoMascotaId}
@@ -198,10 +190,52 @@ const RegisterMascota = () => {
               ))}
             </select>
           </div>
+          
+          <div className="formGroup">
+            <label>Peso</label>
+            <input
+              type="text"
+              name="peso"
+              value={formData.raza}
+              onChange={handleChange}
+              className="input"
+            />
+          </div>
+        </div>
+
+        <div className="formRow">
+        <div className="formGroup">
+            <label>Raza</label>
+            <input
+              type="text"
+              name="peso"
+              value={formData.raza}
+              onChange={handleChange}
+              className="input"
+            />
+          </div>
+          <div className="formGroup">
+            <label>Tamaño:</label>
+            <select
+              name="tamaño"
+              value={formData.tamaño}
+              onChange={handleChange}
+              className="input"
+            >
+              <option value="">Seleccione un tamaño</option>
+              <option value="pequeño">Pequeño</option>
+              <option value="mediano">Mediano</option>
+              <option value="grande">Grande</option>
+            </select>
+          </div>
         </div>
 
         <button type="submit" className="submitButton">
-          REGISTRAR MASCOTA
+          GUARDAR
+        </button>
+
+        <button type="submit" className="submitButton">
+          CANCELAR
         </button>
       </form>
 
