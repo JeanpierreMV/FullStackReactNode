@@ -101,11 +101,14 @@ const RegisterMascota = () => {
 
   return (
     <div className="dataContainer">
+     
+             
+      <form onSubmit={handleSubmit} className="form">
       <h1 className="headerTitle">REGISTRAR MASCOTA</h1>
       <div className="formHeader">
         <div className="formHeaderGroup">
           <div className="formGroup">
-            <label>DNI del Cliente</label>
+            <label className="label"></label>
             {dniFromLocation ? (
               <p>DNI del Cliente: {dniFromLocation}</p>
             ) : (
@@ -120,15 +123,11 @@ const RegisterMascota = () => {
             )}
             {dniError && <p className="errorText">{dniError}</p>}
           </div>
-        
         </div>
       </div>
-
-      <h2 className="formTitle">Datos de la mascota:</h2>
-      <form onSubmit={handleSubmit} className="form">
         <div className="formRow">
           <div className="formGroup">
-            <label>Dueño</label>
+            <label className="label">Dueño</label>
             <input
               type="text"
               name="nombre"
@@ -138,7 +137,7 @@ const RegisterMascota = () => {
             />
           </div>
           <div className="formGroup">
-            <label>Nombre</label>
+            <label className="label">Nombre</label>
             <input
               type="text"
               name="genero"
@@ -151,7 +150,7 @@ const RegisterMascota = () => {
 
         <div className="formRow">
           <div className="formGroup">
-            <label>Sexo</label>
+            <label className="label">Sexo</label>
             <input
               type="number"
               name="edad"
@@ -161,7 +160,7 @@ const RegisterMascota = () => {
             />
           </div>
           <div className="formGroup">
-            <label>Edad</label>
+            <label className="label">Edad</label>
             <input
               type="number"
               step="0.01"
@@ -175,7 +174,7 @@ const RegisterMascota = () => {
 
         <div className="formRow">
           <div className="formGroup">
-            <label>Elegir Especie:</label>
+            <label className="label">Elegir Especie:</label>
             <select
               name="tipoMascotaId"
               value={formData.tipoMascotaId}
@@ -192,11 +191,11 @@ const RegisterMascota = () => {
           </div>
           
           <div className="formGroup">
-            <label>Peso</label>
+            <label className="label">Peso</label>
             <input
               type="text"
               name="peso"
-              value={formData.raza}
+              value={formData.peso}
               onChange={handleChange}
               className="input"
             />
@@ -204,18 +203,18 @@ const RegisterMascota = () => {
         </div>
 
         <div className="formRow">
-        <div className="formGroup">
-            <label>Raza</label>
+          <div className="formGroup">
+            <label className="label">Raza</label>
             <input
               type="text"
-              name="peso"
+              name="raza"
               value={formData.raza}
               onChange={handleChange}
               className="input"
             />
           </div>
           <div className="formGroup">
-            <label>Tamaño:</label>
+            <label className="label">Tamaño:</label>
             <select
               name="tamaño"
               value={formData.tamaño}
@@ -229,14 +228,15 @@ const RegisterMascota = () => {
             </select>
           </div>
         </div>
-
+        <div className="buttonContainer">
         <button type="submit" className="submitButton">
           GUARDAR
         </button>
 
-        <button type="submit" className="submitButton">
+        <button type="button" className="submitButton">
           CANCELAR
         </button>
+        </div>
       </form>
 
       {success && <p className="successText">Mascota registrada exitosamente</p>}

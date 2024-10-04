@@ -1,114 +1,157 @@
 /* styles/RegisterMascota.css */
 
 .container {
-    display: flex;
-    height: 100vh;
-    overflow: hidden; 
-  }
-  
-  .mainContent {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    background-color: #f5f5f5;
-  }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .headerTitle {
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  .userInfo {
-    display: flex;
-    align-items: center;
-  }
-  
-  .userRole {
-    font-size: 12px;
-    color: #666;
-    margin-left: 10px;
-  }
-  
-  .userAvatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #1a237e;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    margin-left: 10px;
-  }
-  
-  .formContainer {
-    padding: 20px;
-    flex: 1;
-  }
-  
-  .dataContainer {
-    background-color: #e0e0e0;
-    padding: 20px;
-    border-radius: 8px;
-  }
-  
-  .formHeader {
-    margin-bottom: 20px;
-  }
-  
-  .formHeaderGroup {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .formTitle {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  .form {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .formRow {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-  }
-  
-  .formGroup {
-    display: flex;
-    flex-direction: column;
-    width: 48%;
-  }
-  
-  .input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .submitButton {
-    padding: 10px 20px;
-    background-color: #1a237e;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    align-self: flex-end;
-    margin-top: 20px;
-  }
-  
+  display: flex;
+  height: 100vh;
+  overflow: hidden; 
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f5f5;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.headerTitle {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+}
+
+.userRole {
+  font-size: 12px;
+  color: #666;
+  margin-left: 10px;
+}
+
+.userAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #1a237e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  margin-left: 10px;
+}
+
+.formContainer {
+  padding: 20px;
+  flex: 1;
+}
+
+.dataContainer {
+  background-color: #e0e0e0;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.formHeader {
+  margin-bottom: 20px;
+}
+
+.formHeaderGroup {
+  display: flex;
+  justify-content: space-between;
+}
+
+.formTitle {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.form {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.formRow {
+  display: flex;
+  justify-content: flex-start; /* Alinear los elementos hacia la izquierda */
+  margin-bottom: 15px;
+}
+
+.formGroup {
+  display: flex;
+  align-items: center; /* Alinear los elementos de la etiqueta e input en una línea */
+  margin-bottom: 15px;
+  width: 100%; /* Asegurar que cada grupo ocupe todo el ancho disponible */
+}
+
+/* Nueva clase para las etiquetas */
+.formGroup label {
+  width: 150px; /* Ajustar este valor para modificar el espacio ocupado por la etiqueta */
+  text-align: left; /* Mantener el texto alineado a la izquierda */
+  margin-right: 10px; /* Separación entre la etiqueta y el input */
+  display: inline-block;
+  font-weight: bold; /* Opcional: para resaltar las etiquetas */
+}
+
+/* Estilo para los inputs más grandes */
+.input {
+  width: 300px; /* Aumentar el tamaño del input */
+  padding: 10px; /* Aumentar el padding para hacerlo más grande */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Ajustar la alineación específica de los inputs */
+.input[name="nombre"],
+.input[name="edad"],
+.input[name="peso"],
+.input[name="tamaño"] {
+  text-align: left; /* Asegurar que el texto dentro del input esté alineado a la izquierda */
+}
+
+/* Contenedor de los botones para alinearlos a la derecha */
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end; /* Alinear los botones a la derecha */
+  gap: 15px; /* Espacio entre cada botón */
+  margin-top: 20px; /* Separación de los botones respecto al formulario */
+}
+
+/* Estilo para los botones */
+.submitButton {
+  padding: 12px 24px; /* Aumentar el tamaño del botón */
+  background-color: #2d3b48;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px; /* Aumentar tamaño de fuente del botón */
+}
+
+/* Ajustar los mensajes de error y éxito */
+.errorText, .successText {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.successText {
+  color: green;
+}
+
+
+button:hover {
+  background-color: #6988a3;
+}

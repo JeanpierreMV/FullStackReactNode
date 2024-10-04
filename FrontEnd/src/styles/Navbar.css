@@ -1,24 +1,32 @@
+/* Navbar.css */
 .header {
-    display: flex;
-    justify-content: flex-end; /* Alinea el contenido a la derecha */
-    padding: 10px; /* Añade un poco de espacio */
-    background-color: #f8f8f8; /* Cambia el color de fondo si lo deseas */
-  }
-  
-  .userInfo {
-    display: flex;
-    align-items: center; /* Alinea verticalmente el contenido */
-  }
-  
-  .userName {
-    display: flex;
-    flex-direction: column; /* Apila los elementos verticalmente */
-    align-items: flex-end; /* Alinea los textos a la derecha */
-    margin-right: 10px; /* Espacio entre el texto y el avatar */
-  }
-  
-  .userRole {
-    text-align: right; /* Asegura que el texto esté alineado a la derecha */
-  }
-  
-  
+  display: flex;
+  justify-content: flex-end; /* Alinea el contenido del header a la derecha */
+  align-items: center; /* Centra verticalmente el contenido dentro del header */
+  padding: 10px 20px; /* Espaciado alrededor del header */
+  background-color: #f8f8f8; /* Color de fondo opcional */
+  height: 60px; /* Ajusta la altura del header */
+  position: relative;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center; /* Alinea verticalmente el nombre y el avatar */
+}
+
+
+
+.userName, .userRole {
+  text-align: right; /* Asegura que todo el texto esté alineado a la derecha */
+  display: flex;
+  flex-direction: column; /* Apila los textos del nombre y rol verticalmente */
+  text-align: right; /* Alinea los textos a la derecha */
+  margin-right: 10px; /* Añade espacio entre el texto y el avatar */
+}
+
+.userAvatar {
+  position: absolute; /* Ubica el avatar en una posición específica dentro del contenedor padre */
+  top: 10px; /* Ajusta según el espacio que quieras desde la parte superior */
+  right: 20px; /* Ajusta según el espacio que quieras desde la parte derecha */
+}
+

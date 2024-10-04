@@ -9,6 +9,7 @@ import RegisterAtencion from './pages/RegisterAtencion';
 import BuscarClientesPage from './pages/BuscarClientesPage';
 import RegisterBoleta from './pages/RegisterBoleta';
 import Login from './pages/Login';
+import FilterMascotaPage from './pages/FilterMascotaPage';
 
 const App = () => {
   return (
@@ -21,8 +22,10 @@ const App = () => {
         <Route path="/registrar-atencion" element={<RegisterAtencion />} />      
         <Route path="/buscar-clientes" element={<BuscarClientesPage />} />
         <Route path="/generar-boleta" element={<RegisterBoleta />} />
+        <Route path="/filter-mascota" element={<FilterMascotaPage />} />
         <Route path="/login" element={<Login />} />
       </Routes>
+
     </Router>
   );
 };
