@@ -39,6 +39,7 @@ export default function FilterMascota() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
+      <div className='dataContainer'>
       <table>
         <thead>
           <tr>
@@ -72,6 +73,7 @@ export default function FilterMascota() {
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   )
 }
