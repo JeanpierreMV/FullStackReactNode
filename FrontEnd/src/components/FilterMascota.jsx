@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import '.././styles/FilterMascota.css';
-
+import '../styles/FilterMascota.css';
 
 export default function FilterMascota() {
-  const [searchTerm, setSearchTerm] = useState('')
+  const [searchTerm, setSearchTerm] = useState('');
   const [pets] = useState([
     {
       dueno: 'ERIKA',
@@ -15,16 +14,15 @@ export default function FilterMascota() {
       especie: 'Nombre de la especie no encontrado',
       tamano: 'Nombre del tamaño no encontrado'
     }
-  ])
+  ]);
 
   const filteredPets = pets.filter(pet =>
     pet.nMascota.toLowerCase().includes(searchTerm.toLowerCase()) ||
     pet.dueno.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  );
 
   return (
     <div className="pet-manager">
-      
       <header>
         <h1>MASCOTA</h1>
         <button className="new-button">Registrar</button>
@@ -39,41 +37,48 @@ export default function FilterMascota() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-      <div className='dataContainer'>
-      <table>
-        <thead>
-          <tr>
-            <th>Dueño</th>
-            <th>N.Mascota</th>
-            <th>Genero</th>
-            <th>Edad</th>
-            <th>Raza</th>
-            <th>Peso</th>
-            <th>Especie</th>
-            <th>Tamaño</th>
-            <th>Opciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredPets.map((pet, index) => (
-            <tr key={index}>
-              <td>{pet.dueno}</td>
-              <td>{pet.nMascota}</td>
-              <td>{pet.genero}</td>
-              <td>{pet.edad}</td>
-              <td>{pet.raza}</td>
-              <td>{pet.peso}</td>
-              <td>{pet.especie}</td>
-              <td>{pet.tamano}</td>
-              <td>
-                <button className="edit-button">✏️</button>
-                <button className="delete-button">🗑️</button>
-              </td>
+      <div 
+        className='dataContainer' 
+        style={{ 
+          backgroundColor: '#ffff', // Color de fondo rojo
+          padding: '20px',            // Padding de 20px
+          borderRadius: '8px'         // Bordes redondeados
+        }}
+      >
+        <table>
+          <thead>
+            <tr>
+              <th>Dueño</th>
+              <th>N.Mascota</th>
+              <th>Genero</th>
+              <th>Edad</th>
+              <th>Raza</th>
+              <th>Peso</th>
+              <th>Especie</th>
+              <th>Tamaño</th>
+              <th>Opciones</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filteredPets.map((pet, index) => (
+              <tr key={index}>
+                <td>{pet.dueno}</td>
+                <td>{pet.nMascota}</td>
+                <td>{pet.genero}</td>
+                <td>{pet.edad}</td>
+                <td>{pet.raza}</td>
+                <td>{pet.peso}</td>
+                <td>{pet.especie}</td>
+                <td>{pet.tamano}</td>
+                <td>
+                  <button className="edit-button">✏️</button>
+                  <button className="delete-button">🗑️</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
-  )
+  );
 }

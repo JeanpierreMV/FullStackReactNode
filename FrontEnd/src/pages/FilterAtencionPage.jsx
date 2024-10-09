@@ -1,21 +1,21 @@
 import React from 'react';
 import Sidebar from '../components/SideBar';
 import Navbar from '../components/Navbar';
-import FilterMascota from '../components/FilterMascota';
+import FilterAtencion from '../components/FilterAtencion';
 
 
-const FilterMascotaPage = () => {
+const FilterAtencionPage = () => {
   return (
     <div className="container">
       <Sidebar />
       <div className="mainContent">
         <Navbar />
         <main className="formContainer">
-          <FilterMascota />
+          <FilterAtencion />
         </main>
       </div>
     </div>
   );
 };
 
-export default FilterMascotaPage;
+export default FilterAtencionPage;

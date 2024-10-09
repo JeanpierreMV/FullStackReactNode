@@ -1,0 +1,88 @@
+.dataContainer {
+    background-color: #e0e0e0;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.headerTitle {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.formRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.formGroup {
+    display: flex;
+    align-items: center; /* Alinea verticalmente el texto y el input */
+    margin-bottom: 15px;
+    width: 45%;
+}
+
+.label {
+    font-weight: bold;
+    margin-right: 10px; /* Espaciado entre la etiqueta y el input */
+    width: 150px; /* Ancho fijo para las etiquetas */
+}
+
+.input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.submitButton {
+    padding: 12px 24px;
+    background-color: #2d3b48;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.generateButton {
+    padding: 12px 24px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.successText, .errorText {
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.successText {
+    color: green;
+}
+
+.errorText {
+    color: red;
+}
+
+button:hover {
+    background-color: #6988a3;
+}
