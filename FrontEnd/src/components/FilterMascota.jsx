@@ -41,8 +41,7 @@ export default function FilterMascota() {
         className='dataContainer' 
         style={{ 
           backgroundColor: '#ffff', // Color de fondo rojo
-          padding: '20px',            // Padding de 20px
-          borderRadius: '8px'         // Bordes redondeados
+        
         }}
       >
         <table>

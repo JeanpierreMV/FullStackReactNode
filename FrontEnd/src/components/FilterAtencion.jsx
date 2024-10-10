@@ -30,9 +30,17 @@ export default function FilterAtencion() {
 
   return (
     <div className="filter-atencion-page">
-      <header>
-        <h1>Gestión de Atenciones</h1>
-        <button className="new-button">Registrar Nueva Atención</button>
+      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+        <h1>Tus de Atenciones</h1>
+        {/* Ajuste en el estilo del botón */}
+        <button 
+          className="new-button" 
+          style={{ 
+            marginRight: '20px', // Añadido margen derecho para separar el botón del borde
+          }}
+        >
+          Registrar Nueva Atención
+        </button>
       </header>
       
       <div className="search-container">

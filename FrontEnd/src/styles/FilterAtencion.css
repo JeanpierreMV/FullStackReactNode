@@ -1,6 +1,6 @@
 .filter-atencion-page {
   font-family: Arial, sans-serif;
-  width: 100%;
+  width: 97%;
   margin: 0 auto;
   padding: 20px;
   background-color: #f8f9fa;
@@ -19,13 +19,14 @@ h1 {
 }
 
 .new-button {
-  padding: 12px 24px;
+  padding: 12px 24px; /*ajusta el tamano del boton*/
   background-color: #2d3b48;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
+ 
 }
 
 .search-container {
@@ -50,9 +51,12 @@ h1 {
 }
 
 .data-container {
-  background-color: #ffffff;
+  background-color: white;
   padding: 20px;
   border-radius: 8px;
+  margin: 0 auto; /* Centrar horizontalmente el contenedor */
+  width: 95%; /* Reducir el ancho para que no esté pegado a los bordes */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para destacar el contenedor */
 }
 
 table {

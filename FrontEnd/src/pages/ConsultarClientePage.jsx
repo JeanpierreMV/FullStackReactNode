@@ -1,22 +1,21 @@
 import React from 'react';
 import Sidebar from '../components/SideBar';
 import Navbar from '../components/Navbar';
-import RegistrarAtencion from '../components/RegistrarAtencion';
+import ConsultarCliente from '../components/ConsultarCliente';
 
 
-
-const RegisterAtencionPage = () => {
+const ConsultarClientePage = () => {
   return (
     <div className="container">
       <Sidebar />
       <div className="mainContent">
         <Navbar />
         <main className="formContainer">
-          <RegistrarAtencion />
+          <ConsultarCliente />
         </main>
       </div>
     </div>
   );
 };
 
-export default RegisterAtencionPage;
+export default ConsultarClientePage;
