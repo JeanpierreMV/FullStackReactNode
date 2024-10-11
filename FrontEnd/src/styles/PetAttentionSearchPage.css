@@ -1,0 +1,31 @@
+.page-container {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  .sidebar {
+    width: 200px;
+    background-color: #343a40;
+    height: 100%;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    align-items: center;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+  }
+  
+  .content-container {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #f2f2f2;
+  }
+  
+  h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos adicionales si es necesario para que el contenido se vea bien */
+  
