@@ -1,0 +1,49 @@
+.boleta-form {
+    padding: 20px;
+    background-color: #f5f5f5;
+  }
+  
+  .boleta-header, .boleta-details {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .boleta-header div, .boleta-details div {
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  .boleta-items table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .boleta-items th, .boleta-items td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .boleta-totals {
+    text-align: right;
+    margin-bottom: 20px;
+  }
+  
+  .boleta-totals p {
+    margin: 5px 0;
+  }
+  
+  .pagar-btn {
+    padding: 10px 20px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .pagar-btn:hover {
+    background-color: #333;
+  }
+  
