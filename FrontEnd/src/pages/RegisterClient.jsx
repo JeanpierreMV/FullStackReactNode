@@ -1,9 +1,10 @@
-// frontend/src/pages/RegisterClient.js
 import React, { useState } from 'react';
 import ClienteForm from '../components/ClienteForm';
 import useForm from '../hooks/useForm';
 import { registrarCliente } from '../services/api';
 import { useNavigate } from 'react-router-dom';
+import '../styles/RegisterClient.css';
+import Sidebar from '../components/SideBar'; // Importa el Sidebar
 
 const RegisterClient = () => {
   const initialState = {
@@ -35,11 +36,14 @@ const RegisterClient = () => {
   };
 
   return (
-    <div>
-      <h1>Registrar Cliente</h1>
-      {success && <p>Cliente registrado exitosamente</p>}
-      {error && <p>{error}</p>}
-      <ClienteForm formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} />
+    <div className="page-container">
+      <Sidebar /> {/* Sidebar al costado */}
+      <div className="form-container"> {/* Contenedor central para el formulario */}
+        <h1>Registrar Cliente</h1>
+        {success && <p>Cliente registrado exitosamente</p>}
+        {error && <p>{error}</p>}
+        <ClienteForm formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} />
+      </div>
     </div>
   );
 };
