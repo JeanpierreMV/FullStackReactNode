@@ -15,6 +15,7 @@ import RegisterAtencionPage from './pages/RegisterAtencionPage.jsx';
 import ConsultarClientePage from './pages/ConsultarClientePage.jsx';
 import PetAttentionSearchPage from './pages/PetAttentionSearchPage.jsx';
 import BuscarServicios from './pages/BuscarServiciosPage.jsx';
+import ClientManagement from './pages/ClientManagement.jsx';
 //import RegisterAtencion from './components/RegistrarAtencion';
 
 const App = () => {
@@ -27,6 +28,7 @@ const App = () => {
         <Route path="/registrar-empleados" element={<RegisterEmployee />} />
         <Route path="/consultar-cliente" element={<ConsultarClientePage />} />
         <Route path="/buscar-clientes" element={<BuscarClientesPage />} />
+        <Route path="/client-manager" element={<ClientManagement />} />
         <Route path="/generar-boleta" element={<RegisterBoleta />} />
         <Route path="/filter-mascota" element={<FilterMascotaPage />} />
         <Route path="/filter-atencion" element={<FilterAtencionPage />} />
