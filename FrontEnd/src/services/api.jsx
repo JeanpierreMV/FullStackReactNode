@@ -107,3 +107,25 @@ export const registrarBoleta = async (boletaData) => {
   }
 };
 
+export const obtenerAtenciones = async (mascotaId) => {
+  try {
+    const response = await api.get(`/atenciones/${mascotaId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener atenciones:', error);
+    throw new Error('Error al obtener atenciones');
+  }
+};
+
+export const obtenerDetallesAtencion = async (atencionId) => {
+  try {
+      const response = await api.get(`/atenciones/detalles/${atencionId}`);
+      return response.data;
+  } catch (error) {
+      console.error('Error al obtener detalles de la atención:', error);
+      throw new Error('Error al obtener detalles de la atención');
+  }
+};
+
+
+
