@@ -51,4 +51,37 @@ router.post('/generar', async (req, res) => {
   }
 });
 
+// Nueva ruta para obtener la facturación del día
+router.get('/facturacion-dia', async (req, res) => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);  // Inicio del día
+
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);  // Fin del día
+
+  try {
+    const boletas = await prisma.boleta.findMany({
+      where: {
+        fecha: {
+          gte: today,
+          lt: tomorrow,
+        },
+      },
+      include: {
+        cliente: true,  // Incluye los datos del cliente
+        detallesBoleta: {
+          include: {
+            servicio: true,  // Incluye los datos del servicio
+          },
+        },
+      },
+    });
+
+    res.status(200).json(boletas);
+  } catch (error) {
+    console.error('Error al obtener facturación del día:', error);
+    res.status(500).json({ error: 'Error al obtener facturación del día' });
+  }
+});
+
 export default router;

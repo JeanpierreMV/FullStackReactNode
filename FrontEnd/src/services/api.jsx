@@ -129,3 +129,12 @@ export const obtenerDetallesAtencion = async (atencionId) => {
 
 
 
+export const obtenerFacturacionDelDia = async () => {
+  try {
+    const response = await api.get('/boletas/facturacion-dia');
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener facturación del día:', error);
+    throw new Error('Error al obtener facturación del día');
+  }
+};
