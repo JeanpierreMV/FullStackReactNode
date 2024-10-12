@@ -5,6 +5,8 @@ import { registrarCliente } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import '../styles/RegisterClient.css';
 import Sidebar from '../components/SideBar'; // Importa el Sidebar
+import Navbar from '../components/Navbar';
+
 
 const RegisterClient = () => {
   const initialState = {

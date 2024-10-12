@@ -1,7 +1,8 @@
+//Harolt Kruchinsky
 import React, { useEffect, useState } from 'react';
 import { obtenerVeterinarios, obtenerServicios, registrarAtencion } from '../services/api';
 import '../styles/RegisterAtencion.css';
-
+import { Link } from 'react-router-dom'; // Asegúrate de importar Link
 const RegistrarAtencion = () => {
   const [formData, setFormData] = useState({
     fechaCita: '',
@@ -212,9 +213,11 @@ const RegistrarAtencion = () => {
           <button type="submit" className="submitButton">
             Guardar
           </button>
-          <button type="button" className="submitButton">
-            Cancelar
-          </button>
+          <Link to="/filter-atencion">
+              <button type="button" className="submitButton">
+                Cancelar
+              </button>
+          </Link>
           <button type="button" className="generateButton">
             Generar Proforma
           </button>

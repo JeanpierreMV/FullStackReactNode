@@ -87,3 +87,87 @@ tr:nth-child(even) {
   font-size: 18px;
   margin-right: 8px;
 }
+
+/* FilterAtencion.css */
+
+/* FilterAtencion.css */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 15px; /* Reducir el padding para acercar el contenido a los bordes */
+  border-radius: 5px;
+  width: 400px;
+  max-width: 90%;
+  color: #333;
+}
+
+h2 {
+  text-align: left;
+  margin-bottom: 10px; /* Reducir margen inferior del título */
+}
+
+hr {
+  margin: 10px 0;
+  border: none;
+  border-top: 1px solid #ddd;
+}
+
+.modal-body p strong{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color:black;
+}
+
+.form-group {
+  width: 100%;
+  margin-bottom: 15px; /* Reducir el margen inferior */
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input[type="date"] {
+  width: 60%; /* Reducir el ancho del input de fecha */
+  padding: 8px; /* Reducir padding para hacer el input más compacto */
+  font-size: 14px; /* Ajustar tamaño de texto */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-button {
+  margin-left: 10px;
+  padding: 8px 16px; /* Hacer los botones más compactos */
+  border: none;
+  cursor: pointer;
+}
+
+.close-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.save-button {
+  background-color: #4CAF50;
+  color: white;
+}

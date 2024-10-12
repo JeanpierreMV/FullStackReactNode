@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import '../styles/FilterAtencion.css';
+import '../styles/SegumientoAtencion.css';
 import { Link } from 'react-router-dom';
 
-export default function FilterAtencion() {
+export default function SeguimientoAtencion() {
   const [searchTerm, setSearchTerm] = useState('');
   const [appointments] = useState([
     {
@@ -33,7 +33,7 @@ export default function FilterAtencion() {
     }
   ]);
 
-  const [showModal1, setShowModal1] = useState(false); // Primer modal
+
   const [showModal2, setShowModal2] = useState(false); // Segundo modal
   const [selectedDate, setSelectedDate] = useState(''); // Fecha de cita seleccionada
   const [selectedAppointment, setSelectedAppointment] = useState(null); // Cita seleccionada para el segundo modal
@@ -68,16 +68,14 @@ export default function FilterAtencion() {
   };
 
   return (
-    <div className="filter-atencion-page">
+    <div className="seguimiento-atencion-page">
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-        <h1>Tus Atenciones</h1>
-        <Link to="/registrar-atencion" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <button className="new-button" style={{ marginRight: '20px' }}>
-            Registrar Nueva Atención
-          </button>
-        </Link>
-      </header>
-      
+        <h1>Atenciones</h1>
+     </header>
+     <h4 className="custom-h4" style={{ color: 'orange' }}>* Pendiente de Pago</h4>
+    <h4 className="custom-h4" style={{ color: 'purple' }}>* Pendiente de Cita</h4>
+    <h4 className="custom-h4" style={{ color: 'green' }}>* Atendiendo</h4>
+    <h4 className="custom-h4" style={{ color: 'red' }}>* Terminado</h4>
       <div className="search-container">
         <label htmlFor="search">Buscar Atención</label>
         <input
@@ -113,7 +111,7 @@ export default function FilterAtencion() {
                 <td>{appointment.estado}</td>
                 <td>
                   <button className="view-button" onClick={() => handleOpenModal2(appointment.fechaCita)}>👁️</button>
-                  <button className="edit-button" onClick={() => handleOpenModal1(appointment)}>✏️</button>
+               
                 </td>
               </tr>
             ))}
@@ -121,33 +119,7 @@ export default function FilterAtencion() {
         </table>
       </div>
 
-      {/* Primer Modal - Editar Fecha de Cita */}
-      {showModal1 && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h2>Editar Fecha de Cita</h2>
-            <div className="modal-body">
-              <div className="form-group">
-                <label htmlFor="fechaCita">Fecha de Cita</label>
-              </div>
-              <div className="form-group">
-                <input
-                  type="date"
-                  id="fechaCita"
-                  value={selectedDate}
-                  onChange={(e) => setSelectedDate(e.target.value)}
-                  className="date-input"
-                />
-              </div>
-            </div>
-            <div className="modal-actions">
-              <button onClick={handleCloseModal1} className="modal-button close-button">Cerrar</button>
-              <button onClick={handleSaveChanges} className="modal-button save-button">Guardar Cambios</button>
-            </div>
-          </div>
-        </div>
-      )}
-
+ 
       {/* Segundo Modal - Detalle de la Cita */}
       {showModal2 && selectedAppointment && (
         <div className="modal-overlay">

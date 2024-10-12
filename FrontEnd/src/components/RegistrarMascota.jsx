@@ -1,8 +1,9 @@
+//Harolt Kruchinsky
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { registrarMascota, obtenerTiposMascota, obtenerClientes } from '../services/api';
 import '../styles/RegisterMascota.css';
-
+import { Link } from 'react-router-dom'; // Asegúrate de importar Link
 const RegisterMascota = () => {
   const [formData, setFormData] = useState({
     nombre: '',
@@ -150,22 +151,24 @@ const RegisterMascota = () => {
 
         <div className="formRow">
           <div className="formGroup">
-            <label className="label">Sexo</label>
-            <input
-              type="number"
-              name="edad"
-              value={formData.edad}
+          <label className="label">Sexo</label>
+            <select
+              name="sexo"
+              value={formData.sexo}
               onChange={handleChange}
               className="input"
-            />
+            >
+              <option value="">Seleccione el sexo</option>
+              <option value="Macho">Macho</option>
+              <option value="Hembra">Hembra</option>
+            </select>
           </div>
           <div className="formGroup">
             <label className="label">Edad</label>
             <input
-              type="number"
-              step="0.01"
-              name="peso"
-              value={formData.peso}
+              type="text"
+              name="edad"
+              value={formData.edad}
               onChange={handleChange}
               className="input"
             />
@@ -232,10 +235,11 @@ const RegisterMascota = () => {
         <button type="submit" className="submitButton">
           GUARDAR
         </button>
-
+        <Link to="/filter-mascota">
         <button type="button" className="submitButton">
           CANCELAR
         </button>
+        </Link>
         </div>
       </form>
 
