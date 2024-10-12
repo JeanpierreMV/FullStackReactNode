@@ -26,4 +26,65 @@ router.post('/', async (req, res) => {
     }
 });
 
+// Método GET para buscar atenciones por mascota
+router.get('/:mascotaId', async (req, res) => {
+    const { mascotaId } = req.params;
+
+    try {
+        const atenciones = await prisma.atencion.findMany({
+            where: { mascotaId: parseInt(mascotaId) },
+            include: {
+                cliente: true,
+                mascota: true,
+                veterinario: true,
+                servicio: true,
+            },
+        });
+        if (atenciones.length > 0) {
+            res.status(200).json(atenciones);
+        } else {
+            res.status(404).json({ message: 'No se encontraron atenciones para esta mascota' });
+        }
+    } catch (error) {
+        console.error('Error al buscar atenciones:', error);
+        res.status(500).json({ error: 'Error al buscar atenciones' });
+    }
+});
+
+
+
+
+router.get('/detalles/:atencionId', async (req, res) => {
+    const { atencionId } = req.params;
+
+    try {
+        const atencion = await prisma.atencion.findUnique({
+            where: { id: parseInt(atencionId) },
+            include: {
+                cliente: true,
+                mascota: true,
+                veterinario: true,
+                servicio: true,
+            },
+        });
+
+        if (atencion) {
+            res.status(200).json(atencion);
+        } else {
+            res.status(404).json({ message: 'Atención no encontrada' });
+        }
+    } catch (error) {
+        console.error('Error al obtener los detalles de la atención:', error);
+        res.status(500).json({ error: 'Error al obtener los detalles de la atención' });
+    }
+});
+
+
+
+
+
+
+
+
+
 export default router;

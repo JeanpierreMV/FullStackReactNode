@@ -16,6 +16,10 @@ import ConsultarClientePage from './pages/ConsultarClientePage.jsx';
 import PetAttentionSearchPage from './pages/PetAttentionSearchPage.jsx';
 import BuscarServicios from './pages/BuscarServiciosPage.jsx';
 //import RegisterAtencion from './components/RegistrarAtencion';
+import BuscarAtencionesPage from './pages/BuscarAtencionesPage';
+import VerDetallesAtencionPage from './pages/VerDetallesAtencionPage';
+import ListarFacturacionPage from './pages/ListarFacturacionPage';
+import VerDetalleBoletaPage from './pages/VerDetalleBoletaPage';
 
 const App = () => {
   return (
@@ -33,6 +37,10 @@ const App = () => {
         <Route path="/pet-attetion" element={<PetAttentionSearchPage />} />
         <Route path="/buscar-servicios" element={<BuscarServicios />} />
         <Route path="/registrar-atencion" element={<RegisterAtencionPage />} />
+        <Route path="/buscar-atencion/:mascotaId" element={<BuscarAtencionesPage />} /> {/* Nueva ruta */}
+        <Route path="/detalles-atencion/:atencionId" element={<VerDetallesAtencionPage />} />
+        <Route path="/facturacion-dia" element={<ListarFacturacionPage />} />
+        <Route path="/boleta/detalle/:id" element={<VerDetalleBoletaPage />} />
         <Route path="/login" element={<Login />} />
       </Routes>
 

@@ -51,4 +51,76 @@ router.post('/generar', async (req, res) => {
   }
 });
 
+// Nueva ruta para obtener la facturación del día
+router.get('/facturacion-dia', async (req, res) => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);  // Inicio del día
+
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);  // Fin del día
+
+  try {
+    const boletas = await prisma.boleta.findMany({
+      where: {
+        fecha: {
+          gte: today,
+          lt: tomorrow,
+        },
+      },
+      include: {
+        cliente: true,  // Incluye los datos del cliente
+        detallesBoleta: {
+          include: {
+            servicio: true,  // Incluye los datos del servicio
+          },
+        },
+      },
+    });
+
+    res.status(200).json(boletas);
+  } catch (error) {
+    console.error('Error al obtener facturación del día:', error);
+    res.status(500).json({ error: 'Error al obtener facturación del día' });
+  }
+});
+
+// Ruta para obtener el detalle de una boleta específica
+router.get('/detalle/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const boleta = await prisma.boleta.findUnique({
+      where: {
+        id: parseInt(id),
+      },
+      include: {
+        cliente: true,  // Incluir información del cliente
+        detallesBoleta: {
+          include: {
+            servicio: true,  // Incluye los detalles del servicio
+            servicio: {
+              include: {
+                atenciones: {
+                  include: {
+                    veterinario: true,  // Incluye detalles del veterinario
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!boleta) {
+      return res.status(404).json({ error: 'Boleta no encontrada' });
+    }
+
+    res.status(200).json(boleta);
+  } catch (error) {
+    console.error('Error al obtener el detalle de la boleta:', error);
+    res.status(500).json({ error: 'Error al obtener el detalle de la boleta' });
+  }
+});
+
 export default router;

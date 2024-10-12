@@ -3,7 +3,7 @@ import clientesRoutes from './clientes.mjs';
 import tiposMascotaRoutes from './tiposMascota.mjs';
 import mascotasRoutes from './mascota.mjs';
 import authRoutes from './auth.mjs';
-import atencionRoutes from './atencion.mjs';
+import atencionesRoutes from './atencion.mjs';
 import veterinariosRoutes from './veterinarios.mjs';; // Asegúrate de tener esto
 import serviciosRoutes from './servicios.mjs';
 import boletasRoutes from './boletas.mjs';
@@ -20,7 +20,7 @@ router.use('/clientes', clientesRoutes);
 router.use('/tipos-mascota', tiposMascotaRoutes);
 router.use('/mascotas', mascotasRoutes); 
 router.use('/empleados', authRoutes);
-router.use('/atenciones', atencionRoutes);
+router.use('/atenciones', atencionesRoutes);
 router.use('/veterinarios', veterinariosRoutes);
 router.use('/servicios', serviciosRoutes);
 router.use('/boletas', boletasRoutes);
