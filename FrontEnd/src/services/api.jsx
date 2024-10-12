@@ -107,3 +107,45 @@ export const registrarBoleta = async (boletaData) => {
   }
 };
 
+export const obtenerAtenciones = async (mascotaId) => {
+  try {
+    const response = await api.get(`/atenciones/${mascotaId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener atenciones:', error);
+    throw new Error('Error al obtener atenciones');
+  }
+};
+
+export const obtenerDetallesAtencion = async (atencionId) => {
+  try {
+      const response = await api.get(`/atenciones/detalles/${atencionId}`);
+      return response.data;
+  } catch (error) {
+      console.error('Error al obtener detalles de la atención:', error);
+      throw new Error('Error al obtener detalles de la atención');
+  }
+};
+
+
+
+export const obtenerFacturacionDelDia = async () => {
+  try {
+    const response = await api.get('/boletas/facturacion-dia');
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener facturación del día:', error);
+    throw new Error('Error al obtener facturación del día');
+  }
+};
+
+// Función para obtener los detalles de una boleta específica
+export const obtenerDetalleBoleta = async (id) => {
+  try {
+    const response = await api.get(`/boletas/detalle/${id}`); // Usar `api` en lugar de `axios` directo
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener detalles de la boleta:', error);
+    throw error;
+  }
+};
