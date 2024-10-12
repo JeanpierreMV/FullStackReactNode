@@ -108,3 +108,48 @@
   .lero {
     background-color: #f90505;
     }
+
+    .modal {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    
+    .modal-content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      width: 400px;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    input, select {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    
+    .modal-buttons {
+      display: flex;
+      justify-content: flex-end;
+    }
+    
+    .close-button, .update-button {
+      margin-left: 10px;
+      padding: 10px 20px;
+    }
+    

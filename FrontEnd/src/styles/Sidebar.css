@@ -12,13 +12,14 @@
   transition: all 0.3s ease;
 }
 
-.sidebar-header {
+.sidebar-header .title{
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
- 
+  color: white;
+
 }
 
 .sidebar-header .logo {
@@ -62,7 +63,9 @@
   font-size: 20px;
   text-align: center;
   color: #fff;
+  
 }
+
 
 /* Responsive design */
 @media (max-width: 768px) {
@@ -87,6 +90,7 @@
   .title {
       font-size: 12px;
       margin-top: 0;
+        
   }
 
   .sidebar-nav {

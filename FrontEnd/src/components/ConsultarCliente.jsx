@@ -1,5 +1,7 @@
+//Harolt Kruchinsky
 import React, { useState } from 'react';
 import '../styles/ConsultarCliente.css';
+import { Link } from 'react-router-dom';
 
 export default function ConsultarCliente() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -20,12 +22,18 @@ export default function ConsultarCliente() {
   );
 
   return (
-    <div className="filter-atencion-page">
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+    <div className="consultar-cliente-page">
+        <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
         <h1>CLIENTES</h1>
-       
-       
+        <Link to="/registrar-cliente" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <button className="new-button" style={{ marginRight: '20px' }}>
+            Registrar Nuevo Cliente
+          </button>
+        </Link>
       </header>
+
+      
+
       
       <div className="search-container">
         <label htmlFor="search">Buscar Clientes</label>

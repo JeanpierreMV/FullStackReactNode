@@ -6,6 +6,7 @@ import RegisterTipoMascota from './pages/RegisterTipoMascota';
 import RegisterMascota from './pages/RegisterMascota'; // Importa la nueva página
 import RegisterEmployee from './pages/RegisterEmployee';
 //import RegisterAtencion from './pages/RegisterAtencion2.jsx';
+import SeguimientoAtencionPage from './pages/SeguimientoAtencionPage.jsx';
 import BuscarClientesPage from './pages/BuscarClientesPage';
 import RegisterBoleta from './pages/RegisterBoleta';
 import Login from './pages/Login';
@@ -37,6 +38,7 @@ const App = () => {
         <Route path="/pet-attetion" element={<PetAttentionSearchPage />} />
         <Route path="/buscar-servicios" element={<BuscarServicios />} />
         <Route path="/registrar-atencion" element={<RegisterAtencionPage />} />
+        <Route path="/seguimiento-atencion" element={<SeguimientoAtencionPage />} />
         <Route path="/buscar-atencion/:mascotaId" element={<BuscarAtencionesPage />} /> {/* Nueva ruta */}
         <Route path="/detalles-atencion/:atencionId" element={<VerDetallesAtencionPage />} />
         <Route path="/facturacion-dia" element={<ListarFacturacionPage />} />
