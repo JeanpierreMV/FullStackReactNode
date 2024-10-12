@@ -17,6 +17,7 @@ import PetAttentionSearchPage from './pages/PetAttentionSearchPage.jsx';
 import BuscarServicios from './pages/BuscarServiciosPage.jsx';
 import ClientManagement from './pages/ClientManagement.jsx';
 import BuscarCitaMas from './pages/SeguimientoAtencion.jsx';
+import CuadreDia from './pages/Dashboard.jsx';
 //import RegisterAtencion from './components/RegistrarAtencion';
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="/registrar-mascota" element={<RegisterMascota />} /> {/* Añade la nueva ruta */}
         <Route path="/registrar-empleados" element={<RegisterEmployee />} />
         <Route path="/consultar-cliente" element={<ConsultarClientePage />} />
+        <Route path="/cuadre-dia" element={<CuadreDia/>} />
         <Route path="/buscar-citas" element={<BuscarCitaMas/>} />
         <Route path="/buscar-clientes" element={<BuscarClientesPage />} />
         <Route path="/client-manager" element={<ClientManagement />} />
