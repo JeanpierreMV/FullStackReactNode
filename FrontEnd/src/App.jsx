@@ -19,6 +19,7 @@ import BuscarServicios from './pages/BuscarServiciosPage.jsx';
 import BuscarAtencionesPage from './pages/BuscarAtencionesPage';
 import VerDetallesAtencionPage from './pages/VerDetallesAtencionPage';
 import ListarFacturacionPage from './pages/ListarFacturacionPage';
+import VerDetalleBoletaPage from './pages/VerDetalleBoletaPage';
 
 const App = () => {
   return (
@@ -39,6 +40,7 @@ const App = () => {
         <Route path="/buscar-atencion/:mascotaId" element={<BuscarAtencionesPage />} /> {/* Nueva ruta */}
         <Route path="/detalles-atencion/:atencionId" element={<VerDetallesAtencionPage />} />
         <Route path="/facturacion-dia" element={<ListarFacturacionPage />} />
+        <Route path="/boleta/detalle/:id" element={<VerDetalleBoletaPage />} />
         <Route path="/login" element={<Login />} />
       </Routes>
 

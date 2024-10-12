@@ -84,4 +84,34 @@ router.get('/facturacion-dia', async (req, res) => {
   }
 });
 
+// Ruta para obtener el detalle de una boleta específica
+router.get('/detalle/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const boleta = await prisma.boleta.findUnique({
+      where: {
+        id: parseInt(id),
+      },
+      include: {
+        cliente: true,  // Incluir información del cliente
+        detallesBoleta: {
+          include: {
+            servicio: true,  // Incluir información del servicio
+          },
+        },
+      },
+    });
+
+    if (!boleta) {
+      return res.status(404).json({ error: 'Boleta no encontrada' });
+    }
+
+    res.status(200).json(boleta);
+  } catch (error) {
+    console.error('Error al obtener el detalle de la boleta:', error);
+    res.status(500).json({ error: 'Error al obtener el detalle de la boleta' });
+  }
+});
+
 export default router;

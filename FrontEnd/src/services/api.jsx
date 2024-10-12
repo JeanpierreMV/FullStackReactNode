@@ -138,3 +138,14 @@ export const obtenerFacturacionDelDia = async () => {
     throw new Error('Error al obtener facturación del día');
   }
 };
+
+// Función para obtener los detalles de una boleta específica
+export const obtenerDetalleBoleta = async (id) => {
+  try {
+    const response = await api.get(`/boletas/detalle/${id}`); // Usar `api` en lugar de `axios` directo
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener detalles de la boleta:', error);
+    throw error;
+  }
+};
