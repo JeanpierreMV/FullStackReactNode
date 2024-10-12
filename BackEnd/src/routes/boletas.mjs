@@ -97,7 +97,16 @@ router.get('/detalle/:id', async (req, res) => {
         cliente: true,  // Incluir información del cliente
         detallesBoleta: {
           include: {
-            servicio: true,  // Incluir información del servicio
+            servicio: true,  // Incluye los detalles del servicio
+            servicio: {
+              include: {
+                atenciones: {
+                  include: {
+                    veterinario: true,  // Incluye detalles del veterinario
+                  },
+                },
+              },
+            },
           },
         },
       },
