@@ -6,15 +6,15 @@
     border-radius: 8px;
   }
   
-  .title {
+  .title-service {
     text-align: center;
     color: #333;
     font-size: 24px;
     margin-bottom: 20px;
   }
   
-  .form {
-    /*display: flex;*/
+  .form-service {
+    display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
     gap: 20px;

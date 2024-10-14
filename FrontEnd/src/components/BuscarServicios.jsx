@@ -1,13 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { consultarServicio, buscarServicioPorNombre } from '../services/api'; 
 import '../styles/BuscarServicios.css';
 
-const BuscarServicios = ({ formData, handleChange, handleSearch }) => {
+const BuscarServicios = ({ formData, handleChange }) => {
+  const [resultados, setResultados] = useState([]);
+
+  // Función para manejar la búsqueda
+  const handleSearch = async (e) => {
+    e.preventDefault();
+
+    const { servicio, tamano, especie } = formData; 
+
+    try {
+      let data;
+
+      // Si se proporciona un nombre, busca por nombre
+      if (servicio) {
+        data = await buscarServicioPorNombre(servicio, tamano, especie);
+      } else {
+        // Si no hay nombre, realiza la búsqueda filtrada por tamaño y especie
+        data = await consultarServicio(tamano, especie);
+      }
+
+      setResultados(data);
+    } catch (error) {
+      console.error('Error al buscar servicios:', error);
+      setResultados([]);
+    }
+  };
+
   return (
     <div className="buscar-container">
-      <h2 className="title">CONSULTAR SERVICIOS BÁSICOS</h2>
+      <h2 className="title-service">CONSULTAR SERVICIOS BÁSICOS</h2>
 
-      <form className="form" onSubmit={handleSearch}>
+      <form className="form-service" onSubmit={handleSearch}>
         <div className="form-group">
           <label>Nombre de servicios:</label>
           <input
@@ -24,7 +51,7 @@ const BuscarServicios = ({ formData, handleChange, handleSearch }) => {
           <label>Tamaño de la mascota:</label>
           <select name="tamano" value={formData.tamano} onChange={handleChange} className="input-select">
             <option value="" disabled>Seleccionar</option>
-            <option value="pequeno">Pequeño</option>
+            <option value="pequeño">Pequeño</option>
             <option value="mediano">Mediano</option>
             <option value="grande">Grande</option>
           </select>
@@ -32,7 +59,7 @@ const BuscarServicios = ({ formData, handleChange, handleSearch }) => {
 
         <div className="form-group">
           <label>Tipo de mascota:</label>
-          <select name="tipo" value={formData.tipo} onChange={handleChange} className="input-select">
+          <select name="especie" value={formData.especie} onChange={handleChange} className="input-select">
             <option value="" disabled>Seleccionar</option>
             <option value="perro">Perro</option>
             <option value="gato">Gato</option>
@@ -54,7 +81,21 @@ const BuscarServicios = ({ formData, handleChange, handleSearch }) => {
             </tr>
           </thead>
           <tbody>
-            {/* Aquí se renderizarán los resultados de la búsqueda cuando lleguen desde la API */}
+            {resultados.length > 0 ? (
+              resultados.map((servicio, index) => (
+                <tr key={index}>
+                  <td>{servicio.nombre}</td>
+                  <td>{servicio.descripcion}</td>
+                  {/* Redondeo el costo hacia el entero superior */}
+                  <td>{Math.ceil(servicio.costo)}</td>
+                  <td>{servicio.consideraciones}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4">No se encontraron resultados</td>
+              </tr>
+            )}
           </tbody>
         </table>
 
@@ -69,10 +110,9 @@ BuscarServicios.propTypes = {
   formData: PropTypes.shape({
     servicio: PropTypes.string.isRequired,
     tamano: PropTypes.string.isRequired,
-    tipo: PropTypes.string.isRequired
+    especie: PropTypes.string.isRequired
   }).isRequired,
   handleChange: PropTypes.func.isRequired,
-  handleSearch: PropTypes.func.isRequired
 };
 
 export default BuscarServicios;

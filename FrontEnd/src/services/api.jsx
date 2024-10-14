@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-
 const api = axios.create({
   baseURL: 'http://localhost:1234/KoalaVet',  
 });
+
+
 
 export const registrarCliente = async (clienteData) => {
   try {
@@ -61,6 +62,16 @@ export const obtenerTiposMascota = async () => {
   } catch (error) {
     console.log('Error al obtener tipos de mascota:', error);
     throw new Error('Error al obtener tipos de mascota');
+  }
+};
+
+export const obtenerTamañoMascota = async () => {
+  try {
+    const response = await api.get('/size-mascota');
+    return response.data; 
+  } catch (error) {
+    console.log('Error al obtener tamaño de mascota:', error);
+    throw new Error('Error al obtener tamaño de mascota');
   }
 };
 
@@ -127,8 +138,6 @@ export const obtenerDetallesAtencion = async (atencionId) => {
   }
 };
 
-
-
 export const obtenerFacturacionDelDia = async () => {
   try {
     const response = await api.get('/boletas/facturacion-dia');
@@ -138,7 +147,6 @@ export const obtenerFacturacionDelDia = async () => {
     throw new Error('Error al obtener facturación del día');
   }
 };
-
 // Función para obtener los detalles de una boleta específica
 export const obtenerDetalleBoleta = async (id) => {
   try {
@@ -147,5 +155,40 @@ export const obtenerDetalleBoleta = async (id) => {
   } catch (error) {
     console.error('Error al obtener detalles de la boleta:', error);
     throw error;
+  }
+};
+
+export const consultarServicio = async (tamaño, especie) => {
+  try {
+    const response = await api.get(`/consultar/servicios`, {
+      params: { tamaño, especie }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener los servicios:', error);
+    throw error;
+  }
+};
+
+export const buscarServicioPorNombre = async (nombre, tamaño, especie) => {
+  try {
+    const params = { nombre };
+    if (tamaño) params.tamaño = tamaño;
+    if (especie) params.especie = especie;
+
+    const response = await api.get(`/consultar/servicios/buscar`, { params });
+    return response.data;
+  } catch (error) {
+    console.error('Error al buscar el servicio:', error);
+    throw error;
+  }
+};
+
+export const obtenerClientePorCodigo = async (codigo) => {
+  try {
+    const response = await api.get(`/cliente/${codigo}`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Cliente no encontrado');
   }
 };

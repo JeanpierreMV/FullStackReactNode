@@ -30,7 +30,7 @@ model Cliente {
 
 model Mascota {
   id            Int        @id @default(autoincrement())
-  codigo        String      @unique
+  codigo        String     // Cambiado a no ser unique
   nombre        String
   genero        String
   raza          String
@@ -41,6 +41,8 @@ model Mascota {
   cliente       Cliente     @relation(fields: [clienteId], references: [id])
   clienteId     Int
   tipoMascotaId Int
+  size          SizeMascota @relation(fields: [sizeId], references: [id]) // Nueva relación añadida
+  sizeId        Int         // Nueva columna añadida
   atenciones    Atencion[] 
   proformas     ProformaServicio[] 
 }
@@ -50,7 +52,6 @@ model TipoMascota {
   nombre   String
   mascotas Mascota[] 
   proformas ProformaServicio[] 
-  
 }
 
 model Servicio {
@@ -141,4 +142,5 @@ model SizeMascota {
   id       Int        @id @default(autoincrement())
   nombre   String     
   proformas ProformaServicio[] 
+  mascotas Mascota[] 
 }
