@@ -68,7 +68,7 @@ export default function SeguimientoAtencion() {
   };
 
   return (
-    <div className="seguimiento-atencion-page">
+    <div className="seguimiento-atencion-pag-e">
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
         <h1>Atenciones</h1>
      </header>
