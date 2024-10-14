@@ -1,0 +1,113 @@
+/* Estructura general del layout */
+.layout {
+    display: flex;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Ajustar el contenido principal */
+  .main-content {
+    display: flex;
+    flex: 1;
+    background-color: #f9f9f9;
+    padding: 0;
+    margin: 0;
+    align-items: flex-start; /* Alinea el contenido hacia arriba */
+  }
+  
+  /* Contenedor del formulario */
+  .content {
+    padding: 20px;
+    flex: 1;
+    background-color: #f9f9f9;
+    overflow-y: auto;
+    margin-top: 130px; /* Cambiado a 60px para bajarlo solo un poquito */
+  }
+  
+  /* Formulario */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 0; /* Mantén margen superior en cero */
+    background-color: white; /* Fondo blanco */
+    padding: 20px; /* Espaciado interno del formulario */
+    border-radius: 8px; /* Bordes redondeados */
+    width: 80%; /* Puedes ajustar el ancho del formulario */
+    margin-left: auto; /* Asegura que el formulario esté alineado a la derecha */
+    margin-right: auto; /* Centramos horizontalmente */
+  }
+  
+  /* Inputs del formulario */
+  input, select, button {
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  /* Botón */
+  button {
+    background-color: teal;
+    color: white;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+  
+  /* Tabla */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  /* Encabezados de tabla */
+  th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  /* Responsive: Para pantallas pequeñas */
+  @media (max-width: 768px) {
+    .layout {
+      flex-direction: column;
+      padding-top: 10px;
+    }
+  
+    .content {
+      padding: 10px;
+    }
+  
+    form {
+      padding: 10px;
+      width: 100%;
+    }
+  }
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro con transparencia */
+    z-index: 1000; /* Asegura que el modal esté encima de otros elementos */
+  }
+  
+  .modal-content {
+    background-color: white; /* Fondo blanco para el contenido del modal */
+    padding: 20px;
+    border-radius: 4px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra para el modal */
+  }
+  
+  
