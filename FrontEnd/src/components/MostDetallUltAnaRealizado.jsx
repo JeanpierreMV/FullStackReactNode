@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import '../styles/SegumientoAtencion.css';
+import '../styles/MostDetallUltAnaRealizado.css';
 import mascotaImage from '../assets/mascota.jpg'; // Asegúrate de tener esta imagen en tu proyecto
 
-export default function SeguimientoAtencion() {
+export default function UltimoAnalisis() {
   const [searchTerm, setSearchTerm] = useState('');
   const [appointments] = useState([
     {
@@ -79,7 +79,7 @@ export default function SeguimientoAtencion() {
               <th>DNI</th>
               <th>Dueño</th>
               <th>Nombre de la Mascota</th>
-              <th>Veterinario</th>
+              <th>Laboratorista</th>
               <th>Fecha de Cita</th>
               <th>Estado</th>
               <th>Opciones</th>

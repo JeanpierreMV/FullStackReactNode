@@ -64,9 +64,9 @@ const Sidebar = () => {
         <div className="nav-section">
           <h2>GESTION DE PAGOS</h2>
           <Link 
-            to="#" 
-            className={`nav-item ${activeLink === '/cuadre-dia' ? 'active' : ''}`} 
-            onClick={() => setActiveLink('/cuadre-dia')}
+            to="/ver-factura" 
+            className={`nav-item ${activeLink === '/ver-factura' ? 'active' : ''}`} 
+            onClick={() => setActiveLink('/ver-factura')}
           >
             <BarChart2 size={18} /> Cuadre del día
           </Link>
