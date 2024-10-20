@@ -13,6 +13,8 @@ import FilterMascotaPage from './pages/FilterMascotaPage';
 import FilterAtencionPage from './pages/FilterAtencionPage.jsx';
 import RegisterAtencionPage from './pages/RegisterAtencionPage.jsx';
 import ConsultarClientePage from './pages/ConsultarClientePage.jsx';
+import BuscarHistorialMascotaPage from './pages/BuscarHistorialMascotaPage';
+import BuscarUltimaAtencionMascotaPage from './pages/BuscarUltimaAtencionMascotaPage';
 //import RegisterAtencion from './components/RegistrarAtencion';
 
 const App = () => {
@@ -29,6 +31,8 @@ const App = () => {
         <Route path="/filter-mascota" element={<FilterMascotaPage />} />
         <Route path="/filter-atencion" element={<FilterAtencionPage />} />
         <Route path="/registrar-atencion" element={<RegisterAtencionPage />} />
+        <Route path="/buscar-historial-mascota" element={<BuscarHistorialMascotaPage />} />
+        <Route path="/buscar-ultima-atencion-mascota" element={<BuscarUltimaAtencionMascotaPage />} />
         <Route path="/login" element={<Login />} />
       </Routes>
 
