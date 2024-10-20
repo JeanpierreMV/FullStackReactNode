@@ -1,0 +1,29 @@
+.invoice-container {
+    max-width: 800px;
+    margin: 5px auto;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px 8px 0px 0px;
+    font-family: Arial, sans-serif;
+    background-color: #085cf6;
+    color: #fff;
+    overflow-y: auto;
+    max-height: 90vh; /* Limitar altura para permitir desplazamiento */
+}
+
+.invoice-title {
+    font-size: 24px; /* Aumenta el tamaño de la fuente */
+    font-weight: bold; /* Aplica negrita */
+    margin: 0; /* Elimina el margen superior */
+    padding-top: 5px; /* Ajuste opcional para separarlo un poco del borde */
+}
+
+.invoice-number {
+    font-size: 16px; /* Tamaño de la fuente para el número de factura */
+    margin: 5px 0 0 0; /* Espaciado entre el título y el número */
+    color: #ffffff; /* Cambiar el color del texto a blanco */
+}
+
+.p {
+color: #fff;
+}
