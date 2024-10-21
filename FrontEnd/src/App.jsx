@@ -24,6 +24,9 @@ import BuscarAtencionesPage from './pages/BuscarAtencionesPage';
 import VerDetallesAtencionPage from './pages/VerDetallesAtencionPage';
 import ListarFacturacionPage from './pages/ListarFacturacionPage';
 import VerDetalleBoletaPage from './pages/VerDetalleBoletaPage';
+import ViewDetailsBillPage from './pages/ViewDetailsBillPage.jsx';
+import MostDetallUltAnaRealizadoPage from './pages/MostDetallUltAnaRealizadoPage.jsx';
+
 
 const App = () => {
   return (
@@ -50,6 +53,8 @@ const App = () => {
         <Route path="/detalles-atencion/:atencionId" element={<VerDetallesAtencionPage />} />
         <Route path="/facturacion-dia" element={<ListarFacturacionPage />} />
         <Route path="/boleta/detalle/:id" element={<VerDetalleBoletaPage />} />
+        <Route path="/ver-factura" element={<ViewDetailsBillPage />} />
+        <Route path="/ultimo-analisis" element={<MostDetallUltAnaRealizadoPage />} />
         <Route path="/login" element={<Login />} />
       </Routes>
 
