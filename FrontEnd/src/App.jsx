@@ -26,12 +26,20 @@ import ListarFacturacionPage from './pages/ListarFacturacionPage';
 import VerDetalleBoletaPage from './pages/VerDetalleBoletaPage';
 import ViewDetailsBillPage from './pages/ViewDetailsBillPage.jsx';
 import MostDetallUltAnaRealizadoPage from './pages/MostDetallUltAnaRealizadoPage.jsx';
-
+import RegistroTail1 from './pages/RegistroTail.jsx';
+import ServiceTa from './pages/ServicePageT.jsx';
+import CitaBuscarT from './pages/CitaBuscarTail.jsx';
+import ConsultaServi from './pages/ClientServicesPageTail.jsx';
 
 const App = () => {
   return (
     <Router>
       <Routes>
+      <Route path="/registrar-clientet" element={<RegistroTail1 />} />
+      <Route path="/service-paget" element={<ServiceTa />} />
+      <Route path="/cita-buscart" element={<CitaBuscarT />} />
+      <Route path="/cliente-consulta" element={<ConsultaServi />} />
+
         <Route path="/registrar-cliente" element={<RegisterClient />} />
         <Route path="/registrar-tipo-mascota" element={<RegisterTipoMascota />} />
         <Route path="/registrar-mascota" element={<RegisterMascota />} /> {/* Añade la nueva ruta */}
