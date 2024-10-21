@@ -80,6 +80,23 @@ router.get('/detalles/:atencionId', async (req, res) => {
 });
 
 
+// NUEVO: Método GET para obtener el listado de todas las atenciones
+router.get('/', async (req, res) => {
+    try {
+        const atenciones = await prisma.atencion.findMany({
+            include: {
+                cliente: true,
+                mascota: true,
+                veterinario: true,
+                servicio: true,
+            },
+        });
+        res.status(200).json(atenciones);
+    } catch (error) {
+        console.error('Error al obtener el listado de atenciones:', error);
+        res.status(500).json({ error: 'Error al obtener el listado de atenciones' });
+    }
+});
 
 
 
