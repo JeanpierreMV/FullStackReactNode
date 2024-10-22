@@ -1,29 +1,91 @@
-.invoice-container {
-    max-width: 800px;
-    margin: 5px auto;
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px 8px 0px 0px;
-    font-family: Arial, sans-serif;
-    background-color: #085cf6;
-    color: #fff;
-    overflow-y: auto;
-    max-height: 90vh; /* Limitar altura para permitir desplazamiento */
+.invoice-wrapper {
+    max-width: 60%;
+    margin: auto;
+    min-height: 100vh; 
+  }
+  
+  .invoice-header {
+    background-color: #2d3b48; /* El color de fondo original que desees */
+    padding: 20px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  
+  .invoice-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #f7f7f7;
+  }
+  
+  .invoice-body {
+    background-color: white;
+
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: visible; /* Asegúrate de que esté visible */
+    background-color: #f0f0f0; /* Color de fondo temporal para visualizar el área */
 }
 
-.invoice-title {
-    font-size: 24px; /* Aumenta el tamaño de la fuente */
-    font-weight: bold; /* Aplica negrita */
-    margin: 0; /* Elimina el margen superior */
-    padding-top: 5px; /* Ajuste opcional para separarlo un poco del borde */
-}
+  .invoice-number {
+    font-size: 1rem;
+    color: #f9f5f5;
+  }
+  
 
-.invoice-number {
-    font-size: 16px; /* Tamaño de la fuente para el número de factura */
-    margin: 5px 0 0 0; /* Espaciado entre el título y el número */
-    color: #ffffff; /* Cambiar el color del texto a blanco */
-}
 
-.p {
-color: #fff;
-}
+    
+  .invoice-dates, .invoice-client {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .invoice-label {
+    font-weight: 600;
+    color: black;
+  }
+  
+  .invoice-value {
+    margin-bottom: 5px;
+    color: #333;
+  }
+  
+  .invoice-items {
+    margin-bottom: 20px;
+  }
+  
+  .invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .invoice-table th, .invoice-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .invoice-table th {
+    background-color: #f7f7f7;
+    font-weight: 600;
+  }
+  
+  .invoice-summary {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  
+  .summary-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+  
+  .summary-row.total {
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+  
