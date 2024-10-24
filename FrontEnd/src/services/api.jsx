@@ -190,3 +190,30 @@ export const obtenerDetalleAtencion = async (atencionId) => {
     throw error;
   }
 };
+
+// Nueva función para integrar la funcionalidad de "VerHistorialMascota"
+export const verHistorialMascota = async (mascotaId) => {
+  try {
+    const response = await api.get(`/historial-mascota/ver/${mascotaId}`);
+    return response.data.map(historial => ({
+      fecha: historial.fecha,
+      descripcion: historial.descripcion,
+      veterinario: historial.veterinario,
+      servicio: historial.servicio,  // Incluye el servicio realizado
+      costo: historial.costo         // Incluye el costo de la atención
+    }));
+  } catch (error) {
+    console.error('Error al obtener el historial completo de la mascota:', error);
+    throw new Error('Error al obtener el historial completo de la mascota');
+  }
+};
+
+export const mostrarListadoAtencion = async (mascotaId) => {
+  try {
+    const response = await obtenerListadoAtencionPorMascota(mascotaId); // Obtiene el listado de atenciones por mascota
+    return response;
+  } catch (error) {
+    console.error('Error al mostrar el listado de atenciones:', error);
+    throw new Error('Error al mostrar el listado de atenciones');
+  }
+};

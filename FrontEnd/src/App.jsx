@@ -15,6 +15,8 @@ import RegisterAtencionPage from './pages/RegisterAtencionPage.jsx';
 import ConsultarClientePage from './pages/ConsultarClientePage.jsx';
 import BuscarHistorialMascotaPage from './pages/BuscarHistorialMascotaPage';
 import BuscarUltimaAtencionMascotaPage from './pages/BuscarUltimaAtencionMascotaPage';
+import VerHistorialMascotaPage from './pages/VerHistorialMascotaPage';
+import MostrarListadoAtencionPage from './pages/MostrarListadoAtencionPage';
 //import RegisterAtencion from './components/RegistrarAtencion';
 
 const App = () => {
@@ -33,6 +35,8 @@ const App = () => {
         <Route path="/registrar-atencion" element={<RegisterAtencionPage />} />
         <Route path="/buscar-historial-mascota" element={<BuscarHistorialMascotaPage />} />
         <Route path="/buscar-ultima-atencion-mascota" element={<BuscarUltimaAtencionMascotaPage />} />
+        <Route path="/ver-historial-mascota" element={<VerHistorialMascotaPage />} />
+        <Route path="/mostrar-listado-atencion" element={<MostrarListadoAtencionPage />} />
         <Route path="/login" element={<Login />} />
       </Routes>
 
