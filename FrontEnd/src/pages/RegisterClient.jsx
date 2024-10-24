@@ -39,7 +39,7 @@ const RegisterClient = () => {
 
   return (
     <div className="page-container">
-      <Sidebar /> {/* Sidebar al costado */}
+           <Sidebar/>
       <div className="form-container"> {/* Contenedor central para el formulario */}
         <h1>Registrar Cliente</h1>
         {success && <p>Cliente registrado exitosamente</p>}

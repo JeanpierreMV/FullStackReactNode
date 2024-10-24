@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import RegisterClient from './pages/RegisterClient';
+import RegisterClient from './pages/RegisterClient.jsx';
 import RegisterTipoMascota from './pages/RegisterTipoMascota';
 import RegisterMascota from './pages/RegisterMascota'; // Importa la nueva página
 import RegisterEmployee from './pages/RegisterEmployee';
@@ -22,14 +22,14 @@ import VerDetallesAtencionPage from './pages/VerDetallesAtencionPage';
 import ListarFacturacionPage from './pages/ListarFacturacionPage';
 import VerDetalleBoletaPage from './pages/VerDetalleBoletaPage';
 import ViewDetailsBillPage from './pages/ViewDetailsBillPage.jsx';
-import MostDetallUltAnaRealizadoPage from './pages/MostDetallUltAnaRealizadoPage.jsx';
 
+import ViewDetailsAnalysis from './pages/ViewDetailsAnalysisPage.jsx';
 
 const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/registrar-cliente" element={<RegisterClient />} />
+        <Route path="/registrar-cliente" element={<RegisterClient />} />S
         <Route path="/registrar-tipo-mascota" element={<RegisterTipoMascota />} />
         <Route path="/registrar-mascota" element={<RegisterMascota />} /> {/* Añade la nueva ruta */}
         <Route path="/registrar-empleados" element={<RegisterEmployee />} />
@@ -47,7 +47,8 @@ const App = () => {
         <Route path="/facturacion-dia" element={<ListarFacturacionPage />} />
         <Route path="/boleta/detalle/:id" element={<VerDetalleBoletaPage />} />
         <Route path="/ver-factura" element={<ViewDetailsBillPage />} />
-        <Route path="/ultimo-analisis" element={<MostDetallUltAnaRealizadoPage />} />
+        <Route path="/ultimo-analisis" element={<ViewDetailsAnalysis />} />
+       
         <Route path="/" element={<Login />} />
       </Routes>
 
