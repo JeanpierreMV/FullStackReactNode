@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/FilterAtencion.css';
 import { Link } from 'react-router-dom';
-
+import mascotaImage from '../assets/mascota.jpg'; // Asegúrate de tener esta imagen en tu proyecto
 export default function FilterAtencion() {
   const [searchTerm, setSearchTerm] = useState('');
   const [appointments] = useState([
@@ -148,27 +148,35 @@ export default function FilterAtencion() {
         </div>
       )}
 
-      {/* Segundo Modal - Detalle de la Cita */}
       {showModal2 && selectedAppointment && (
         <div className="modal-overlay">
           <div className="modal-content">
             <h2>Detalle de la Cita</h2>
-            <hr />
+           {/* <hr />*/}
             <div className="modal-body">
-              <h3>Informacion de la Cita: </h3>
-              <p><strong>Nombre del Servicio:</strong> {selectedAppointment.servicio}</p>
-              <p><strong>Descripción:</strong> {selectedAppointment.descripcion}</p>
-              <p><strong>Especie:</strong> {selectedAppointment.especie}</p>
-              <p><strong>Tamaño:</strong> {selectedAppointment.tamaño}</p>
-              <p><strong>Costo:</strong> {selectedAppointment.costo}</p>
-            </div>
+              {/* Columna izquierda: Imagen */}
+              <img src={mascotaImage} alt="Mascota" className="mascota-image" />
+
+              {/* Columna derecha: Información */}
+              <div className="info-container">
+                <h3>Información de la Cita</h3>
+                <div className="info-row"><strong>Nombre del Servicio:</strong> {selectedAppointment.dueno}</div>
+                <div className="info-row"><strong>Descripcion:</strong> {selectedAppointment.nMascota}</div>
+                <div className="info-row"><strong>Especie:</strong> {selectedAppointment.especie}</div>
+                <div className="info-row"><strong>Tamaño:</strong> {selectedAppointment.tamaño}</div>
+                <div className="info-row"><strong>Costo:</strong> {selectedAppointment.costo}</div>
+              
+              </div>
+              
+              </div>
+           
             <hr />
             <div className="modal-actions">
               <button onClick={handleCloseModal2} className="modal-button close-button">Cerrar</button>
             </div>
           </div>
         </div>
-      )}
+      )}  
     </div>
   );
 }

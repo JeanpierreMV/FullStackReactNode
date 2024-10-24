@@ -48,7 +48,7 @@ const App = () => {
         <Route path="/boleta/detalle/:id" element={<VerDetalleBoletaPage />} />
         <Route path="/ver-factura" element={<ViewDetailsBillPage />} />
         <Route path="/ultimo-analisis" element={<MostDetallUltAnaRealizadoPage />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
       </Routes>
 
     </Router>
