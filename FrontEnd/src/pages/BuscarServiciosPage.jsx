@@ -6,7 +6,7 @@ const BuscarServiciosPage = () => {
   const [formData, setFormData] = useState({
     servicio: '',
     tamano: '',
-    tipo: ''
+    especie: ''
   });
 
   const handleChange = (e) => {
@@ -20,12 +20,12 @@ const BuscarServiciosPage = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     console.log('Buscando servicios:', formData);
-    // Aquí irá la lógica para la API
+    
   };
 
   return (
     <div className="page-container">
-      <Sidebar /> {/* Incluimos el Sidebar */}
+      <Sidebar /> 
       <div className="content">
         <BuscarServicios
           formData={formData}

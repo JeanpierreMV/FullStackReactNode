@@ -47,9 +47,9 @@ const Sidebar = () => {
         <div className="nav-section">
           <h2>EMPRESA</h2>
           <Link 
-            to="#" 
-            className={`nav-item ${activeLink === '/consultar-servicios' ? 'active' : ''}`} 
-            onClick={() => setActiveLink('/consultar-servicios')}
+            to="/buscar-servicios" 
+            className={`nav-item ${activeLink === '/buscar-servicios' ? 'active' : ''}`} 
+            onClick={() => setActiveLink('/buscar-servicios')}
           >
             <ClipboardList size={18} /> Consultar servicios
           </Link>

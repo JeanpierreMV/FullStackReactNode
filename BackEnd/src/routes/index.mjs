@@ -8,6 +8,9 @@ import veterinariosRoutes from './veterinarios.mjs';; // Asegúrate de tener est
 import serviciosRoutes from './servicios.mjs';
 import boletasRoutes from './boletas.mjs';
 import validar from './buscarCliente.mjs'
+import tamaño from './sizemascota.mjs';
+import consultarS from './consultarS.mjs';
+import busCliente from './buscarCliente.mjs';
 
 const router = express.Router();
 
@@ -25,5 +28,7 @@ router.use('/veterinarios', veterinariosRoutes);
 router.use('/servicios', serviciosRoutes);
 router.use('/boletas', boletasRoutes);
 router.use('/validar', validar);
-
+router.use('/size-mascota', tamaño)
+router.use('/consultar', consultarS)
+router.use('/cliente', busCliente)
 export default router;

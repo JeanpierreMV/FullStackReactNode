@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/ViewDetailsAnalysis.css';
-import mascotaImage from '../assets/mascota.jpg'; // Asegúrate de tener esta imagen en tu proyecto
+import mascotaImage from '/src/assets/mascota.jpg';
+import felinoImage from '/src/assets/felino.png'
 
 export default function ViewDetailsAnalysis() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -9,27 +10,31 @@ export default function ViewDetailsAnalysis() {
       dni: '12345678',
       dueno: 'ERIKA',
       nMascota: 'LUA',
-      veterinario: 'Dr. Carlos',
+      edad:'21',
+      laboratorista: 'Dr. Carlos',
       fechaCita: '2024-10-10',
       estado: 'Pendiente',
-      servicio: 'Consulta General',
-      descripcion: 'Revisión médica general',
+      servicio: 'Analisis',
+      tipo_analisis: 'Sangre',
+      resultado_analisis: 'Revisión médica general',
       especie: 'Canino',
-      tamaño: 'Mediano',
-      costo: '$50'
+      tamaño: 'Mediano'
+      
     },
     {
       dni: '87654321',
       dueno: 'JUAN',
       nMascota: 'MAX',
-      veterinario: 'Dr. Gomez',
+      edad:'10',
+      laboratorista: 'Dr. Gomez',
       fechaCita: '2024-10-12',
       estado: 'Completado',
-      servicio: 'Vacunación',
-      descripcion: 'Aplicación de vacuna antirrábica',
+      servicio: 'Analisis',
+      tipo_analisis: 'Sangre',
+      resultado_analisis: 'Aplicación de vacuna antirrábica',
       especie: 'Felino',
-      tamaño: 'Pequeño',
-      costo: '$30'
+      tamaño: 'Pequeño'
+      
     }
   ]);
 
@@ -62,7 +67,7 @@ export default function ViewDetailsAnalysis() {
       <h4 className="custom-h4" style={{ color: 'red' }}>* Terminado</h4>
 
       <div className="search-container">
-        <label htmlFor="search">Buscar Atención</label>
+        <label htmlFor="search">Buscar Analisis</label>
         <input
           type="text"
           id="search"
@@ -91,7 +96,7 @@ export default function ViewDetailsAnalysis() {
                 <td>{appointment.dni}</td>
                 <td>{appointment.dueno}</td>
                 <td>{appointment.nMascota}</td>
-                <td>{appointment.veterinario}</td>
+                <td>{appointment.laboratorista}</td>
                 <td>{appointment.fechaCita}</td>
                 <td>{appointment.estado}</td>
                 <td>
@@ -105,38 +110,38 @@ export default function ViewDetailsAnalysis() {
 
       {/* Modal de Detalle de la Cita */}
       {showModal2 && selectedAppointment && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h2>Detalle de la Cita</h2>
-            <hr />
-            <div className="modal-body">
-              {/* Columna izquierda: Imagen */}
-              <img src={mascotaImage} alt="Mascota" className="mascota-image" />
+  <div className="modal-overlay">
+    <div className="modal-content">
+      <h2>Detalle de Análisis</h2>
+      <hr />
+      <div className="modal-body">
+        {/* Columna izquierda: Imagen */}
+        <img 
+          src={selectedAppointment.especie === 'Canino' ? mascotaImage : felinoImage} 
+          alt="Mascota" 
+          className="mascota-image" 
+        />
 
-              {/* Columna derecha: Información */}
-              <div className="info-container">
-                <h3>Información de la Cita</h3>
-                <div className="info-row"><strong>Dueño:</strong> {selectedAppointment.dueno}</div>
-                <div className="info-row"><strong>Nombre Mascota:</strong> {selectedAppointment.nMascota}</div>
-                <div className="info-row"><strong>Edad:</strong> 21</div> {/* Ejemplo de edad fija */}
-                <div className="info-row"><strong>Especie:</strong> {selectedAppointment.especie}</div>
-                <div className="info-row"><strong>Tamaño:</strong> {selectedAppointment.tamaño}</div>
-                <div className="info-row"><strong>Servicio:</strong> {selectedAppointment.servicio}</div>
-                <div className="info-row"><strong>Descripción:</strong> {selectedAppointment.descripcion}</div>
-                <div className="info-row"><strong>Costo:</strong> {selectedAppointment.costo}</div>
-                <h3>Información Adicional</h3>
-                Requiere alguna analisis?
-              </div>
-              
-              </div>
-           
-            <hr />
-            <div className="modal-actions">
-              <button onClick={handleCloseModal2} className="modal-button close-button">Cerrar</button>
-            </div>
-          </div>
+        {/* Columna derecha: Información */}
+        <div className="info-container">
+          <div className="info-row"><strong>Nombre Mascota:</strong> {selectedAppointment.nMascota}</div>
+          <div className="info-row"><strong>Edad:</strong> {selectedAppointment.edad}</div>
+          <div className="info-row"><strong>Especie:</strong> {selectedAppointment.especie}</div>
+          <div className="info-row"><strong>Tamaño:</strong> {selectedAppointment.tamaño}</div>
+          <div className="info-row"><strong>Servicio:</strong> {selectedAppointment.servicio}</div>
+          <div className="info-row"><strong>Tipo Análisis:</strong> {selectedAppointment.tipo_analisis}</div>
+          <div className="info-row"><strong>Resultado Análisis:</strong> {selectedAppointment.resultado_analisis}</div>
         </div>
-      )}
+      </div>
+
+      <hr />
+      <div className="modal-actions">
+        <button onClick={handleCloseModal2} className="modal-button close-button">Cerrar</button>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 }

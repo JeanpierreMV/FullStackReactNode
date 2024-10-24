@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import RegisterClient from './pages/RegisterClient.jsx';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import RegisterClient from './pages/RegisterClient';
 import RegisterTipoMascota from './pages/RegisterTipoMascota';
 import RegisterMascota from './pages/RegisterMascota'; // Importa la nueva página
 import RegisterEmployee from './pages/RegisterEmployee';
@@ -16,6 +16,9 @@ import RegisterAtencionPage from './pages/RegisterAtencionPage.jsx';
 import ConsultarClientePage from './pages/ConsultarClientePage.jsx';
 import PetAttentionSearchPage from './pages/PetAttentionSearchPage.jsx';
 import BuscarServicios from './pages/BuscarServiciosPage.jsx';
+import ClientManagement from './pages/ClientManagement.jsx';
+// import BuscarCitaMas from './pages/SeguimientoAtencion.jsx';
+import CuadreDia from './pages/Dashboard.jsx';
 //import RegisterAtencion from './components/RegistrarAtencion';
 import BuscarAtencionesPage from './pages/BuscarAtencionesPage';
 import VerDetallesAtencionPage from './pages/VerDetallesAtencionPage';
@@ -25,16 +28,30 @@ import ViewDetailsBillPage from './pages/ViewDetailsBillPage.jsx';
 
 import ViewDetailsAnalysis from './pages/ViewDetailsAnalysisPage.jsx';
 
+import RegistroTail1 from './pages/RegistroTail.jsx';
+import ServiceTa from './pages/ServicePageT.jsx';
+import CitaBuscarT from './pages/CitaBuscarTail.jsx';
+import ConsultaServi from './pages/ClientServicesPageTail.jsx';
+
 const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/registrar-cliente" element={<RegisterClient />} />S
+        <Route path="/registrar-cliente" element={<RegisterClient />} />
+      <Route path="/registrar-clientet" element={<RegistroTail1 />} />
+      <Route path="/service-paget" element={<ServiceTa />} />
+      <Route path="/cita-buscart" element={<CitaBuscarT />} />
+      <Route path="/cliente-consulta" element={<ConsultaServi />} />
+
+        <Route path="/registrar-cliente" element={<RegisterClient />} />
         <Route path="/registrar-tipo-mascota" element={<RegisterTipoMascota />} />
         <Route path="/registrar-mascota" element={<RegisterMascota />} /> {/* Añade la nueva ruta */}
         <Route path="/registrar-empleados" element={<RegisterEmployee />} />
         <Route path="/consultar-cliente" element={<ConsultarClientePage />} />
+        <Route path="/cuadre-dia" element={<CuadreDia/>} />
+        {/* <Route path="/buscar-citas" element={<BuscarCitaMas/>} /> */}
         <Route path="/buscar-clientes" element={<BuscarClientesPage />} />
+        {/* <Route path="/client-manager" element={<ClientManagement />} /> */}
         <Route path="/generar-boleta" element={<RegisterBoleta />} />
         <Route path="/filter-mascota" element={<FilterMascotaPage />} />
         <Route path="/filter-atencion" element={<FilterAtencionPage />} />

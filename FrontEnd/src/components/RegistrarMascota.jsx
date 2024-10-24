@@ -1,9 +1,14 @@
-//Harolt Kruchinsky
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { registrarMascota, obtenerTiposMascota, obtenerClientes } from '../services/api';
+import { useLocation, Link } from 'react-router-dom';
+import {
+  registrarMascota,
+  obtenerTiposMascota,
+  obtenerTamañoMascota,
+  obtenerClientes,
+  obtenerClientePorCodigo
+} from '../services/api';
 import '../styles/RegisterMascota.css';
-import { Link } from 'react-router-dom'; // Asegúrate de importar Link
+
 const RegisterMascota = () => {
   const [formData, setFormData] = useState({
     nombre: '',
@@ -13,16 +18,16 @@ const RegisterMascota = () => {
     raza: '',
     tipoMascotaId: '',
     codigo: '',
-    especie: '',
-    tamaño: ''
+    tamaño: '' // Cambiado para incluir tamaño
   });
 
   const [currentDate, setCurrentDate] = useState('');
   const [tipoMascotas, setTipoMascotas] = useState([]);
+  const [tamanosMascota, setTamanosMascota] = useState([]); // Estado para tamaños
   const [clientes, setClientes] = useState([]);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
-  const [dniError, setDniError] = useState(''); 
+  const [dniError, setDniError] = useState('');
 
   const location = useLocation();
   const dniFromLocation = location.state?.dni;
@@ -31,8 +36,10 @@ const RegisterMascota = () => {
     const fetchData = async () => {
       try {
         const tipos = await obtenerTiposMascota();
+        const tamanos = await obtenerTamañoMascota(); // Obtiene tamaños de mascota
         const clients = await obtenerClientes();
         setTipoMascotas(tipos);
+        setTamanosMascota(tamanos); // Guarda los tamaños obtenidos
         setClientes(clients);
         if (dniFromLocation) {
           setFormData((prevFormData) => ({ ...prevFormData, codigo: dniFromLocation }));
@@ -55,20 +62,36 @@ const RegisterMascota = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    // Verificar si el cliente existe
-    const cliente = clientes.find((c) => c.dni === formData.codigo);
-    if (!cliente) {
-      setDniError('El DNI ingresado no corresponde a ningún cliente registrado.');
-      return; // Evita el envío si el cliente no existe
+  const handleCodigoChange = async (e) => {
+    const { value } = e.target;
+    setFormData((prevFormData) => ({ ...prevFormData, codigo: value }));
+    if (value) {
+      try {
+        const cliente = await obtenerClientePorCodigo(value);
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          nombre: cliente.nombre,
+          genero: cliente.genero
+        }));
+        setDniError('');
+      } catch (err) {
+        setDniError('El DNI ingresado no corresponde a ningún cliente registrado.');
+      }
     } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        nombre: '',
+        genero: ''
+      }));
       setDniError('');
     }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
     // Validar campos obligatorios
-    if (!formData.nombre || !formData.genero || !formData.raza || !formData.tipoMascotaId || !formData.edad || !formData.peso || !formData.especie || !formData.tamaño) {
+    if (!formData.nombre || !formData.genero || !formData.raza || !formData.tipoMascotaId || !formData.edad || !formData.peso || !formData.tamaño) {
       setError('Todos los campos son obligatorios.');
       return;
     }
@@ -76,7 +99,7 @@ const RegisterMascota = () => {
     // Validar tipos de datos
     if (isNaN(formData.edad) || isNaN(formData.peso) || isNaN(formData.tipoMascotaId)) {
       setError('Edad, peso y tipo de mascota deben ser numéricos.');
-      return; // Evita el envío si hay valores no numéricos
+      return; 
     }
 
     try {
@@ -91,8 +114,7 @@ const RegisterMascota = () => {
         raza: '',
         tipoMascotaId: '',
         codigo: dniFromLocation || '', // Limpiamos el campo de DNI si no viene de location
-        especie: '',
-        tamaño: ''
+        tamaño: '' 
       });
     } catch (err) {
       setError('Error al registrar la mascota');
@@ -102,30 +124,28 @@ const RegisterMascota = () => {
 
   return (
     <div className="dataContainer">
-     
-             
       <form onSubmit={handleSubmit} className="form">
-      <h1 className="headerTitle">REGISTRAR MASCOTA</h1>
-      <div className="formHeader">
-        <div className="formHeaderGroup">
-          <div className="formGroup">
-            <label className="label"></label>
-            {dniFromLocation ? (
-              <p>DNI del Cliente: {dniFromLocation}</p>
-            ) : (
-              <input
-                type="text"
-                name="codigo"
-                value={formData.codigo}
-                onChange={handleChange}
-                className="input"
-                placeholder="Ingresa el DNI del cliente"
-              />
-            )}
-            {dniError && <p className="errorText">{dniError}</p>}
+        <h1 className="headerTitle">REGISTRAR MASCOTA</h1>
+        <div className="formHeader">
+          <div className="formHeaderGroup">
+            <div className="formGroup">
+              <label className="label"></label>
+              {dniFromLocation ? (
+                <p>DNI del Cliente: {dniFromLocation}</p>
+              ) : (
+                <input
+                  type="text"
+                  name="codigo"
+                  value={formData.codigo}
+                  onChange={handleCodigoChange}
+                  className="input"
+                  placeholder="Ingresa el DNI del cliente"
+                />
+              )}
+              {dniError && <p className="errorText">{dniError}</p>}
+            </div>
           </div>
         </div>
-      </div>
         <div className="formRow">
           <div className="formGroup">
             <label className="label">Dueño</label>
@@ -135,26 +155,14 @@ const RegisterMascota = () => {
               value={formData.nombre}
               onChange={handleChange}
               className="input"
+              disabled // Deshabilitado para que no se pueda editar
             />
           </div>
           <div className="formGroup">
-            <label className="label">Nombre</label>
-            <input
-              type="text"
+            <label className="label">Sexo</label>
+            <select
               name="genero"
               value={formData.genero}
-              onChange={handleChange}
-              className="input"
-            />
-          </div>
-        </div>
-
-        <div className="formRow">
-          <div className="formGroup">
-          <label className="label">Sexo</label>
-            <select
-              name="sexo"
-              value={formData.sexo}
               onChange={handleChange}
               className="input"
             >
@@ -163,6 +171,9 @@ const RegisterMascota = () => {
               <option value="Hembra">Hembra</option>
             </select>
           </div>
+        </div>
+
+        <div className="formRow">
           <div className="formGroup">
             <label className="label">Edad</label>
             <input
@@ -173,9 +184,6 @@ const RegisterMascota = () => {
               className="input"
             />
           </div>
-        </div>
-
-        <div className="formRow">
           <div className="formGroup">
             <label className="label">Elegir Especie:</label>
             <select
@@ -192,7 +200,9 @@ const RegisterMascota = () => {
               ))}
             </select>
           </div>
-          
+        </div>
+
+        <div className="formRow">
           <div className="formGroup">
             <label className="label">Peso</label>
             <input
@@ -203,9 +213,6 @@ const RegisterMascota = () => {
               className="input"
             />
           </div>
-        </div>
-
-        <div className="formRow">
           <div className="formGroup">
             <label className="label">Raza</label>
             <input
@@ -216,30 +223,35 @@ const RegisterMascota = () => {
               className="input"
             />
           </div>
+        </div>
+
+        <div className="formRow">
           <div className="formGroup">
             <label className="label">Tamaño:</label>
             <select
-              name="tamaño"
+              name="tamaño" // Manteniendo el nombre del campo "tamaño"
               value={formData.tamaño}
               onChange={handleChange}
               className="input"
             >
               <option value="">Seleccione un tamaño</option>
-              <option value="pequeño">Pequeño</option>
-              <option value="mediano">Mediano</option>
-              <option value="grande">Grande</option>
+              {tamanosMascota.map((tamanos) => (
+                <option key={tamanos.id} value={tamanos.id}>
+                  {tamanos.nombre}
+                </option>
+              ))}
             </select>
           </div>
         </div>
         <div className="buttonContainer">
-        <button type="submit" className="submitButton">
-          GUARDAR
-        </button>
-        <Link to="/filter-mascota">
-        <button type="button" className="submitButton">
-          CANCELAR
-        </button>
-        </Link>
+          <button type="submit" className="submitButton">
+            GUARDAR
+          </button>
+          <Link to="/filter-mascota">
+            <button type="button" className="submitButton">
+              CANCELAR
+            </button>
+          </Link>
         </div>
       </form>
 
