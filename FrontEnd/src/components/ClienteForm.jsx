@@ -1,6 +1,19 @@
 import PropTypes from 'prop-types';
 import '../styles/RegisterClient.css'; // Asegúrate de que tienes un archivo CSS para estilos adicionales.
 
+const distritosLima = [
+  "Ancón", "Ate", "Barranco", "Breña", "Carabayllo", "Cercado de Lima",
+  "Chaclacayo", "Chorrillos", "Cieneguilla", "Comas", "El Agustino", 
+  "Independencia", "Jesús María", "La Molina", "La Victoria", "Lince",
+  "Los Olivos", "Lurigancho", "Lurín", "Magdalena del Mar", "Miraflores", 
+  "Pachacámac", "Pucusana", "Pueblo Libre", "Puente Piedra", "Punta Hermosa", 
+  "Punta Negra", "Rímac", "San Bartolo", "San Borja", "San Isidro", 
+  "San Juan de Lurigancho", "San Juan de Miraflores", "San Luis", "San Martín de Porres", 
+  "San Miguel", "Santa Anita", "Santa María del Mar", "Santa Rosa", 
+  "Santiago de Surco", "Surquillo", "Villa El Salvador", "Villa María del Triunfo"
+];
+
+
 const ClienteForm = ({ formData, handleChange, handleSubmit }) => {
   return (
     <form onSubmit={handleSubmit} className="client-form">
@@ -58,16 +71,18 @@ const ClienteForm = ({ formData, handleChange, handleSubmit }) => {
         <div className="form-group">
           <label>Distrito</label>
           <select
-            name="distrito"
-            value={formData.distrito}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Selecciona un distrito</option>
-            <option value="Distrito 1">Distrito 1</option>
-            <option value="Distrito 2">Distrito 2</option>
-            <option value="Distrito 3">Distrito 3</option>
-          </select>
+    name="distrito"
+    value={formData.distrito}
+    onChange={handleChange}
+    required
+  >
+    <option value="">Selecciona un distrito</option>
+    {distritosLima.map((distrito, index) => (
+      <option key={index} value={distrito}>
+        {distrito}
+      </option>
+    ))}
+  </select>
         </div>
         <div className="form-group">
           <label>Email</label>
@@ -99,8 +114,9 @@ const ClienteForm = ({ formData, handleChange, handleSubmit }) => {
           >
             <option value="">Selecciona un rol</option>
             <option value="Administrador">Administrador</option>
+            <option value="Veterinario">Veterinario</option>
+            <option value="Laboratorista">Laboratorista</option>
             <option value="Cliente">Cliente</option>
-            <option value="Empleado">Empleado</option>
           </select>
         </div>
       </div>
