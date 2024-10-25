@@ -57,7 +57,7 @@ const Login = () => {
                                 required
                             />
                         </div>
-                        <button type="submit">Iniciar Sesión xD</button>
+                        <button type="submit">Iniciar Sesión</button>
                         {error && <p>{error}</p>}
                         <div className="forgot-password">
                             <a href="#">¿Olvidaste tu contraseña?</a>

@@ -1,91 +1,166 @@
-.invoice-wrapper {
-    max-width: 60%;
-    margin: auto;
-    min-height: 100vh; 
-  }
-  
-  .invoice-header {
-    background-color: #2d3b48; /* El color de fondo original que desees */
-    padding: 20px;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-  
-  .invoice-title {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: #f7f7f7;
-  }
-  
-  .invoice-body {
-    background-color: white;
-
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: visible; /* Asegúrate de que esté visible */
-    background-color: #f0f0f0; /* Color de fondo temporal para visualizar el área */
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
 }
 
-  .invoice-number {
-    font-size: 1rem;
-    color: #f9f5f5;
+.invoice-container {
+  background-color: white;
+  max-width: 800px;
+  margin: 15px auto;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.invoice-wrapper {
+  max-width: 100%;
+  width: 90%;
+  margin: auto;
+  padding: 20px;
+  min-height: 100vh;
+  overflow-x: auto; /* Scroll horizontal si el contenido no cabe */
+}
+
+.invoice-header {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e6e6e6;
+}
+
+.invoice-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #f7f7f7;
+}
+
+.invoice-number {
+  font-size: 1rem;
+  color: #f9f5f5;
+}
+
+.invoice-meta {
+  font-size: 0.9rem;
+  color: #666;
+  display: flex;
+  justify-content: space-around;
+}
+
+.invoice-client {
+  font-size: 0.9rem;
+  color: #0f0f0f;
+  justify-content: space-around;
+  display: flex;
+}
+
+.invoice-body {
+  background-color: white;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.invoice-label {
+  font-weight: 600;
+  color: black;
+}
+
+.invoice-value {
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.invoice-items {
+  margin-bottom: 20px;
+}
+
+.invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.invoice-table th, .invoice-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.invoice-table th {
+  background-color: #f7f7f7;
+  font-weight: 500;
+}
+
+.invoice-summary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.summary-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.summary-row.total {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+/* Ajustes para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .invoice-wrapper {
+    width: 100%; /* Asegura que el contenedor ocupe todo el ancho disponible */
+    padding: 10px;
   }
-  
 
+  .invoice-header, .invoice-body {
+    padding: 10px; /* Reduce el padding en pantallas pequeñas */
+  }
 
-    
+  .invoice-title {
+    font-size: 1.5rem; /* Disminuye el tamaño del título */
+  }
+
   .invoice-dates, .invoice-client {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
+    flex-direction: column; /* Coloca las fechas y el cliente en columnas */
+    align-items: flex-start;
+    gap: 10px; /* Añade un pequeño espacio entre los elementos */
   }
-  
-  .invoice-label {
-    font-weight: 600;
-    color: black;
-  }
-  
-  .invoice-value {
-    margin-bottom: 5px;
-    color: #333;
-  }
-  
+
   .invoice-items {
-    margin-bottom: 20px;
+    overflow-x: auto; /* Añade scroll horizontal a la tabla de items si es necesario */
   }
-  
-  .invoice-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
+
   .invoice-table th, .invoice-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
+    padding: 6px; /* Reduce el tamaño del padding en la tabla */
   }
-  
-  .invoice-table th {
-    background-color: #f7f7f7;
-    font-weight: 600;
-  }
-  
+
   .invoice-summary {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    width: 100%;
+    align-items: flex-start;
   }
-  
+
   .summary-row {
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 5px;
   }
-  
+
   .summary-row.total {
-    font-size: 1.25rem;
-    font-weight: 700;
+    font-size: 1.1rem; /* Reduce el tamaño del texto del total */
   }
-  
+}
+
+/* Ajustes adicionales para pantallas más pequeñas */
+@media (max-width: 480px) {
+  .summary-row.total {
+    font-size: 1.2rem;
+  }
+}
+
+.fundo {
+ color: red;
+}

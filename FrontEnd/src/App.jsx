@@ -25,7 +25,9 @@ import VerDetallesAtencionPage from './pages/VerDetallesAtencionPage';
 import ListarFacturacionPage from './pages/ListarFacturacionPage';
 import VerDetalleBoletaPage from './pages/VerDetalleBoletaPage';
 import ViewDetailsBillPage from './pages/ViewDetailsBillPage.jsx';
-import MostDetallUltAnaRealizadoPage from './pages/MostDetallUltAnaRealizadoPage.jsx';
+
+import ViewDetailsAnalysis from './pages/ViewDetailsAnalysisPage.jsx';
+
 import RegistroTail1 from './pages/RegistroTail.jsx';
 import ServiceTa from './pages/ServicePageT.jsx';
 import CitaBuscarT from './pages/CitaBuscarTail.jsx';
@@ -35,6 +37,7 @@ const App = () => {
   return (
     <Router>
       <Routes>
+        <Route path="/registrar-cliente" element={<RegisterClient />} />
       <Route path="/registrar-clientet" element={<RegistroTail1 />} />
       <Route path="/service-paget" element={<ServiceTa />} />
       <Route path="/cita-buscart" element={<CitaBuscarT />} />
@@ -61,8 +64,9 @@ const App = () => {
         <Route path="/facturacion-dia" element={<ListarFacturacionPage />} />
         <Route path="/boleta/detalle/:id" element={<VerDetalleBoletaPage />} />
         <Route path="/ver-factura" element={<ViewDetailsBillPage />} />
-        <Route path="/ultimo-analisis" element={<MostDetallUltAnaRealizadoPage />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/ultimo-analisis" element={<ViewDetailsAnalysis />} />
+       
+        <Route path="/" element={<Login />} />
       </Routes>
 
     </Router>
