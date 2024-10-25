@@ -26,6 +26,7 @@ model Cliente {
   atenciones    Atencion[] 
   boletas       Boleta[]   
   proformas     ProformaServicio[]
+  analisisAtenciones AnalisisAtencion[]
 }
 
 model Mascota {
@@ -44,14 +45,16 @@ model Mascota {
   size          SizeMascota @relation(fields: [sizeId], references: [id]) // Nueva relación añadida
   sizeId        Int         // Nueva columna añadida
   atenciones    Atencion[] 
-  proformas     ProformaServicio[] 
+  proformas     ProformaServicio[]
+  analisisAtenciones AnalisisAtencion[] 
 }
 
 model TipoMascota {
   id       Int       @id @default(autoincrement())
   nombre   String
   mascotas Mascota[] 
-  proformas ProformaServicio[] 
+  proformas ProformaServicio[]
+  analisis  Analisis[] 
 }
 
 model Servicio {
@@ -143,4 +146,48 @@ model SizeMascota {
   nombre   String     
   proformas ProformaServicio[] 
   mascotas Mascota[] 
+  analisis  Analisis[]
+}
+
+model Laboratorista {
+  id          Int          @id @default(autoincrement())
+  nombre      String
+  analisisAtencion AnalisisAtencion[]  
+}
+
+model Muestra {
+  id          Int          @id @default(autoincrement())
+  tipo        String
+  analisisAtencion AnalisisAtencion[]  
+}
+
+model Analisis {
+  id           Int        @id @default(autoincrement())
+  nombre       String
+  descripcion  String
+  tipoMascota  TipoMascota @relation(fields: [tipoMascotaId], references: [id])
+  tipoMascotaId Int
+  sizeMascota  SizeMascota @relation(fields: [sizeId], references: [id])
+  sizeId       Int
+  costo        Float
+  analisisAtenciones AnalisisAtencion[]
+}
+
+model AnalisisAtencion {
+  id             Int          @id @default(autoincrement())
+  cliente        Cliente      @relation(fields: [clienteId], references: [id])
+  clienteId      Int
+  mascota        Mascota      @relation(fields: [mascotaId], references: [id])
+  mascotaId      Int
+  laboratorista  Laboratorista @relation(fields: [laboratoristaId], references: [id])  
+  laboratoristaId Int
+  analisis       Analisis     @relation(fields: [analisisId], references: [id])  
+  analisisId     Int
+  muestra        Muestra      @relation(fields: [muestraId], references: [id])  
+  muestraId      Int
+  fecha          DateTime     @default(now())  
+  resultado      String       
+  conclusiones   String       
+  receta         String       
+  observaciones  String       
 }

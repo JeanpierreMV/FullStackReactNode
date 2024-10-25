@@ -11,6 +11,9 @@ import validar from './buscarCliente.mjs'
 import tamaño from './sizemascota.mjs';
 import consultarS from './consultarS.mjs';
 import busCliente from './buscarCliente.mjs';
+import analisisRoutes from './analisis.mjs';
+import historialMascotaRoutes from './historialMascota.mjs';
+import analisisAtencionRoutes from './analisisA.mjs';
 
 const router = express.Router();
 
@@ -31,4 +34,8 @@ router.use('/validar', validar);
 router.use('/size-mascota', tamaño)
 router.use('/consultar', consultarS)
 router.use('/cliente', busCliente)
+router.use('/analisis', analisisRoutes)
+router.use('/historial-mascota', historialMascotaRoutes)
+router.use('/analisis-atencion', analisisAtencionRoutes);
+
 export default router;

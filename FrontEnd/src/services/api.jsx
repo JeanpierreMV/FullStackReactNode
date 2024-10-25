@@ -192,3 +192,51 @@ export const obtenerClientePorCodigo = async (codigo) => {
     throw new Error('Cliente no encontrado');
   }
 };
+
+export const obtenerAnalisis = async () => {
+  try {
+    const response = await api.get(`/analisis`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener análisis:', error);
+    throw error;
+  }
+};
+
+export const obtenerHistorialMascota = async (mascotaId) => {
+  try {
+    const response = await api.get(`/historial-mascota/${mascotaId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener el historial de la mascota:', error);
+    throw error;
+  }
+};
+
+// Función para obtener el listado de atenciones
+export const obtenerListadoAtenciones = async () => {
+  try {
+    const response = await api.get('/atenciones');
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener el listado de atenciones:', error);
+    throw new Error('Error al obtener el listado de atenciones');
+  }
+};
+
+// Función para actualizar resultados de la atención de análisis
+export const actualizarResultadosAnalisisAtencion = async (analisisAtencionId, data) => {
+  try {
+      const response = await api.put(`/analisis-atencion/${analisisAtencionId}`, data);
+      return response.data; // Devuelve los datos actualizados
+  } catch (error) {
+      console.error('Error al actualizar resultados de la atención de análisis:', error);
+      throw new Error('Error al actualizar resultados de la atención de análisis');
+  }
+};
+
+
+
+
+
+
