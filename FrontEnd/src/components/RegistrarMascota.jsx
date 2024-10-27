@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import {
   registrarMascota,
   obtenerTiposMascota,
   obtenerTamañoMascota,
-  obtenerClientes,
   obtenerClientePorCodigo
 } from '../services/api';
 import '../styles/RegisterMascota.css';
 
 const RegisterMascota = () => {
+  // Estado principal del formulario
   const [formData, setFormData] = useState({
     nombre: '',
     genero: '',
@@ -18,31 +18,42 @@ const RegisterMascota = () => {
     raza: '',
     tipoMascotaId: '',
     codigo: '',
-    tamaño: '' // Cambiado para incluir tamaño
+    tamaño: '',
+    nombreDueño: ''
   });
 
-  const [currentDate, setCurrentDate] = useState('');
+  // Estados para manejar datos y mensajes
   const [tipoMascotas, setTipoMascotas] = useState([]);
-  const [tamanosMascota, setTamanosMascota] = useState([]); // Estado para tamaños
-  const [clientes, setClientes] = useState([]);
+  const [tamanosMascota, setTamanosMascota] = useState([]);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
   const [dniError, setDniError] = useState('');
 
+  // Obtener DNI del cliente si viene desde otra página
   const location = useLocation();
   const dniFromLocation = location.state?.dni;
 
+  // Efecto para cargar datos iniciales
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const tipos = await obtenerTiposMascota();
-        const tamanos = await obtenerTamañoMascota(); // Obtiene tamaños de mascota
-        const clients = await obtenerClientes();
+        // Cargar datos de tipos y tamaños de mascotas
+        const [tipos, tamanos] = await Promise.all([
+          obtenerTiposMascota(),
+          obtenerTamañoMascota()
+        ]);
+        
         setTipoMascotas(tipos);
-        setTamanosMascota(tamanos); // Guarda los tamaños obtenidos
-        setClientes(clients);
+        setTamanosMascota(tamanos);
+
+        // Si hay un DNI en la ubicación, buscar cliente
         if (dniFromLocation) {
-          setFormData((prevFormData) => ({ ...prevFormData, codigo: dniFromLocation }));
+          setFormData(prev => ({ ...prev, codigo: dniFromLocation }));
+          const cliente = await obtenerClientePorCodigo(dniFromLocation);
+          setFormData(prev => ({
+            ...prev,
+            genero: cliente.genero,
+          }));
         }
       } catch (err) {
         setError('Error al cargar datos');
@@ -51,59 +62,69 @@ const RegisterMascota = () => {
     fetchData();
   }, [dniFromLocation]);
 
-  useEffect(() => {
-    const today = new Date();
-    const formattedDate = today.toLocaleDateString('es-ES'); // Formato DD/MM/YYYY
-    setCurrentDate(formattedDate);
-  }, []);
-
+  // Manejador para cambios en los campos del formulario
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  // Manejador específico para cambios en el campo de código/DNI
   const handleCodigoChange = async (e) => {
     const { value } = e.target;
-    setFormData((prevFormData) => ({ ...prevFormData, codigo: value }));
-    if (value) {
-      try {
-        const cliente = await obtenerClientePorCodigo(value);
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          nombre: cliente.nombre,
-          genero: cliente.genero
-        }));
-        setDniError('');
-      } catch (err) {
-        setDniError('El DNI ingresado no corresponde a ningún cliente registrado.');
-      }
-    } else {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        nombre: '',
-        genero: ''
+    setFormData(prev => ({ ...prev, codigo: value }));
+    
+    if (!value) {
+      setFormData(prev => ({ ...prev, nombreDueño: '', genero: '' }));
+      setDniError('');
+      return;
+    }
+
+    try {
+      const cliente = await obtenerClientePorCodigo(value);
+      setFormData(prev => ({
+        ...prev,
+        nombreDueño: cliente.nombre,
+        genero: cliente.genero
       }));
       setDniError('');
+    } catch (err) {
+      setDniError('El DNI ingresado no corresponde a ningún cliente registrado.');
     }
   };
 
+  // Manejador para el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validar campos obligatorios
-    if (!formData.nombre || !formData.genero || !formData.raza || !formData.tipoMascotaId || !formData.edad || !formData.peso || !formData.tamaño) {
+    // Validaciones de campos
+    const camposRequeridos = ['nombre', 'genero', 'raza', 'tipoMascotaId', 'edad', 'peso', 'tamaño'];
+    const camposFaltantes = camposRequeridos.some(campo => !formData[campo]);
+    
+    if (camposFaltantes) {
       setError('Todos los campos son obligatorios.');
       return;
     }
 
-    // Validar tipos de datos
     if (isNaN(formData.edad) || isNaN(formData.peso) || isNaN(formData.tipoMascotaId)) {
       setError('Edad, peso y tipo de mascota deben ser numéricos.');
-      return; 
+      return;
     }
 
     try {
-      await registrarMascota(formData);
+      const mascotaData = {
+        codigo: formData.codigo,
+        nombre: formData.nombre,
+        genero: formData.genero,
+        raza: formData.raza,
+        tipoMascotaId: formData.tipoMascotaId,
+        edad: formData.edad,
+        peso: formData.peso,
+        sizeId: formData.tamaño
+      };
+
+      await registrarMascota(mascotaData);
+      
+      // Resetear formulario después del éxito
       setSuccess(true);
       setError('');
       setFormData({
@@ -113,8 +134,9 @@ const RegisterMascota = () => {
         peso: '',
         raza: '',
         tipoMascotaId: '',
-        codigo: dniFromLocation || '', // Limpiamos el campo de DNI si no viene de location
-        tamaño: '' 
+        codigo: dniFromLocation || '',
+        tamaño: '',
+        nombreDueño: ''
       });
     } catch (err) {
       setError('Error al registrar la mascota');
@@ -122,10 +144,13 @@ const RegisterMascota = () => {
     }
   };
 
+  // Renderizado del componente
   return (
     <div className="dataContainer">
       <form onSubmit={handleSubmit} className="form">
         <h1 className="headerTitle">REGISTRAR MASCOTA</h1>
+        
+        {/* Sección DNI */}
         <div className="formHeader">
           <div className="formHeaderGroup">
             <div className="formGroup">
@@ -146,16 +171,18 @@ const RegisterMascota = () => {
             </div>
           </div>
         </div>
+
+        {/* Información del dueño y género */}
         <div className="formRow">
           <div className="formGroup">
             <label className="label">Dueño</label>
             <input
               type="text"
-              name="nombre"
-              value={formData.nombre}
+              name="nombreDueño"
+              value={formData.nombreDueño}
               onChange={handleChange}
               className="input"
-              disabled // Deshabilitado para que no se pueda editar
+              disabled
             />
           </div>
           <div className="formGroup">
@@ -173,16 +200,76 @@ const RegisterMascota = () => {
           </div>
         </div>
 
+        {/* Información básica de la mascota */}
         <div className="formRow">
+          <div className="formGroup">
+            <label className="label">Nombre de la Mascota</label>
+            <input
+              type="text"
+              name="nombre"
+              value={formData.nombre}
+              onChange={handleChange}
+              className="input"
+              placeholder="Ingresa el nombre de la mascota"
+            />
+          </div>
           <div className="formGroup">
             <label className="label">Edad</label>
             <input
-              type="text"
+              type="number"
               name="edad"
               value={formData.edad}
               onChange={handleChange}
               className="input"
+              placeholder="Ingresa la edad de la mascota"
             />
+          </div>
+        </div>
+
+        {/* Características físicas */}
+        <div className="formRow">
+          <div className="formGroup">
+            <label className="label">Peso</label>
+            <input
+              type="number"
+              name="peso"
+              value={formData.peso}
+              onChange={handleChange}
+              className="input"
+              placeholder="Ingresa el peso de la mascota"
+              step="0.1"
+            />
+          </div>
+          <div className="formGroup">
+            <label className="label">Raza</label>
+            <input
+              type="text"
+              name="raza"
+              value={formData.raza}
+              onChange={handleChange}
+              className="input"
+              placeholder="Ingresa la raza"
+            />
+          </div>
+        </div>
+
+        {/* Selección de tamaño y especie */}
+        <div className="formRow">
+          <div className="formGroup">
+            <label className="label">Tamaño:</label>
+            <select
+              name="tamaño"
+              value={formData.tamaño}
+              onChange={handleChange}
+              className="input"
+            >
+              <option value="">Seleccione un tamaño</option>
+              {tamanosMascota.map((tamano) => (
+                <option key={tamano.id} value={tamano.id}>
+                  {tamano.nombre}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="formGroup">
             <label className="label">Elegir Especie:</label>
@@ -202,61 +289,13 @@ const RegisterMascota = () => {
           </div>
         </div>
 
-        <div className="formRow">
-          <div className="formGroup">
-            <label className="label">Peso</label>
-            <input
-              type="text"
-              name="peso"
-              value={formData.peso}
-              onChange={handleChange}
-              className="input"
-            />
-          </div>
-          <div className="formGroup">
-            <label className="label">Raza</label>
-            <input
-              type="text"
-              name="raza"
-              value={formData.raza}
-              onChange={handleChange}
-              className="input"
-            />
-          </div>
-        </div>
-
-        <div className="formRow">
-          <div className="formGroup">
-            <label className="label">Tamaño:</label>
-            <select
-              name="tamaño" // Manteniendo el nombre del campo "tamaño"
-              value={formData.tamaño}
-              onChange={handleChange}
-              className="input"
-            >
-              <option value="">Seleccione un tamaño</option>
-              {tamanosMascota.map((tamanos) => (
-                <option key={tamanos.id} value={tamanos.id}>
-                  {tamanos.nombre}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
+        {/* Botón de envío y mensajes */}
         <div className="buttonContainer">
-          <button type="submit" className="submitButton">
-            GUARDAR
-          </button>
-          <Link to="/filter-mascota">
-            <button type="button" className="submitButton">
-              CANCELAR
-            </button>
-          </Link>
+          <button type="submit" className="submitButton">Registrar</button>
+          {success && <p className="successText">Mascota registrada exitosamente!</p>}
+          {error && <p className="errorText">{error}</p>}
         </div>
       </form>
-
-      {success && <p className="successText">Mascota registrada exitosamente</p>}
-      {error && <p className="errorText">{error}</p>}
     </div>
   );
 };

@@ -14,20 +14,26 @@ datasource db {
 }
 
 model Cliente {
-  id            Int       @id @default(autoincrement())
-  nombre        String
-  apellido      String
-  dni           String     @unique
-  celular       String
-  email         String
-  direccion     String
-  fechaRegistro DateTime   @default(now())
-  mascotas      Mascota[]  
-  atenciones    Atencion[] 
-  boletas       Boleta[]   
-  proformas     ProformaServicio[]
+  id                Int                 @id @default(autoincrement())
+  nombre            String
+  apellido          String
+  dni               String              @unique
+  celular           String
+  email             String              @unique
+  direccion         String
+  distrito          String
+  fechaRegistro     DateTime            @default(now())
+  password          String            
+  rol               Rol                 @relation(fields: [rolId], references: [id])
+  rolId             Int                
+  mascotas          Mascota[]
+  atenciones        Atencion[]
+  boletas           Boleta[]
+  proformas         ProformaServicio[]
   analisisAtenciones AnalisisAtencion[]
+
 }
+
 
 model Mascota {
   id            Int        @id @default(autoincrement())
@@ -127,19 +133,11 @@ model DetalleBoleta {
 
 model Rol {
   id       Int       @id @default(autoincrement())
-  nombre   String    
-  empleados Empleado[]
+  nombre   String  
+  clientes  Cliente[] 
+
 }
 
-model Empleado {
-  id          Int       @id @default(autoincrement())
-  nombre      String
-  email       String    @unique
-  password    String    
-  rol         Rol       @relation(fields: [rolId], references: [id])
-  rolId       Int
-  creadoEn    DateTime  @default(now())
-}
 
 model SizeMascota {
   id       Int        @id @default(autoincrement())

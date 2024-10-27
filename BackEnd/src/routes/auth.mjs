@@ -34,7 +34,7 @@ router.post('/registrar', async (req, res) => {
     const { email, password } = req.body;
   
     try {
-      const user = await prisma.empleado.findUnique({ where: { email } });  // Cambié `usuario` por `empleado` si corresponde
+      const user = await prisma.cliente.findUnique({ where: { email }, include:{rol: true} });  
       
       if (!user) {
         return res.status(404).json({ error: 'Usuario no encontrado' });
@@ -47,7 +47,7 @@ router.post('/registrar', async (req, res) => {
       }
   
       const token = jwt.sign(
-        { userId: user.id, email: user.email }, 
+        { userId: user.id, email: user.email, nombre: user.nombre, rol: user.rol.nombre }, 
         SECRET_KEY, 
         { expiresIn: '1h' }
       );

@@ -1,4 +1,4 @@
-//Harolt Kruchinsky
+
 import React, { useState } from 'react';
 import { login } from '../services/api'; // Asegúrate de ajustar la ruta
 import { useNavigate } from 'react-router-dom'; // Importa useNavigate
@@ -8,15 +8,20 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const navigate = useNavigate(); // Usa useNavigate para redirigir después del login
+    const navigate = useNavigate(); 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
         try {
-            const response = await login({ email, password }); // Conexión con la API
-            // Guarda el token en localStorage
+            const response = await login({ email, password }); 
+            const payload = JSON.parse(atob(response.token.split('.')[1]));
+            console.log(payload);
+            
             localStorage.setItem('token', response.token);
-            // Redirige a la página de registro de cliente
+            localStorage.setItem('nombre', payload.nombre);
+            localStorage.setItem('rol', payload.rol);
+            
             navigate('/registrar-cliente');
         } catch (error) {
             setError('Error al iniciar sesión');

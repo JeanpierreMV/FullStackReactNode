@@ -1,9 +1,17 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:1234/KoalaVet',  
+  baseURL: 'http://localhost:1234/KoalaVet', 
+  headers: {
+    'Content-Type': 'application/json'
+  } 
 });
 
+
+const token = localStorage.getItem('token');
+if (token) {
+  api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
 
 
 export const registrarCliente = async (clienteData) => {
@@ -12,6 +20,15 @@ export const registrarCliente = async (clienteData) => {
     return response.data;
   } catch (error) {
     throw new Error('Error al registrar cliente');
+  }
+};
+
+export const listaClientes = async (clienteData) => {
+  try {
+    const response = await api.get('/clientes', clienteData);
+    return response.data;
+  } catch (error) {
+    throw new Error('Error al listar los cliente');
   }
 };
 
@@ -34,6 +51,37 @@ export const registrarMascota = async (mascotaData) => {
   }
 };
 
+export const listarMascota = async (mascotaData) => {
+  try {
+    const response = await api.get('/mascotas', mascotaData);
+    return response.data;
+  } catch (error) {
+    console.error('Error al listar las mascota:', error);
+    throw new Error('Error al listar las mascota:');
+  }
+};
+
+export const actualizarMascota = async (id, mascotaData) => {
+  try {
+    const response = await api.put(`/mascotas/${id}`, mascotaData);
+    return response.data;
+  } catch (error) {
+    console.error('Error al actualizar la mascota:', error);
+    throw new Error('Error al actualizar la mascota');
+  }
+};
+
+export const eliminarMascota = async (id) => {
+  try {
+    const response = await api.delete(`/mascotas/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al eliminar la mascota:', error);
+    throw new Error('Error al eliminar la mascota');
+  }
+};
+
+
 export const registrarEmpleado = async (empleadoData) => {
   try {
     const response = await api.post('/empleados/registrar', {
@@ -48,7 +96,7 @@ export const registrarEmpleado = async (empleadoData) => {
 
 export const login = async (credentials) => {
   try {
-    const response = await api.post('/empleados/login', credentials);
+    const response = await api.post('/auth/login', credentials);
     return response.data;
   } catch (error) {
     throw new Error('Error al iniciar sesión');

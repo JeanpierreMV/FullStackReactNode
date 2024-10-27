@@ -173,8 +173,8 @@ const ClienteForm = ({ formData, handleChange, handleSubmit }) => {
           <label>Contraseña</label>
           <input
             type="password"
-            name="contraseña"
-            value={formData.contraseña}
+            name="password"
+            value={formData.password}
             onChange={handleChange}
             required
           />
@@ -188,16 +188,16 @@ const ClienteForm = ({ formData, handleChange, handleSubmit }) => {
             required
           >
             <option value="">Selecciona un rol</option>
-            <option value="Administrador">Administrador</option>
-            <option value="Veterinario">Veterinario</option>
-            <option value="Laboratorista">Laboratorista</option>
-            <option value="Cliente">Cliente</option>
+            <option value="1">Veterinario</option> {/* Usa el ID del rol en lugar del nombre */}
+            <option value="2">Laboratorista</option>
+            <option value="3">Administrador</option>
+            <option value="4">Cliente</option>
           </select>
         </div>
       </div>
       <div className="button-section">
         <button type="submit">Guardar</button>
-        <button type="button" onClick={() => { /* Lógica para cancelar */ }}>Cancelar</button>
+        <button type="button" onClick={() => console.log('Cancelado')}>Cancelar</button> 
       </div>
     </form>
   );
@@ -209,10 +209,10 @@ ClienteForm.propTypes = {
     nombre: PropTypes.string.isRequired,
     apellido: PropTypes.string.isRequired,
     dni: PropTypes.string.isRequired,
-    direccion: PropTypes.string,
+    direccion: PropTypes.string.isRequired,
     celular: PropTypes.string.isRequired,
-    email: PropTypes.string,
-    contraseña: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired, // Cambiado a password
     distrito: PropTypes.string.isRequired,
     rol: PropTypes.string.isRequired,
   }).isRequired,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ClienteForm from '../components/ClienteForm';
 import useForm from '../hooks/useForm';
 import { registrarCliente } from '../services/api';
@@ -10,23 +10,34 @@ import Navbar from '../components/Navbar';
 
 const RegisterClient = () => {
   const initialState = {
-    nombre: '',
-    apellido: '',
-    dni: '',
-    celular: '',
-    email: '',
-    direccion: '',
+    nombre:'',
+    apellido:'',
+    dni:'',
+    direccion:'',
+    celular:'',
+    email:'',
+    password:'', 
+    distrito:'',
+    rol:'',
   };
 
   const { formData, handleChange } = useForm(initialState);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
-  const navigate = useNavigate(); // Hook para la navegación
+  const navigate = useNavigate(); 
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+   
+
+    const formdatasend = {
+
+      ...formData,
+      rol:parseInt(formData.rol, 10),
+    }
     try {
-      await registrarCliente(formData);
+      await registrarCliente(formdatasend);
       setSuccess(true);
       setError(null);
       // Navegar a la página de Registrar Mascota pasando el DNI

@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 // POST /mascotas - Registrar una nueva mascota
 router.post('/registrar', async (req, res) => {
   try {
-    const { codigo, nombre, genero, raza, tipoMascotaId, edad, peso } = req.body;
+    const { codigo, nombre, genero, raza, tipoMascotaId, edad, peso, sizeId } = req.body;
 
    
     if (!codigo || !nombre || !genero || !raza || !tipoMascotaId || !edad || !peso) {
@@ -41,9 +41,10 @@ router.post('/registrar', async (req, res) => {
         genero,
         raza,
         edad: parseInt(edad),  
-        peso: parseFloat(peso),  
-        tipoMascotaId: parseInt(tipoMascotaId),
+        peso: parseFloat(peso), 
         clienteId: cliente.id, 
+        tipoMascotaId: parseInt(tipoMascotaId),
+        sizeId: parseInt(sizeId),
       },
     });
 
@@ -59,8 +60,9 @@ router.get('/', async (req, res) => {
   try {
       const mascotas = await prisma.mascota.findMany({
           include: {
-              especie: true, // Incluir tipo de mascota si es necesario
-              cliente: true, // Incluir cliente si es necesario
+              especie: true, 
+              cliente: true, 
+              size: true,
           },
       });
       res.json(mascotas);
@@ -68,5 +70,65 @@ router.get('/', async (req, res) => {
       res.status(500).json({ error: 'Error al obtener mascotas' });
   }
 });
+
+
+router.put('/:id', async (req, res) => {
+  const { id } = req.params;
+  const { codigo, nombre, genero, raza, tipoMascotaId, edad, peso, sizeId } = req.body;
+
+  try {
+    // Crear el objeto de actualización solo con los campos definidos
+    const data = {};
+    if (codigo !== undefined) data.codigo = codigo;
+    if (nombre !== undefined) data.nombre = nombre;
+    if (genero !== undefined) data.genero = genero;
+    if (raza !== undefined) data.raza = raza;
+    if (tipoMascotaId !== undefined) data.tipoMascotaId = parseInt(tipoMascotaId);
+    if (edad !== undefined) data.edad = parseInt(edad);
+    if (peso !== undefined) data.peso = parseFloat(peso);
+    if (sizeId !== undefined) data.sizeId = parseInt(sizeId);
+
+    // Verificar si hay al menos un campo para actualizar
+    if (Object.keys(data).length === 0) {
+      return res.status(400).json({ error: 'Debe proporcionar al menos un campo para actualizar.' });
+    }
+
+    // Actualizar la mascota en la base de datos
+    const mascotaActualizada = await prisma.mascota.update({
+      where: { id: parseInt(id) },
+      data,
+    });
+
+    return res.json(mascotaActualizada);
+  } catch (error) {
+    console.error('Error al actualizar la mascota:', error);
+    if (error.code === 'P2025') {
+      return res.status(404).json({ error: 'Mascota no encontrada.' });
+    }
+    return res.status(500).json({ error: 'Error al actualizar la mascota.' });
+  }
+});
+
+
+
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+   
+    await prisma.mascota.delete({
+      where: { id: parseInt(id) },
+    });
+
+    return res.status(200).json({ message: 'Mascota eliminada exitosamente.' });
+  } catch (error) {
+    console.error('Error al eliminar la mascota:', error);
+    if (error.code === 'P2025') {
+      return res.status(404).json({ error: 'Mascota no encontrada.' });
+    }
+    return res.status(500).json({ error: 'Error al eliminar la mascota.' });
+  }
+});
+
 
 export default router;

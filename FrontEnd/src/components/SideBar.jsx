@@ -1,15 +1,27 @@
 import { Users, FileSpreadsheet, ClipboardList, Receipt, BarChart2, FileText, LogOut, Dog } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom'; // Importa Link y useLocation
-import { useState, useEffect } from 'react'; // Importa useState y useEffect
+import { Link, useLocation, useNavigate } from 'react-router-dom'; // Importa useNavigate
+import { useState, useEffect } from 'react';
 import '../styles/Sidebar.css';
 
 const Sidebar = () => {
-  const location = useLocation(); // Hook para obtener la ubicación actual
-  const [activeLink, setActiveLink] = useState(location.pathname); // Estado para la opción activa
+  const location = useLocation();
+  const navigate = useNavigate(); // Hook para la navegación
+  const [activeLink, setActiveLink] = useState(location.pathname);
 
   useEffect(() => {
-    setActiveLink(location.pathname); // Actualiza la opción activa cuando cambia la ubicación
+    setActiveLink(location.pathname);
   }, [location]);
+
+  // Función para cerrar sesión
+  const handleLogout = () => {
+    // Limpia el token y otros datos en localStorage
+    localStorage.removeItem('token');
+    localStorage.removeItem('nombre');
+    localStorage.removeItem('rol');
+
+    // Redirige a la página de login
+    navigate('/'); 
+  };
 
   return (
     <div className="sidebar">
@@ -34,7 +46,6 @@ const Sidebar = () => {
           >
             <Dog size={18} /> Mascotas
           </Link>
-
           <Link 
             to="/seguimiento-atencion" 
             className={`nav-item ${activeLink === '/seguimiento-atencion' ? 'active' : ''}`} 
@@ -42,7 +53,6 @@ const Sidebar = () => {
           >
             <FileSpreadsheet size={18} /> Seguimiento de atención
           </Link>
-
         </div>
         <div className="nav-section">
           <h2>EMPRESA</h2>
@@ -80,13 +90,12 @@ const Sidebar = () => {
         </div>
         <div className="nav-section">
           <h2>INICIO DE SESION</h2>
-          <Link 
-            to="#" 
-            className={`nav-item ${activeLink === '/cerrar-sesion' ? 'active' : ''}`} 
-            onClick={() => setActiveLink('/cerrar-sesion')}
+          <span 
+            className={`nav-item`} 
+            onClick={handleLogout} // Cambia el onClick para manejar el cierre de sesión
           >
             <LogOut size={18} /> Cerrar sesión
-          </Link>
+          </span>
         </div>
       </nav>
     </div>
