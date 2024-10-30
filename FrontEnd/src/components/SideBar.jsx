@@ -2,6 +2,7 @@ import { Users, FileSpreadsheet, ClipboardList, Receipt, BarChart2, FileText, Lo
 import { Link, useLocation } from 'react-router-dom'; // Importa Link y useLocation
 import { useState, useEffect } from 'react'; // Importa useState y useEffect
 import '../styles/Sidebar.css';
+import { AiOutlineFileSearch } from 'react-icons/ai';
 
 const Sidebar = () => {
   const location = useLocation(); // Hook para obtener la ubicación actual
@@ -59,6 +60,13 @@ const Sidebar = () => {
             onClick={() => setActiveLink('/filter-atencion')}
           >
             <Receipt size={18} /> Registrar atención
+          </Link>
+          <Link 
+            to="/" 
+            className={`nav-item ${activeLink === '/consultar-analisis' ? 'active' : ''}`} 
+            onClick={() => setActiveLink('/consultar-analisis')}
+          >
+            <AiOutlineFileSearch size={18} /> Consultar Analisis
           </Link>
         </div>
         <div className="nav-section">
