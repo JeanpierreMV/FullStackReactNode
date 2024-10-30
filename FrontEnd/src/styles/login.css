@@ -6,9 +6,12 @@
     margin: 0;
     padding: 0;
 }
-.login-container h1{
+
+.login-container h1 {
     color: #2d3a48;
     font-family: 'Uncial Antiqua';
+    margin-top: 10px; /* Espacio entre el logo y el texto */
+    text-align: center;
 }
 
 .main-content {
@@ -27,8 +30,6 @@
     width: 350px;
     text-align: center; /* Centrar contenido dentro del contenedor */
 }
-
-
 
 .logo {
     width: 100px; /* Ajusta el tamaño del logo */
@@ -84,3 +85,9 @@
     text-decoration: underline;
 }
 
+.logo-title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px; /* Espacio debajo del logo y el título */
+}

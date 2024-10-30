@@ -197,7 +197,7 @@ const ClienteForm = ({ formData, handleChange, handleSubmit }) => {
       </div>
       <div className="button-section">
         <button type="submit">Guardar</button>
-        <button type="button" onClick={() => console.log('Cancelado')}>Cancelar</button> 
+        <button type="button" onClick={() => console.log('Cancelado')} style={{ marginLeft: '10px' }}>Cancelar</button> 
       </div>
     </form>
   );
