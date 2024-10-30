@@ -1,4 +1,3 @@
-//Harolt Kruchinsky
 import React, { useState } from 'react';
 import { login } from '../services/api'; // Asegúrate de ajustar la ruta
 import { useNavigate } from 'react-router-dom'; // Importa useNavigate
@@ -14,10 +13,8 @@ const Login = () => {
         e.preventDefault();
         try {
             const response = await login({ email, password }); // Conexión con la API
-            // Guarda el token en localStorage
-            localStorage.setItem('token', response.token);
-            // Redirige a la página de registro de cliente
-            navigate('/registrar-cliente');
+            localStorage.setItem('token', response.token); // Guarda el token en localStorage
+            navigate('/registrar-cliente'); // Redirige a la página de registro de cliente
         } catch (error) {
             setError('Error al iniciar sesión');
         }
@@ -25,18 +22,13 @@ const Login = () => {
 
     return (
         <div className="dashboard">
-           
             <div className="main-content">
-               
                 <div className="login-container">
-                    
-                    <div>
+                    <div className="logo-title-container">
                         <img src="/koala.png" alt="Koala Vet Logo" className="logo" />
-                       
+                        <h1>KOALA VET</h1>
                     </div>
-                    <h1>KOALA VET</h1>
                     <form className="login-form" onSubmit={handleSubmit}>
-                        
                         <div className="form-group">
                             <label htmlFor="email">Correo</label>
                             <input
