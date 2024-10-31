@@ -146,13 +146,148 @@
     text-align: left; /* Alinea todo el texto a la izquierda */
   }
   
-  .info-row {
-    margin-bottom: 10px; /* Espacio entre cada fila de información */
-  }
-  
   .info-row strong {
     font-weight: bold; /* Mantiene el texto en negrita para las etiquetas */
     margin-right: 10px; /* Espacio entre el título y el valor */
   }
   
-  
+  /* General styles */
+body {
+  font-family: Arial, sans-serif;
+}
+
+.seguimiento-atencion-page {
+  padding: 20px;
+}
+
+/* Search Container */
+.search-container {
+  margin-bottom: 20px;
+}
+
+.search-container label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.search-container input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Data Container */
+.data-container {
+  margin-top: 20px;
+}
+
+.data-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-container th, .data-container td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+}
+
+.data-container th {
+  background-color: #f2f2f2;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h2 {
+  margin-top: 0;
+}
+
+/* Modal Body */
+.modal-body {
+  display: flex;
+  align-items: flex-start;
+}
+
+.mascota-image {
+  width: 100px;
+  height: auto;
+  margin-right: 20px;
+  border-radius: 10px;
+}
+
+.info-container {
+  flex-grow: 1;
+}
+
+/* Modal Actions */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.modal-button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.close-button {
+  background-color: #005588;
+  color: white;
+}
+
+.close-button:hover {
+  background-color: #002244;
+}
+
+.save-button {
+  background-color: #002244;
+  color: white;
+}
+
+.save-button:hover {
+  background-color: #005588;
+}
+
+/* Info Rows */
+.info-row {
+  margin-bottom: 6px;
+  display: flex;
+  flex-direction: column; /* Stack subtitle and input vertically */
+  font-size: 14px;
+}
+
+.info-row strong {
+  margin-bottom: 5px; /* Add space between the label and input */
+}
+
+

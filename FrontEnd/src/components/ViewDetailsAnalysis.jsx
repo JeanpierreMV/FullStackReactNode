@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/ViewDetailsAnalysis.css';
 import mascotaImage from '/src/assets/mascota.jpg';
-import felinoImage from '/src/assets/felino.png'
+import felinoImage from '/src/assets/felino.png';
 
 export default function ViewDetailsAnalysis() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -10,7 +10,7 @@ export default function ViewDetailsAnalysis() {
       dni: '12345678',
       dueno: 'ERIKA',
       nMascota: 'LUA',
-      edad:'21',
+      edad: '21',
       laboratorista: 'Dr. Carlos',
       fechaCita: '2024-10-10',
       estado: 'Pendiente',
@@ -19,13 +19,12 @@ export default function ViewDetailsAnalysis() {
       resultado_analisis: 'Revisión médica general',
       especie: 'Canino',
       tamaño: 'Mediano'
-      
     },
     {
       dni: '87654321',
       dueno: 'JUAN',
       nMascota: 'MAX',
-      edad:'10',
+      edad: '10',
       laboratorista: 'Dr. Gomez',
       fechaCita: '2024-10-12',
       estado: 'Completado',
@@ -34,11 +33,11 @@ export default function ViewDetailsAnalysis() {
       resultado_analisis: 'Aplicación de vacuna antirrábica',
       especie: 'Felino',
       tamaño: 'Pequeño'
-      
     }
   ]);
 
   const [showModal2, setShowModal2] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
 
   const filteredAppointments = appointments.filter(appointment =>
@@ -52,8 +51,17 @@ export default function ViewDetailsAnalysis() {
     setShowModal2(true);
   };
 
+  const handleOpenEditModal = (appointment) => {
+    setSelectedAppointment(appointment);
+    setShowEditModal(true);
+  };
+
   const handleCloseModal2 = () => {
     setShowModal2(false);
+  };
+
+  const handleCloseEditModal = () => {
+    setShowEditModal(false);
   };
 
   return (
@@ -67,7 +75,7 @@ export default function ViewDetailsAnalysis() {
       <h4 className="custom-h4" style={{ color: 'red' }}>* Terminado</h4>
 
       <div className="search-container">
-        <label htmlFor="search">Buscar Analisis</label>
+        <label htmlFor="search">Buscar Análisis</label>
         <input
           type="text"
           id="search"
@@ -101,6 +109,7 @@ export default function ViewDetailsAnalysis() {
                 <td>{appointment.estado}</td>
                 <td>
                   <button className="view-button" onClick={() => handleOpenModal2(appointment)}>👁️</button>
+                  <button className="edit-button" onClick={() => handleOpenEditModal(appointment)}>✏️</button>
                 </td>
               </tr>
             ))}
@@ -110,33 +119,76 @@ export default function ViewDetailsAnalysis() {
 
       {/* Modal de Detalle de la Cita */}
       {showModal2 && selectedAppointment && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Detalle de Análisis</h2>
+            <hr />
+            <div className="modal-body">
+              <img src={selectedAppointment.especie === 'Canino' ? mascotaImage : felinoImage} alt="Mascota" className="mascota-image" />
+              <div className="info-container">
+                <div className="info-row"><strong>Nombre Mascota:</strong> {selectedAppointment.nMascota}</div>
+                <div className="info-row"><strong>Edad:</strong> {selectedAppointment.edad}</div>
+                <div className="info-row"><strong>Especie:</strong> {selectedAppointment.especie}</div>
+                <div className="info-row"><strong>Tamaño:</strong> {selectedAppointment.tamaño}</div>
+                <div className="info-row"><strong>Servicio:</strong> {selectedAppointment.servicio}</div>
+                <div className="info-row"><strong>Tipo Análisis:</strong> {selectedAppointment.tipo_analisis}</div>
+                <div className="info-row"><strong>Resultado Análisis:</strong> {selectedAppointment.resultado_analisis}</div>
+              </div>
+            </div>
+            <hr />
+            <div className="modal-actions">
+              <button onClick={handleCloseModal2} className="modal-button close-button">Cerrar</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Edición */}
+{showEditModal && selectedAppointment && (
   <div className="modal-overlay">
     <div className="modal-content">
-      <h2>Detalle de Análisis</h2>
+      <h2>Registrar Resultado de Análisis</h2>
       <hr />
       <div className="modal-body">
-        {/* Columna izquierda: Imagen */}
-        <img 
-          src={selectedAppointment.especie === 'Canino' ? mascotaImage : felinoImage} 
-          alt="Mascota" 
-          className="mascota-image" 
-        />
-
-        {/* Columna derecha: Información */}
         <div className="info-container">
-          <div className="info-row"><strong>Nombre Mascota:</strong> {selectedAppointment.nMascota}</div>
-          <div className="info-row"><strong>Edad:</strong> {selectedAppointment.edad}</div>
-          <div className="info-row"><strong>Especie:</strong> {selectedAppointment.especie}</div>
-          <div className="info-row"><strong>Tamaño:</strong> {selectedAppointment.tamaño}</div>
-          <div className="info-row"><strong>Servicio:</strong> {selectedAppointment.servicio}</div>
-          <div className="info-row"><strong>Tipo Análisis:</strong> {selectedAppointment.tipo_analisis}</div>
-          <div className="info-row"><strong>Resultado Análisis:</strong> {selectedAppointment.resultado_analisis}</div>
+          <div className="info-row">
+            <strong>Fecha de Atención:</strong>
+            <input type="date" defaultValue="2024-06-21" />
+          </div>
+          <div className="info-row">
+            <strong>Nombre del Laboratorista:</strong>
+            <input type="text" defaultValue="" />
+          </div>
+          <div className="info-row">
+            <strong>Observaciones:</strong>
+            <textarea defaultValue="" />
+          </div>
+          <div className="info-row">
+            <strong>Receta:</strong>
+            <textarea defaultValue="" />
+          </div>
+          <div className="info-row">
+            <strong>Tipo de Análisis:</strong>
+            <input type="text" defaultValue="Heces" />
+          </div>
+          <div className="info-row">
+            <strong>Tipo de Muestra:</strong>
+            <input type="text" defaultValue="" />
+          </div>
+          <div className="info-row">
+            <strong>Resultado de Análisis:</strong>
+            <textarea defaultValue="" />
+          </div>
+          <div className="info-row">
+            <strong>Conclusiones:</strong>
+            <textarea defaultValue="" />
+          </div>
         </div>
       </div>
-
       <hr />
       <div className="modal-actions">
-        <button onClick={handleCloseModal2} className="modal-button close-button">Cerrar</button>
+        <button onClick={handleCloseEditModal} className="modal-button close-button">Cerrar</button>
+        <button className="modal-button save-button">Guardar</button>
       </div>
     </div>
   </div>
