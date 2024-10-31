@@ -195,6 +195,7 @@ export const obtenerFacturacionDelDia = async () => {
     throw new Error('Error al obtener facturación del día');
   }
 };
+
 // Función para obtener los detalles de una boleta específica
 export const obtenerDetalleBoleta = async (id) => {
   try {
@@ -283,7 +284,50 @@ export const actualizarResultadosAnalisisAtencion = async (analisisAtencionId, d
   }
 };
 
+/*
+// Método para registrar una nueva boleta
+export const registrarBoleta = async (boletaData) => {
+  try {
+    const response = await api.post('/boletas/generar', boletaData);
+    return response.data;
+  } catch (error) {
+    throw new Error('Error al generar la boleta');
+  }
+};
 
+// Método para obtener detalles de una boleta específica
+export const obtenerDetalleBoleta = async (id) => {
+  try {
+    const response = await api.get(`/boletas/detalle/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener detalles de la boleta:', error);
+    throw error;
+  }
+};
+
+// Método para obtener todas las boletas
+export const obtenerBoletas = async () => {
+  try {
+    const response = await api.get('/boletas');
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener boletas:', error);
+    throw new Error('Error al obtener boletas');
+  }
+};
+
+// Método para obtener la facturación del día
+export const obtenerFacturacionDelDia = async () => {
+  try {
+    const response = await api.get('/boletas/facturacion-dia');
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener facturación del día:', error);
+    throw new Error('Error al obtener facturación del día');
+  }
+};
+*/
 
 
 

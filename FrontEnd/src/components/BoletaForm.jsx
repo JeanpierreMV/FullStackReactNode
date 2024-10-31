@@ -1,138 +1,125 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
-const BoletaForm = ({ clientes, servicios, handleSubmit }) => {
-  const [selectedCliente, setSelectedCliente] = useState('');
-  const [selectedServicios, setSelectedServicios] = useState([]);
-  const [boletaNumero, setBoletaNumero] = useState('');
-  const [fechaCreacion, setFechaCreacion] = useState('');
-  const [fechaVencimiento, setFechaVencimiento] = useState('');
+const GenerarBoleta = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [dni, setDni] = useState('');
+  const [mascota, setMascota] = useState('');
+  const [services, setServices] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [error, setError] = useState('');
+  const [boletaGenerada, setBoletaGenerada] = useState(null);
 
-  const handleServicioChange = (servicioId, cantidad) => {
-    setSelectedServicios((prev) => {
-      const index = prev.findIndex(s => s.id === servicioId);
-      if (index > -1) {
-        return prev.map((s, i) => i === index ? { ...s, cantidad } : s);
-      }
-      return [...prev, { id: servicioId, cantidad, costo: servicios.find(s => s.id === servicioId).costo }];
-    });
+  const handleGenerateBoleta = () => {
+    setShowModal(true);
+    setError('');
+    setServices([]); // Limpiar servicios previos
+    setTotal(0); // Reiniciar total
+    setBoletaGenerada(null); // Limpiar boleta previa
   };
 
-  const calcularSubtotal = () => {
-    return selectedServicios.reduce((total, servicio) => total + (servicio.costo * servicio.cantidad), 0);
+  const handleSolicitar = async () => {
+    setError('');
+    try {
+      // Realizar llamada a la API para obtener servicios
+      const response = await axios.post('/api/servicios/obtener', { dni, mascota });
+      const fetchedServices = response.data;
+
+      // Calcular el total
+      const totalCost = fetchedServices.reduce((acc, item) => acc + item.costo * item.cantidad, 0);
+
+      setServices(fetchedServices);
+      setTotal(totalCost);
+      setShowModal(false);
+    } catch (err) {
+      console.error('Error al solicitar servicios:', err);
+      setError('Error al obtener servicios. Asegúrate de que el DNI y la mascota sean correctos.');
+    }
   };
 
-  const calcularIGV = (subtotal) => {
-    return subtotal * 0.18;
-  };
+  const handleConfirmarBoleta = async () => {
+    setError('');
+    try {
+      // Llamada a la API para generar la boleta
+      const response = await axios.post('/api/boleta/generar', {
+        clienteId: dni,
+        servicios: services,
+      });
 
-  const calcularTotal = (subtotal, igv) => {
-    return subtotal + igv;
+      setBoletaGenerada(response.data);
+    } catch (err) {
+      console.error('Error al generar la boleta:', err);
+      setError('Error al generar la boleta. Intente de nuevo.');
+    }
   };
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    handleSubmit({
-      boletaNumero,
-      clienteId: selectedCliente,
-      servicios: selectedServicios,
-      fechaCreacion,
-      fechaVencimiento,
-    });
-  };
-
-  const subtotal = calcularSubtotal();
-  const igv = calcularIGV(subtotal);
-  const total = calcularTotal(subtotal, igv);
 
   return (
-    <form onSubmit={onSubmit} className="boleta-form">
-      <div className="boleta-header">
-        <div>
-          <label>Boleta #</label>
-          <input 
-            type="text" 
-            value={boletaNumero} 
-            onChange={(e) => setBoletaNumero(e.target.value)} 
-            required
-          />
-        </div>
-        <div>
-          <label>Fecha de creación</label>
-          <input 
-            type="date" 
-            value={fechaCreacion} 
-            onChange={(e) => setFechaCreacion(e.target.value)} 
-            required
-          />
-        </div>
-        <div>
-          <label>Fecha de vencimiento</label>
-          <input 
-            type="date" 
-            value={fechaVencimiento} 
-            onChange={(e) => setFechaVencimiento(e.target.value)} 
-            required
-          />
-        </div>
-      </div>
+    <div>
+      {/* Interfaz Principal de la Boleta */}
+      <h2>Boleta de Pago</h2>
+      <button onClick={handleGenerateBoleta}>Generar Boleta</button>
 
-      <div className="boleta-details">
-        <label>Cliente</label>
-        <select 
-          onChange={(e) => setSelectedCliente(e.target.value)} 
-          required
-        >
-          <option value="">Seleccione un cliente</option>
-          {clientes.map(cliente => (
-            <option key={cliente.id} value={cliente.id}>{cliente.nombre}</option>
-          ))}
-        </select>
-      </div>
-
-      <div className="boleta-items">
-        <label>Servicios</label>
-        <table>
-          <thead>
-            <tr>
-              <th>ITEM</th>
-              <th>DESCRIPCIÓN</th>
-              <th>COSTO</th>
-              <th>CANTIDAD</th>
-              <th>TOTAL</th>
-            </tr>
-          </thead>
-          <tbody>
-            {servicios.map((servicio, index) => (
-              <tr key={servicio.id}>
-                <td>{index + 1}</td>
-                <td>{servicio.nombre}</td>
-                <td>${servicio.costo}</td>
-                <td>
-                  <input
-                    type="number"
-                    min="0"
-                    placeholder="Cantidad"
-                    onChange={(e) => handleServicioChange(servicio.id, parseInt(e.target.value))}
-                  />
-                </td>
-                <td>
-                  ${(selectedServicios.find(s => s.id === servicio.id)?.cantidad || 0) * servicio.costo}
-                </td>
+      <div>
+        {services.length > 0 && (
+          <table>
+            <thead>
+              <tr>
+                <th>Servicio Información</th>
+                <th>Descripción</th>
+                <th>Costo</th>
+                <th>Cantidad</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {services.map((service, index) => (
+                <tr key={index}>
+                  <td>{service.nombre}</td>
+                  <td>{service.descripcion}</td>
+                  <td>S/{service.costo}</td>
+                  <td>{service.cantidad}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        <p>Total a Pagar: S/{total}.00</p>
+        {services.length > 0 && (
+          <button onClick={handleConfirmarBoleta} className="confirm-btn">
+            Confirmar Boleta
+          </button>
+        )}
       </div>
 
-      <div className="boleta-totals">
-        <p>Subtotal: ${subtotal.toFixed(2)}</p>
-        <p>IGV: ${igv.toFixed(2)}</p>
-        <p>Total: ${total.toFixed(2)}</p>
-      </div>
+      {/* Mostrar boleta generada */}
+      {boletaGenerada && (
+        <div>
+          <h3>Boleta Generada</h3>
+          <p>Código de Boleta: {boletaGenerada.codigo}</p>
+          <p>Total: S/{boletaGenerada.total}</p>
+        </div>
+      )}
 
-      <button type="submit" className="pagar-btn">Pagar</button>
-    </form>
+      {/* Modal para ingresar DNI y Mascota */}
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h3>Generar Boletas de Pago</h3>
+            <label>
+              DNI:
+              <input value={dni} onChange={(e) => setDni(e.target.value)} />
+            </label>
+            <label>
+              Mascota:
+              <input value={mascota} onChange={(e) => setMascota(e.target.value)} />
+            </label>
+            <button onClick={() => setShowModal(false)} className="close-btn">Cerrar</button>
+            <button onClick={handleSolicitar} className="solicitar-btn">Solicitar</button>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
-export default BoletaForm;
+export default GenerarBoleta;

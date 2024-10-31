@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from '../components/SideBar';
 import Navbar from '../components/Navbar';
-import BoletaForm from '../components/BoletaForm'; // Importamos el componente BoletaForm
+import GenerarBoleta from '../components/BoletaForm'; // Importamos el componente BoletaForm
 import { registrarBoleta, obtenerClientes, obtenerServicios } from '../services/api'; // Importamos los servicios necesarios
-import '../styles/RegisterBoleta.css';
+import '../styles/GenerarBoleta.css';
 
 
 const RegisterBoleta = () => {
@@ -43,24 +43,14 @@ const RegisterBoleta = () => {
 
   return (
     <div className="container">
-    <Sidebar />
-    <div className="mainContent">
-      <Navbar />
-    <div className="generar-boleta-container">
-      <h1>Generar Boleta</h1>
-      {/* Mensajes de éxito o error según el estado */}
-      {success && <p className="success-message">Boleta generada exitosamente</p>}
-      {error && <p className="error-message">{error}</p>}
-      {/* Renderizamos el formulario, pasando clientes, servicios y la función handleSubmit */}
-      <BoletaForm 
-        clientes={clientes} 
-        servicios={servicios} 
-        handleSubmit={handleSubmit} 
-      />
+      <Sidebar />
+      <div className="mainContent">
+        <Navbar />
+        <main className="formContainer">
+          <GenerarBoleta />
+        </main>
+      </div>
     </div>
-    </div>
-    </div>
-
   );
 };
 

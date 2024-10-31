@@ -31,6 +31,7 @@ import ViewDetailsAnalysis from './pages/ViewDetailsAnalysisPage.jsx';
 import ServiceTa from './pages/ServicePageT.jsx';
 import CitaBuscarT from './pages/CitaBuscarTail.jsx';
 import ConsultaServi from './pages/ClientServicesPageTail.jsx';
+import GenerarBoletaPage from './pages/GenerarBoletaPage.jsx';
 
 const App = () => {
   return (
@@ -60,6 +61,7 @@ const App = () => {
         <Route path="/boleta/detalle/:id" element={<PrivateRoute element={<VerDetalleBoletaPage />} />} />
         <Route path="/ver-factura" element={<PrivateRoute element={<ViewDetailsBillPage />} />} />
         <Route path="/ultimo-analisis" element={<PrivateRoute element={<ViewDetailsAnalysis />} />} />
+        
       </Routes>
 
     </Router>
@@ -67,3 +69,5 @@ const App = () => {
 };
 
 export default App;
+
+//<Route path="/generar-boleta" element={<PrivateRoute element={<RegisterBoleta />} />} />
