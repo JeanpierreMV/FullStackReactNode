@@ -95,7 +95,7 @@ model Atencion {
   clienteId      Int
   mascota        Mascota     @relation(fields: [mascotaId], references: [id])
   mascotaId      Int
-  veterinario    Veterinario @relation(fields: [veterinarioId], references: [id])
+  cliente        Cliente     @relation(fields: [clienteId], references: [id])
   veterinarioId  Int
   servicio       Servicio    @relation(fields: [servicioId], references: [id])
   servicioId     Int
@@ -104,11 +104,6 @@ model Atencion {
   descripcion    String
 }
 
-model Veterinario {
-  id          Int        @id @default(autoincrement())
-  nombre      String
-  atenciones  Atencion[] 
-}
 
 model Boleta {
   id            Int        @id @default(autoincrement())

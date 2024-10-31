@@ -1,46 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/FilterAtencion.css';
 import { Link } from 'react-router-dom';
+import { atencionesget } from '../services/api'; // Asegúrate de que la ruta es correcta
 import mascotaImage from '../assets/mascota.jpg'; // Asegúrate de tener esta imagen en tu proyecto
+
 export default function FilterAtencion() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [appointments] = useState([
-    {
-      dni: '12345678',
-      dueno: 'ERIKA',
-      nMascota: 'LUA',
-      veterinario: 'Dr. Carlos',
-      fechaCita: '2024-10-10',
-      estado: 'Pendiente',
-      servicio: 'Consulta General',
-      descripcion: 'Revisión médica general',
-      especie: 'Canino',
-      tamaño: 'Mediano',
-      costo: '$50'
-    },
-    {
-      dni: '87654321',
-      dueno: 'JUAN',
-      nMascota: 'MAX',
-      veterinario: 'Dr. Gomez',
-      fechaCita: '2024-10-12',
-      estado: 'Completado',
-      servicio: 'Vacunación',
-      descripcion: 'Aplicación de vacuna antirrábica',
-      especie: 'Felino',
-      tamaño: 'Pequeño',
-      costo: '$30'
-    }
-  ]);
-
+  const [appointments, setAppointments] = useState([]); // Cambia a un estado vacío inicialmente
   const [showModal1, setShowModal1] = useState(false); // Primer modal
   const [showModal2, setShowModal2] = useState(false); // Segundo modal
   const [selectedDate, setSelectedDate] = useState(''); // Fecha de cita seleccionada
   const [selectedAppointment, setSelectedAppointment] = useState(null); // Cita seleccionada para el segundo modal
 
+  // Efecto para obtener atenciones
+  useEffect(() => {
+    const fetchAtenciones = async () => {
+      try {
+        const response = await atencionesget(); // Llama a tu API aquí
+        setAppointments(response); // Asigna la respuesta al estado
+      } catch (error) {
+        console.error('Error al obtener atenciones:', error);
+      }
+    };
+
+    fetchAtenciones();
+  }, []); // Se ejecuta una vez al montar el componente
+
+  // Filtrar solo por DNI
   const filteredAppointments = appointments.filter(appointment =>
-    appointment.nMascota.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    appointment.dueno.toLowerCase().includes(searchTerm.toLowerCase()) ||
     appointment.dni.includes(searchTerm)
   );
 
@@ -79,11 +66,11 @@ export default function FilterAtencion() {
       </header>
       
       <div className="search-container">
-        <label htmlFor="search">Buscar Atención</label>
+        <label htmlFor="search">Buscar Atención por DNI</label>
         <input
           type="text"
           id="search"
-          placeholder="Buscar por DNI, Dueño o Mascota"
+          placeholder="Buscar por DNI"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -106,14 +93,14 @@ export default function FilterAtencion() {
             {filteredAppointments.map((appointment, index) => (
               <tr key={index}>
                 <td>{appointment.dni}</td>
-                <td>{appointment.dueno}</td>
-                <td>{appointment.nMascota}</td>
-                <td>{appointment.veterinario}</td>
+                <td>{appointment.nombreDuenio}</td>
+                <td>{appointment.nombreMascota}</td>
+                <td>{appointment.nombreVeterinario}</td>
                 <td>{appointment.fechaCita}</td>
-                <td>{appointment.estado}</td>
+                <td>{appointment.consideraciones}</td> {/* Cambia a consideraciones */}
                 <td>
-                  <button className="view-button" onClick={() => handleOpenModal2(appointment.fechaCita)}>👁️</button>
-                  <button className="edit-button" onClick={() => handleOpenModal1(appointment)}>✏️</button>
+                  <button className="view-button" onClick={() => handleOpenModal2(appointment)}>👁️</button>
+                  <button className="edit-button" onClick={() => handleOpenModal1(appointment.fechaCita)}>✏️</button>
                 </td>
               </tr>
             ))}
@@ -152,7 +139,6 @@ export default function FilterAtencion() {
         <div className="modal-overlay">
           <div className="modal-content">
             <h2>Detalle de la Cita</h2>
-           {/* <hr />*/}
             <div className="modal-body">
               {/* Columna izquierda: Imagen */}
               <img src={mascotaImage} alt="Mascota" className="mascota-image" />
@@ -160,16 +146,13 @@ export default function FilterAtencion() {
               {/* Columna derecha: Información */}
               <div className="info-container">
                 <h3>Información de la Cita</h3>
-                <div className="info-row"><strong>Nombre del Servicio:</strong> {selectedAppointment.dueno}</div>
-                <div className="info-row"><strong>Descripcion:</strong> {selectedAppointment.nMascota}</div>
+                <div className="info-row"><strong>Nombre del Servicio:</strong> {selectedAppointment.servicio}</div>
+                <div className="info-row"><strong>Descripción:</strong> {selectedAppointment.descripcion}</div>
                 <div className="info-row"><strong>Especie:</strong> {selectedAppointment.especie}</div>
                 <div className="info-row"><strong>Tamaño:</strong> {selectedAppointment.tamaño}</div>
                 <div className="info-row"><strong>Costo:</strong> {selectedAppointment.costo}</div>
-              
               </div>
-              
-              </div>
-           
+            </div>
             <hr />
             <div className="modal-actions">
               <button onClick={handleCloseModal2} className="modal-button close-button">Cerrar</button>

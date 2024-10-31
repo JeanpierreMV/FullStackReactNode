@@ -142,9 +142,28 @@ export const registrarAtencion = async (atencionData) => {
   }
 };
 
+export const atencionesget = async (atencionData) => {
+  try {
+      const response = await api.get('/atenciones', atencionData);
+      return response.data;
+  } catch (error) {
+      throw new Error('Error al registrar atención');
+  }
+};
+
 export const obtenerMascotas = async () => {
   const response = await api.get('/mascotas');
   return response.data;
+};
+
+export const obtenerMascotasPorDni = async (dni) => {
+  try {
+    const response = await api.get(`/mascotas/${dni}`);
+    return response.data; 
+  } catch (error) {
+    console.error('Error al obtener las mascotas:', error);
+    throw error; 
+  }
 };
 
 export const obtenerVeterinarios = async () => {

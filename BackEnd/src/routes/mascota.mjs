@@ -72,6 +72,29 @@ router.get('/', async (req, res) => {
 });
 
 
+router.get('/:dni', async (req, res) => {
+  const { dni } = req.params;
+
+  try {
+    
+      const cliente = await prisma.cliente.findUnique({
+          where: { dni: dni },
+          include: { mascotas: true } 
+      });
+
+      if (!cliente) {
+          return res.status(404).json({ error: 'Cliente no encontrado' });
+      }
+
+      res.json(cliente.mascotas);
+  } catch (error) {
+      res.status(500).json({ error: 'Error al obtener las mascotas del cliente' });
+  }
+});
+
+
+
+
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
   const { codigo, nombre, genero, raza, tipoMascotaId, edad, peso, sizeId } = req.body;

@@ -1,8 +1,19 @@
-//Harolt Kruchinsky
 import React, { useEffect, useState } from 'react';
-import { obtenerVeterinarios, obtenerServicios, registrarAtencion } from '../services/api';
+import { obtenerVeterinarios, obtenerServicios, registrarAtencion, obtenerMascotasPorDni, obtenerClientePorCodigo } from '../services/api';
 import '../styles/RegisterAtencion.css';
-import { Link } from 'react-router-dom'; // Asegúrate de importar Link
+import { Link } from 'react-router-dom';
+
+const tipoMascotaMap = {
+  1: 'Perro',
+  2: 'Gato'
+};
+
+const sizeMap = {
+  1: 'Grande',
+  2: 'Mediano',
+  3: 'Pequeño'
+};
+
 const RegistrarAtencion = () => {
   const [formData, setFormData] = useState({
     fechaCita: '',
@@ -18,16 +29,35 @@ const RegistrarAtencion = () => {
 
   const [veterinarios, setVeterinarios] = useState([]);
   const [servicios, setServicios] = useState([]);
+  const [mascotas, setMascotas] = useState([]);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
+
+  // Mantener un mapeo de nombres a IDs
+  const [veterinariosMap, setVeterinariosMap] = useState({});
+  const [serviciosMap, setServiciosMap] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const vets = await obtenerVeterinarios();
         const services = await obtenerServicios();
+        
+        // Crear mapeos de nombres a IDs
+        const vetMap = {};
+        vets.forEach(vet => {
+          vetMap[vet.nombre] = vet.id;
+        });
+        
+        const servMap = {};
+        services.forEach(serv => {
+          servMap[serv.nombre] = serv.id;
+        });
+        
         setVeterinarios(vets);
         setServicios(services);
+        setVeterinariosMap(vetMap);
+        setServiciosMap(servMap);
       } catch (err) {
         setError('Error al cargar datos');
       }
@@ -40,17 +70,98 @@ const RegistrarAtencion = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleMascotaChange = (e) => {
+    const selectedMascota = mascotas.find(mascota => mascota.nombre === e.target.value);
+    if (selectedMascota) {
+      setFormData(prev => ({
+        ...prev,
+        nombreMascota: selectedMascota.nombre,
+        tamaño: sizeMap[selectedMascota.sizeId] || 'Desconocido',
+        sexo: selectedMascota.genero,
+        especie: tipoMascotaMap[selectedMascota.tipoMascotaId] || 'Desconocido'
+      }));
+    }
+  };
+
+  const handleDniChange = async (e) => {
+    const { value } = e.target;
+    setFormData({ ...formData, dniDuenio: value });
+
+    if (value) {
+      try {
+        const cliente = await obtenerClientePorCodigo(value);
+        setFormData(prev => ({
+          ...prev,
+          duenio: cliente.nombre,
+        }));
+
+        const mascotasData = await obtenerMascotasPorDni(value);
+        setMascotas(mascotasData);
+
+        if (mascotasData.length > 0) {
+          const primeraMascota = mascotasData[0];
+          setFormData(prev => ({
+            ...prev,
+            nombreMascota: primeraMascota.nombre,
+            tamaño: sizeMap[primeraMascota.sizeId] || 'Desconocido',
+            sexo: primeraMascota.genero,
+            especie: tipoMascotaMap[primeraMascota.tipoMascotaId] || 'Desconocido'
+          }));
+        } else {
+          setError('No se encontraron mascotas para este dueño.');
+          setFormData(prev => ({
+            ...prev,
+            nombreMascota: '',
+            tamaño: '',
+            sexo: '',
+            especie: ''
+          }));
+        }
+      } catch (err) {
+        setError('El DNI ingresado no corresponde a ningún cliente registrado.');
+        setFormData(prev => ({
+          ...prev,
+          duenio: '',
+          nombreMascota: '',
+          sexo: '',
+          tamaño: '',
+          especie: ''
+        }));
+        setMascotas([]);
+      }
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        duenio: '',
+        nombreMascota: '',
+        sexo: '',
+        tamaño: '',
+        especie: ''
+      }));
+      setMascotas([]);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validar campos obligatorios
-    if (!formData.fechaCita || !formData.dniDuenio || !formData.duenio || !formData.nombreMascota || !formData.sexo || !formData.especie || !formData.tamaño || !formData.servicio || !formData.veterinario) {
+    if (!formData.fechaCita || !formData.dniDuenio || !formData.nombreMascota || !formData.servicio || !formData.veterinario) {
       setError('Todos los campos son obligatorios.');
       return;
     }
 
     try {
-      await registrarAtencion(formData);
+      // Preparar datos en el formato que espera la API
+      const apiData = {
+        dniDuenio: formData.dniDuenio,
+        nombreMascota: formData.nombreMascota,
+        veterinarioId: veterinariosMap[formData.veterinario], // Convertir nombre a ID
+        servicioId: serviciosMap[formData.servicio], // Convertir nombre a ID
+        fechaCita: formData.fechaCita
+      };
+
+      await registrarAtencion(apiData);
       setSuccess(true);
       setError('');
       setFormData({
@@ -64,12 +175,14 @@ const RegistrarAtencion = () => {
         servicio: '',
         veterinario: ''
       });
+      setMascotas([]);
     } catch (err) {
       setError('Error al registrar la atención');
       setSuccess(false);
     }
   };
 
+  // El resto del JSX permanece igual...
   return (
     <div className="dataContainer">
       <form onSubmit={handleSubmit} className="form">
@@ -87,7 +200,7 @@ const RegistrarAtencion = () => {
             />
           </div>
           <div className="formGroup">
-          <label className="label">Especie</label>
+            <label className="label">Especie</label>
             <input
               type="text"
               name="especie"
@@ -96,24 +209,23 @@ const RegistrarAtencion = () => {
               className="input"
               readOnly
             />
-        </div>
+          </div>
         </div>
 
         <div className="formRow">
           <div className="formGroup">
-          <label className="label">DNI del Dueño</label>
+            <label className="label">DNI del Dueño</label>
             <input
               type="text"
               name="dniDuenio"
               value={formData.dniDuenio}
-              onChange={handleChange}
+              onChange={handleDniChange}
               className="input"
               placeholder="Ingresa el DNI"
             />
-        
           </div>
           <div className="formGroup">
-          <label className="label">Tamaño</label>
+            <label className="label">Tamaño</label>
             <input
               type="text"
               name="tamaño"
@@ -125,9 +237,9 @@ const RegistrarAtencion = () => {
           </div>
         </div>
 
-       <div className="formRow">
+        <div className="formRow">
           <div className="formGroup">
-          <label className="label">Dueño</label>
+            <label className="label">Dueño</label>
             <input
               type="text"
               name="duenio"
@@ -136,11 +248,9 @@ const RegistrarAtencion = () => {
               className="input"
               readOnly
             />
-
-        
           </div>
           <div className="formGroup">
-          <label className="label">Servicio</label>
+            <label className="label">Servicio</label>
             <select
               name="servicio"
               value={formData.servicio}
@@ -159,21 +269,34 @@ const RegistrarAtencion = () => {
 
         <div className="formRow">
           <div className="formGroup">
-          <label className="label">Nombre</label>
-            <input
-              type="text"
-              name="nombreMascota"
-              value={formData.nombreMascota}
-              onChange={handleChange}
-              className="input"
-              readOnly
-            />
-
-
-        
+            <label className="label">Nombre de la Mascota</label>
+            {mascotas.length > 0 ? (
+              <select
+                name="nombreMascota"
+                value={formData.nombreMascota}
+                onChange={handleMascotaChange}
+                className="input"
+              >
+                <option value="">Seleccione una mascota</option>
+                {mascotas.map((mascota) => (
+                  <option key={mascota.id} value={mascota.nombre}>
+                    {mascota.nombre}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <input
+                type="text"
+                name="nombreMascota"
+                value={formData.nombreMascota}
+                onChange={handleChange}
+                className="input"
+                readOnly
+              />
+            )}
           </div>
           <div className="formGroup">
-          <label className="label">Veterinario</label>
+            <label className="label">Veterinario</label>
             <select
               name="veterinario"
               value={formData.veterinario}
@@ -186,18 +309,13 @@ const RegistrarAtencion = () => {
                   {vet.nombre}
                 </option>
               ))}
-            </select>          
-
-
-
-
-
+            </select>
           </div>
         </div>
 
         <div className="formRow">
           <div className="formGroup">
-          <label className="label">Sexo</label>
+            <label className="label">Sexo</label>
             <input
               type="text"
               name="sexo"
@@ -214,9 +332,9 @@ const RegistrarAtencion = () => {
             Guardar
           </button>
           <Link to="/filter-atencion">
-              <button type="button" className="submitButton">
-                Cancelar
-              </button>
+            <button type="button" className="submitButton">
+              Cancelar
+            </button>
           </Link>
           <button type="button" className="generateButton">
             Generar Proforma
