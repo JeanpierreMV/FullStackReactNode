@@ -14,7 +14,18 @@ const Sidebar = () => {
 
   useEffect(() => {
     setActiveLink(location.pathname);
-  }, [location]);
+
+     // Navegar automáticamente según el rol del usuario
+     if (userRole === 'Veterinario') {
+      navigate('/seguimiento-atencion');
+    } else if (userRole === 'Administrador') {
+      navigate('/consultar-cliente');
+    } else if (userRole === 'Cliente') {
+      navigate('/seguimiento-atencion');
+    } else if (userRole === 'Laboratorista') {
+      navigate('/ultimo-analisis');
+    }
+  }, [location, userRole, navigate]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -181,8 +192,7 @@ const Sidebar = () => {
         <div className="nav-section">
           <h2>INICIO DE SESION</h2>
           <span 
-            className={`nav-item`} 
-            onClick={handleLogout}
+            className={`nav-item`}             onClick={handleLogout}
           >
             <LogOut size={18} /> Cerrar sesión
           </span>
