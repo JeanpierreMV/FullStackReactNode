@@ -6,32 +6,41 @@ import { AiOutlineFileSearch } from 'react-icons/ai';
 
 const Sidebar = () => {
   const location = useLocation();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const [activeLink, setActiveLink] = useState(location.pathname);
-  
+
   // Obtener el rol del usuario desde localStorage
   const userRole = localStorage.getItem('rol');
 
   useEffect(() => {
+    // Establecer el enlace activo al cambiar de ubicación
     setActiveLink(location.pathname);
+  }, [location.pathname]);
 
-     // Navegar automáticamente según el rol del usuario
-     if (userRole === 'Veterinario') {
-      navigate('/seguimiento-atencion');
-    } else if (userRole === 'Administrador') {
-      navigate('/consultar-cliente');
-    } else if (userRole === 'Cliente') {
-      navigate('/seguimiento-atencion');
-    } else if (userRole === 'Laboratorista') {
-      navigate('/ultimo-analisis');
+  useEffect(() => {
+    // Redirigir solo la primera vez que se accede al sidebar
+    const hasRedirected = sessionStorage.getItem('hasRedirected');
+    
+    if (!hasRedirected && userRole) {
+      if (userRole === 'Veterinario') {
+        navigate('/seguimiento-atencion');
+      } else if (userRole === 'Administrador') {
+        navigate('/consultar-cliente');
+      } else if (userRole === 'Cliente') {
+        navigate('/seguimiento-atencion');
+      } else if (userRole === 'Laboratorista') {
+        navigate('/ultimo-analisis');
+      }
+      sessionStorage.setItem('hasRedirected', 'true'); // Marcar que la redirección inicial se realizó
     }
-  }, [location, userRole, navigate]);
+  }, [userRole, navigate]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('nombre');
     localStorage.removeItem('rol');
-    navigate('/'); 
+    sessionStorage.removeItem('hasRedirected'); // Limpiar el estado al cerrar sesión
+    navigate('/');
   };
 
   return (
@@ -41,22 +50,22 @@ const Sidebar = () => {
         <h1 className="title">KOALA VET</h1>
       </div>
       <nav className="sidebar-nav">
-          
+        
         {/* Opciones para Administrador */}
         {userRole === 'Administrador' && (
           <>
             <div className="nav-section">
               <h2>USUARIO</h2>
-              <Link 
-                to="/consultar-cliente" 
-                className={`nav-item ${activeLink === '/consultar-cliente' ? 'active' : ''}`} 
+              <Link
+                to="/consultar-cliente"
+                className={`nav-item ${activeLink === '/consultar-cliente' ? 'active' : ''}`}
                 onClick={() => setActiveLink('/consultar-cliente')}
               >
                 <Users size={18} /> Clientes
               </Link>
-              <Link 
-                to="/filter-mascota" 
-                className={`nav-item ${activeLink === '/filter-mascota' ? 'active' : ''}`} 
+              <Link
+                to="/filter-mascota"
+                className={`nav-item ${activeLink === '/filter-mascota' ? 'active' : ''}`}
                 onClick={() => setActiveLink('/filter-mascota')}
               >
                 <Dog size={18} /> Mascotas
@@ -64,29 +73,29 @@ const Sidebar = () => {
             </div>
             <div className="nav-section">
               <h2>EMPRESA</h2>
-              <Link 
-                to="/buscar-servicios" 
-                className={`nav-item ${activeLink === '/buscar-servicios' ? 'active' : ''}`} 
+              <Link
+                to="/buscar-servicios"
+                className={`nav-item ${activeLink === '/buscar-servicios' ? 'active' : ''}`}
                 onClick={() => setActiveLink('/buscar-servicios')}
               >
                 <ClipboardList size={18} /> Consultar servicios
               </Link>
-              <Link 
-                to="/filter-atencion" 
-                className={`nav-item ${activeLink === '/filter-atencion' ? 'active' : ''}`} 
+              <Link
+                to="/filter-atencion"
+                className={`nav-item ${activeLink === '/filter-atencion' ? 'active' : ''}`}
                 onClick={() => setActiveLink('/filter-atencion')}
               >
                 <Receipt size={18} /> Registrar atención
               </Link>
             </div>
             <div className="nav-section">
-              <h2>GESTION DE PAGOS</h2>
-              <Link 
-                to="/generar-boleta" 
-                className={`nav-item ${activeLink === '/generar-boleta' ? 'active' : ''}`} 
+              <h2>GESTIÓN DE PAGOS</h2>
+              <Link
+                to="/generar-boleta"
+                className={`nav-item ${activeLink === '/generar-boleta' ? 'active' : ''}`}
                 onClick={() => setActiveLink('/generar-boleta')}
               >
-                <BarChart2 size={18} /> General boleta de pago
+                <BarChart2 size={18} /> Generar boleta de pago
               </Link>
             </div>
           </>
@@ -95,46 +104,43 @@ const Sidebar = () => {
         {/* Opciones para Veterinario */}
         {userRole === 'Veterinario' && (
           <div className="nav-section">
-              <h2>USUARIO</h2>
-              <Link 
-                to="/consultar-cliente" 
-                className={`nav-item ${activeLink === '/consultar-cliente' ? 'active' : ''}`} 
-                onClick={() => setActiveLink('/consultar-cliente')}
-              >
-                <Users size={18} /> Clientes
-              </Link>
-              <Link 
-                to="/filter-mascota" 
-                className={`nav-item ${activeLink === '/filter-mascota' ? 'active' : ''}`} 
-                onClick={() => setActiveLink('/filter-mascota')}
-              >
-                <Dog size={18} /> Mascotas
-              </Link>
-
-              <Link 
-              to="/seguimiento-atencion" 
-              className={`nav-item ${activeLink === '/seguimiento-atencion' ? 'active' : ''}`} 
+            <h2>USUARIO</h2>
+            <Link
+              to="/consultar-cliente"
+              className={`nav-item ${activeLink === '/consultar-cliente' ? 'active' : ''}`}
+              onClick={() => setActiveLink('/consultar-cliente')}
+            >
+              <Users size={18} /> Clientes
+            </Link>
+            <Link
+              to="/filter-mascota"
+              className={`nav-item ${activeLink === '/filter-mascota' ? 'active' : ''}`}
+              onClick={() => setActiveLink('/filter-mascota')}
+            >
+              <Dog size={18} /> Mascotas
+            </Link>
+            <Link
+              to="/seguimiento-atencion"
+              className={`nav-item ${activeLink === '/seguimiento-atencion' ? 'active' : ''}`}
               onClick={() => setActiveLink('/seguimiento-atencion')}
             >
               <FileSpreadsheet size={18} /> Seguimiento de atención
             </Link>
-
             <h2>EMPRESA</h2>
-            <Link 
-                to="/buscar-servicios" 
-                className={`nav-item ${activeLink === '/buscar-servicios' ? 'active' : ''}`} 
-                onClick={() => setActiveLink('/buscar-servicios')}
-              >
-                <ClipboardList size={18} /> Consultar servicios
-              </Link>
-
-              <Link 
-                to="/ultimo-analisis" 
-                className={`nav-item ${activeLink === '/ultimo-analisis' ? 'active' : ''}`} 
-                onClick={() => setActiveLink('/buscar-servicios')}
-              >
-                <AiOutlineFileSearch size={18} /> Consultar Análisis
-              </Link>
+            <Link
+              to="/buscar-servicios"
+              className={`nav-item ${activeLink === '/buscar-servicios' ? 'active' : ''}`}
+              onClick={() => setActiveLink('/buscar-servicios')}
+            >
+              <ClipboardList size={18} /> Consultar servicios
+            </Link>
+            <Link
+              to="/ultimo-analisis"
+              className={`nav-item ${activeLink === '/ultimo-analisis' ? 'active' : ''}`}
+              onClick={() => setActiveLink('/ultimo-analisis')}
+            >
+              <AiOutlineFileSearch size={18} /> Consultar Análisis
+            </Link>
           </div>
         )}
 
@@ -142,32 +148,31 @@ const Sidebar = () => {
         {userRole === 'Laboratorista' && (
           <div className="nav-section">
             <h2>USUARIO</h2>
-            <Link 
-              to="/consultar-cliente" 
-              className={`nav-item ${activeLink === '/consultar-cliente' ? 'active' : ''}`} 
+            <Link
+              to="/consultar-cliente"
+              className={`nav-item ${activeLink === '/consultar-cliente' ? 'active' : ''}`}
               onClick={() => setActiveLink('/consultar-cliente')}
             >
               <Users size={18} /> Clientes
             </Link>
-            <Link 
-              to="/filter-mascota" 
-              className={`nav-item ${activeLink === '/filter-mascota' ? 'active' : ''}`} 
+            <Link
+              to="/filter-mascota"
+              className={`nav-item ${activeLink === '/filter-mascota' ? 'active' : ''}`}
               onClick={() => setActiveLink('/filter-mascota')}
             >
               <Dog size={18} /> Mascotas
             </Link>
-            <Link 
-              to="/seguimiento-atencion" 
-              className={`nav-item ${activeLink === '/seguimiento-atencion' ? 'active' : ''}`} 
+            <Link
+              to="/seguimiento-atencion"
+              className={`nav-item ${activeLink === '/seguimiento-atencion' ? 'active' : ''}`}
               onClick={() => setActiveLink('/seguimiento-atencion')}
             >
               <FileSpreadsheet size={18} /> Seguimiento de atención
             </Link>
-
             <h2>EMPRESA</h2>
-            <Link 
-              to="/ultimo-analisis" 
-              className={`nav-item ${activeLink === '/ultimo-analisis' ? 'active' : ''}`} 
+            <Link
+              to="/ultimo-analisis"
+              className={`nav-item ${activeLink === '/ultimo-analisis' ? 'active' : ''}`}
               onClick={() => setActiveLink('/ultimo-analisis')}
             >
               <AiOutlineFileSearch size={18} /> Consultar Análisis
@@ -179,9 +184,9 @@ const Sidebar = () => {
         {userRole === 'Cliente' && (
           <div className="nav-section">
             <h2>USUARIO</h2>
-            <Link 
-              to="/seguimiento-atencion" 
-              className={`nav-item ${activeLink === '/seguimiento-atencion' ? 'active' : ''}`} 
+            <Link
+              to="/seguimiento-atencion"
+              className={`nav-item ${activeLink === '/seguimiento-atencion' ? 'active' : ''}`}
               onClick={() => setActiveLink('/seguimiento-atencion')}
             >
               <FileSpreadsheet size={18} /> Seguimiento de atención
@@ -190,9 +195,10 @@ const Sidebar = () => {
         )}
 
         <div className="nav-section">
-          <h2>INICIO DE SESION</h2>
-          <span 
-            className={`nav-item`}             onClick={handleLogout}
+          <h2>INICIO DE SESIÓN</h2>
+          <span
+            className="nav-item"
+            onClick={handleLogout}
           >
             <LogOut size={18} /> Cerrar sesión
           </span>
