@@ -8,6 +8,8 @@ import {
 } from '../services/api';
 import '../styles/RegisterMascota.css';
 
+
+
 const RegisterMascota = () => {
   // Estado principal del formulario
   const [formData, setFormData] = useState({
@@ -293,6 +295,7 @@ const RegisterMascota = () => {
         <div className="buttonContainer">
           <button type="submit" className="submitButton">Registrar</button>
           {success && <p className="successText">Mascota registrada exitosamente!</p>}
+          
           {error && <p className="errorText">{error}</p>}
         </div>
       </form>
