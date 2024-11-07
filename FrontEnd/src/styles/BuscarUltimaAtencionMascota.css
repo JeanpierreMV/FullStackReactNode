@@ -1,0 +1,89 @@
+.buscar-atencion-page {
+    padding: 20px;
+  }
+  
+  .search-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .search-container input {
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .search-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .data-container table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .data-container th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .view-button {
+    background-color: #008CBA;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 400px;
+  }
+  
+  .mascota-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 20px;
+  }
+  
+  .info-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .info-row {
+    margin-bottom: 10px;
+  }
+  
+  .modal-button {
+    padding: 10px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  

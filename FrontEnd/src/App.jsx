@@ -20,6 +20,10 @@ import BuscarServicios from './pages/BuscarServiciosPage.jsx';
 //import ClientManagement from './pages/ClientManagement.jsx';
 // import BuscarCitaMas from './pages/SeguimientoAtencion.jsx';
 import CuadreDia from './pages/Dashboard.jsx';
+import BuscarHistorialMascotaPage from './pages/BuscarHistorialMascotaPage';
+import BuscarUltimaAtencionMascotaPage from './pages/BuscarUltimaAtencionMascotaPage';
+import VerHistorialMascotaPage from './pages/VerHistorialMascotaPage';
+import MostrarListadoAtencionPage from './pages/MostrarListadoAtencionPage';
 //import RegisterAtencion from './components/RegistrarAtencion';
 import BuscarAtencionesPage from './pages/BuscarAtencionesPage';
 import VerDetallesAtencionPage from './pages/VerDetallesAtencionPage';
@@ -36,7 +40,7 @@ import GenerarBoletaPage from './pages/GenerarBoletaPage.jsx';
 const App = () => {
   return (
     <Router>
-      <Routes>      
+            
       <Route path="/" element={<Login />} />
         <Route path="/registrar-cliente" element={<PrivateRoute element={<RegisterClient />} />} />
         <Route path="/service-paget" element={<PrivateRoute element={<ServiceTa />} />} />
@@ -62,6 +66,22 @@ const App = () => {
         <Route path="/ver-factura" element={<PrivateRoute element={<ViewDetailsBillPage />} />} />
         <Route path="/ultimo-analisis" element={<PrivateRoute element={<ViewDetailsAnalysis />} />} />
         
+      <Routes>
+        <Route path="/registrar-cliente" element={<RegisterClient />} />
+        <Route path="/registrar-tipo-mascota" element={<RegisterTipoMascota />} />
+        <Route path="/registrar-mascota" element={<RegisterMascota />} /> {/* Añade la nueva ruta */}
+        <Route path="/registrar-empleados" element={<RegisterEmployee />} />
+        <Route path="/consultar-cliente" element={<ConsultarClientePage />} />
+        <Route path="/buscar-clientes" element={<BuscarClientesPage />} />
+        <Route path="/generar-boleta" element={<RegisterBoleta />} />
+        <Route path="/filter-mascota" element={<FilterMascotaPage />} />
+        <Route path="/filter-atencion" element={<FilterAtencionPage />} />
+        <Route path="/registrar-atencion" element={<RegisterAtencionPage />} />
+        <Route path="/buscar-historial-mascota" element={<BuscarHistorialMascotaPage />} />
+        <Route path="/buscar-ultima-atencion-mascota" element={<BuscarUltimaAtencionMascotaPage />} />
+        <Route path="/ver-historial-mascota" element={<VerHistorialMascotaPage />} />
+        <Route path="/mostrar-listado-atencion" element={<MostrarListadoAtencionPage />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
 
     </Router>
