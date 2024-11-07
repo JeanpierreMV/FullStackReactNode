@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import BuscarServicios from '../components/BuscarServicios';
 import Sidebar from '../components/SideBar'; // Importa el Sidebar
+import Navbar from '../components/Navbar';
 
 const BuscarServiciosPage = () => {
   const [formData, setFormData] = useState({
@@ -25,9 +26,13 @@ const BuscarServiciosPage = () => {
 
   return (
     <div className="page-container">
-      <Sidebar /> 
+       
+      <Sidebar />
+      
       <div className="content">
+      <Navbar />  
         <BuscarServicios
+        
           formData={formData}
           handleChange={handleChange}
           handleSearch={handleSearch}

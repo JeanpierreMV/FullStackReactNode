@@ -95,7 +95,7 @@ model Atencion {
   clienteId      Int
   mascota        Mascota     @relation(fields: [mascotaId], references: [id])
   mascotaId      Int
-  cliente        Cliente     @relation(fields: [clienteId], references: [id])
+ 
   veterinarioId  Int
   servicio       Servicio    @relation(fields: [servicioId], references: [id])
   servicioId     Int
