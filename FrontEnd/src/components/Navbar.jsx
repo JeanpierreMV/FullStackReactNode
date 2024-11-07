@@ -14,9 +14,9 @@ const Navbar = () => {
           <span className="userName">{nombre}</span> 
           <span className="userRole">{rol}</span>  
         </div>
-        <div className="userAvatar">
+       {/* <div className="userAvatar">
           <User size={24} />
-        </div>
+        </div>*/}
       </div>
     </header>
   );

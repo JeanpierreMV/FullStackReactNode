@@ -54,7 +54,7 @@ const RegisterClient = () => {
       <div className="mainContent">
       <Navbar />
       <div className="form-container"> {/* Contenedor central para el formulario */}
-        <h1>Registrar Cliente hola</h1>
+        <h1>Registrar Cliente</h1>
         {success && <p>Cliente registrado exitosamente</p>}
         {error && <p>{error}</p>}
         <ClienteForm formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} />

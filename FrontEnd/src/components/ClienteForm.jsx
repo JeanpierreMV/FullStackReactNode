@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import '../styles/RegisterClient.css';
 import validator from 'validator';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';  // Importar useNavigate
 
 const distritosLima = [
   "Ancón", "Ate", "Barranco", "Breña", "Carabayllo", "Cercado de Lima",
@@ -17,6 +18,7 @@ const distritosLima = [
 
 const ClienteForm = ({ formData, handleChange, handleSubmit }) => {
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();  // Inicializar navigate
 
   const validateInput = (name, value) => {
     let error = '';
@@ -84,6 +86,11 @@ const ClienteForm = ({ formData, handleChange, handleSubmit }) => {
     if (isValid) {
       handleSubmit(e);
     }
+  };
+
+  // Función para redirigir al cancelar
+  const handleCancel = () => {
+    navigate('/consultar-cliente');  // Redirigir a la ruta /consultar-cliente
   };
 
   return (
@@ -197,7 +204,13 @@ const ClienteForm = ({ formData, handleChange, handleSubmit }) => {
       </div>
       <div className="button-section">
         <button type="submit">Guardar</button>
-        <button type="button" onClick={() => console.log('Cancelado')} style={{ marginLeft: '10px' }}>Cancelar</button> 
+        <button
+          type="button"
+          onClick={handleCancel}
+          style={{ marginLeft: '10px' }}
+        >
+          Cancelar
+        </button>
       </div>
     </form>
   );
@@ -212,12 +225,12 @@ ClienteForm.propTypes = {
     direccion: PropTypes.string.isRequired,
     celular: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
-    password: PropTypes.string.isRequired, // Cambiado a password
-    distrito: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
     rol: PropTypes.string.isRequired,
+    distrito: PropTypes.string.isRequired
   }).isRequired,
   handleChange: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired
 };
 
 export default ClienteForm;
