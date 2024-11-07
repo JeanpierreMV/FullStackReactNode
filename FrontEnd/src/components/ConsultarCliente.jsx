@@ -123,7 +123,7 @@ function EditClientModal({ cliente, onClose }) {
     email: cliente.email,
     contrasena: '',
     rol: cliente.rol || 'ADMIN',
-    estado: cliente.estado || 'ACTIVO',
+ 
     numeroMascotas: '1',
   });
 
@@ -141,7 +141,7 @@ function EditClientModal({ cliente, onClose }) {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>Editar Cliente</h2>
+        <h2 className='titulo-editar-cliente'>Editar Cliente</h2>
         <label>Nombre</label>
         <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} />
         
@@ -167,17 +167,12 @@ function EditClientModal({ cliente, onClose }) {
         <input type="password" name="contrasena" value={formData.contrasena} onChange={handleChange} />
         
         <label>Rol</label>
-        <select name="rol" value={formData.rol} onChange={handleChange}>
+        <select className="linea" name="rol" value={formData.rol} onChange={handleChange}>
           <option value="ADMIN">ADMIN</option>
           <option value="USER">USER</option>
         </select>
         
-        <label>Estado</label>
-        <select name="estado" value={formData.estado} onChange={handleChange}>
-          <option value="ACTIVO">ACTIVO</option>
-          <option value="INACTIVO">INACTIVO</option>
-        </select>
-        
+              
         <label>Número de Mascotas</label>
         <select name="numeroMascotas" value={formData.numeroMascotas} onChange={handleChange}>
           <option value="1">1</option>
