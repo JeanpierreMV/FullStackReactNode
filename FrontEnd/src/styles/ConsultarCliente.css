@@ -88,3 +88,6 @@
     margin-right: 8px;
   }
   
+  .modal-actions button:first-child {
+    margin-right: 16px; /* Ajusta el valor según el espacio deseado */
+  }

@@ -73,7 +73,7 @@ const RegisterClient = ({ onClientAdded }) => {
         <option value="cliente">Cliente</option>
       </select>
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      <button type="submit">Guardar</button>
+      <button type="submit">Guardar no </button>
     </form>
   );
 };
