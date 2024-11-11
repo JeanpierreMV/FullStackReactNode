@@ -4,11 +4,12 @@ import { PrismaClient } from '@prisma/client';
 const router = express.Router();
 const prisma = new PrismaClient();
 
+// Registrar nueva atención
 router.post('/', async (req, res) => {
     const { dniDuenio, nombreMascota, veterinarioId, servicioId, fechaCita } = req.body;
 
     try {
-       
+        // Buscar al cliente por su DNI
         const cliente = await prisma.cliente.findUnique({
             where: {
                 dni: dniDuenio,
@@ -31,10 +32,7 @@ router.post('/', async (req, res) => {
             return res.status(404).json({ error: 'Mascota no encontrada para este dueño' });
         }
 
-         // Imprimir los valores para depuración
-      
-
-        // Crear la atención con los IDs obtenidos
+        // Crear la atención
         const atencion = await prisma.atencion.create({
             data: {
                 clienteId: cliente.id,
@@ -54,6 +52,7 @@ router.post('/', async (req, res) => {
     }
 });
 
+// Obtener todas las atenciones
 router.get('/', async (req, res) => {
     try {
         const atenciones = await prisma.atencion.findMany({
@@ -99,8 +98,7 @@ router.get('/', async (req, res) => {
                 dni: atencion.cliente.dni,
                 nombreDuenio: atencion.cliente.nombre,
                 nombreMascota: atencion.mascota.nombre,
-                // Obtiene el nombre del veterinario usando el veterinarioId que es un clienteId
-                nombreVeterinario: veterinarioMap[atencion.veterinarioId] || 'Desconocido', // Usa veterinarioId aquí
+                nombreVeterinario: veterinarioMap[atencion.veterinarioId] || 'Desconocido',
                 fechaCita: `${fecha} ${hora}`, // Combina fecha y hora
                 consideraciones: atencion.consideraciones,
             };
@@ -112,8 +110,6 @@ router.get('/', async (req, res) => {
         res.status(500).json({ error: 'Error al obtener atenciones' });
     }
 });
-
-
 
 // Método GET para buscar atenciones por mascota
 router.get('/:mascotaId', async (req, res) => {
@@ -140,25 +136,44 @@ router.get('/:mascotaId', async (req, res) => {
     }
 });
 
-
-
-
+/// Método GET para obtener los detalles de una atención específica por ID
 router.get('/detalles/:atencionId', async (req, res) => {
-    const { atencionId } = req.params;
+    const { atencionId } = req.params; // Obtenemos el id de la atención
 
     try {
         const atencion = await prisma.atencion.findUnique({
-            where: { id: parseInt(atencionId) },
+            where: { id: parseInt(atencionId) },  // Usamos el id
             include: {
-                cliente: true,
-                mascota: true,
-                veterinario: true,
-                servicio: true,
+                servicio: {
+                    select: {
+                        nombre: true,
+                        descripcion: true,
+                        costo: true,
+                    },
+                },
+                mascota: {
+                    select: {
+                        especie: {  // TipoMascota
+                            select: { nombre: true },
+                        },
+                        size: {  // SizeMascota
+                            select: { nombre: true },
+                        },
+                    },
+                },
             },
         });
 
         if (atencion) {
-            res.status(200).json(atencion);
+            // Formatear la respuesta con los datos solicitados
+            const detallesAtencion = {
+                nombreServicio: atencion.servicio.nombre,
+                descripcion: atencion.servicio.descripcion,
+                especie: atencion.mascota.especie.nombre,
+                tamaño: atencion.mascota.size.nombre,
+                costo: atencion.servicio.costo,
+            };
+            res.status(200).json(detallesAtencion);
         } else {
             res.status(404).json({ message: 'Atención no encontrada' });
         }
@@ -167,28 +182,6 @@ router.get('/detalles/:atencionId', async (req, res) => {
         res.status(500).json({ error: 'Error al obtener los detalles de la atención' });
     }
 });
-
-
-// NUEVO: Método GET para obtener el listado de todas las atenciones
-router.get('/', async (req, res) => {
-    try {
-        const atenciones = await prisma.atencion.findMany({
-            include: {
-                cliente: true,
-                mascota: true,
-                veterinario: true,
-                servicio: true,
-            },
-        });
-        res.status(200).json(atenciones);
-    } catch (error) {
-        console.error('Error al obtener el listado de atenciones:', error);
-        res.status(500).json({ error: 'Error al obtener el listado de atenciones' });
-    }
-});
-
-
-
 
 
 

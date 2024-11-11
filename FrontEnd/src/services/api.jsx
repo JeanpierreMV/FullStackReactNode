@@ -152,14 +152,6 @@ export const registrarAtencion = async (atencionData) => {
   }
 };
 
-export const atencionesget = async (atencionData) => {
-  try {
-      const response = await api.get('/atenciones', atencionData);
-      return response.data;
-  } catch (error) {
-      throw new Error('Error al registrar atención');
-  }
-};
 
 export const obtenerMascotas = async () => {
   const response = await api.get('/mascotas');
@@ -349,6 +341,27 @@ export const generarBoleta = async (data) => {
 }
 };
 
+// Obtener todas las atenciones
+export const atencionesget = async () => {
+  try {
+    const response = await api.get('/atenciones'); // Solo obtén los datos, no necesitas pasar atencionData en este caso
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener atenciones:', error.response || error.message);
+    throw new Error('Error al obtener atenciones');
+  }
+};
+
+// Obtener detalles específicos de una atención
+export const getAtencionDetalle = async (atencionId) => {
+  try {
+      const response = await api.get(`/atenciones/detalles/${atencionId}`);
+      return response.data;
+  } catch (error) {
+      console.error('Error al obtener los detalles de la atención:', error);
+      throw new Error('Error al obtener los detalles de la atención');
+  }
+};
 
 
 
