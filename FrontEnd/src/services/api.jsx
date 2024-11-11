@@ -207,15 +207,7 @@ export const obtenerDetallesAtencion = async (atencionId) => {
   }
 };
 
-export const obtenerFacturacionDelDia = async () => {
-  try {
-    const response = await api.get('/boletas/facturacion-dia');
-    return response.data;
-  } catch (error) {
-    console.error('Error al obtener facturación del día:', error);
-    throw new Error('Error al obtener facturación del día');
-  }
-};
+
 // Función para obtener los detalles de una boleta específica
 export const obtenerDetalleBoleta = async (id) => {
   try {
@@ -360,6 +352,16 @@ export const getAtencionDetalle = async (atencionId) => {
   } catch (error) {
       console.error('Error al obtener los detalles de la atención:', error);
       throw new Error('Error al obtener los detalles de la atención');
+  }
+};
+
+export const obtenerFacturacionDelDia = async () => {
+  try {
+    const response = await api.get('/boleta/facturacion-dia');
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener facturación del día:', error);
+    throw new Error('Error al obtener facturación del día');
   }
 };
 

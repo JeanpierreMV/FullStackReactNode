@@ -113,10 +113,41 @@ router.post('/generar-boleta', async (req, res) => {
         res.status(201).json({ message: 'Boleta generada exitosamente', boleta });
     } catch (error) {
         console.error('Error al generar la boleta:', error.message); // Muestra el mensaje del error
-    console.error('Stack:', error.stack); // Muestra la traza del error
-    res.status(500).json({ error: error.message || 'Error al generar la boleta' });
+        console.error('Stack:', error.stack); // Muestra la traza del error
+        res.status(500).json({ error: error.message || 'Error al generar la boleta' });
     }
 });
+
+// Ruta para obtener facturación del día
+router.get('/facturacion-dia', async (req, res) => {
+    try {
+      // Obtener la fecha actual
+      const today = new Date().toISOString().split('T')[0]; // 'YYYY-MM-DD'
+  
+      // Obtener las boletas generadas en el día actual
+      const facturacionDia = await prisma.boleta.findMany({
+        where: {
+          fecha: {
+            gte: new Date("2024-11-11T00:00:00.000Z"),  // Desde el inicio del día
+            lt: new Date("2024-11-11T23:59:59.999Z")   // Hasta el final del día
+          }
+        },
+        include: {
+          detallesBoleta: true,
+          cliente: true
+        }
+      });
+  
+      if (facturacionDia.length > 0) {
+        res.status(200).json(facturacionDia);
+      } else {
+        res.status(404).json({ message: 'No hay facturación generada hoy' });
+      }
+    } catch (error) {
+      console.error('Error al obtener facturación del día:', error);
+      res.status(500).json({ error: 'Error al obtener facturación del día' });
+    }
+  });
 
 
 export default router;

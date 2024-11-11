@@ -23,7 +23,6 @@ import CuadreDia from './pages/Dashboard.jsx';
 //import RegisterAtencion from './components/RegistrarAtencion';
 import BuscarAtencionesPage from './pages/BuscarAtencionesPage';
 import VerDetallesAtencionPage from './pages/VerDetallesAtencionPage';
-import ListarFacturacionPage from './pages/ListarFacturacionPage';
 import VerDetalleBoletaPage from './pages/VerDetalleBoletaPage';
 import ViewDetailsBillPage from './pages/ViewDetailsBillPage.jsx';
 import ViewDetailsAnalysis from './pages/ViewDetailsAnalysisPage.jsx';
@@ -31,7 +30,7 @@ import ViewDetailsAnalysis from './pages/ViewDetailsAnalysisPage.jsx';
 import ServiceTa from './pages/ServicePageT.jsx';
 import CitaBuscarT from './pages/CitaBuscarTail.jsx';
 import ConsultaServi from './pages/ClientServicesPageTail.jsx';
-import GenerarBoleta from './pages/GenerarBoleta';
+import ListarFacturacionPage from './pages/ListarFacturacionPage';
 
 const App = () => {
   return (

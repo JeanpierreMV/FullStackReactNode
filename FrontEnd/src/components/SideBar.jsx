@@ -20,7 +20,7 @@ const Sidebar = () => {
   useEffect(() => {
     // Redirigir solo la primera vez que se accede al sidebar
     const hasRedirected = sessionStorage.getItem('hasRedirected');
-    
+
     if (!hasRedirected && userRole) {
       if (userRole === 'Veterinario') {
         navigate('/seguimiento-atencion');
@@ -50,7 +50,7 @@ const Sidebar = () => {
         <h1 className="title">KOALA VET</h1>
       </div>
       <nav className="sidebar-nav">
-        
+
         {/* Opciones para Administrador */}
         {userRole === 'Administrador' && (
           <>
@@ -97,6 +97,15 @@ const Sidebar = () => {
               >
                 <BarChart2 size={18} /> Generar boleta de pago
               </Link>
+
+              <Link
+                to="/facturacion-dia"
+                className={`nav-item ${activeLink === '/facturacion-dia' ? 'active' : ''}`}
+                onClick={() => setActiveLink('/facturacion-dia')}
+              >
+                <Receipt size={18} /> Facturación del Día
+              </Link>
+
             </div>
           </>
         )}
