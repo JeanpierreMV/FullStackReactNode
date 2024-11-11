@@ -6,7 +6,7 @@ import authRoutes from './auth.mjs';
 import atencionesRoutes from './atencion.mjs';
 import veterinariosRoutes from './veterinarios.mjs';
 import serviciosRoutes from './servicios.mjs';
-import boletasRoutes from './boletas.mjs';
+import boletaRoutes from './boleta.mjs';
 //import validar from './buscarCliente.mjs'
 import tamaño from './sizemascota.mjs';
 import consultarS from './consultarS.mjs';
@@ -30,7 +30,7 @@ router.use('/auth', authRoutes);
 router.use('/atenciones', atencionesRoutes);
 router.use('/veterinarios', veterinariosRoutes);
 router.use('/servicios', serviciosRoutes);
-router.use('/boletas', boletasRoutes);
+router.use('/boleta', boletaRoutes);
 //router.use('/validar', validar);
 router.use('/size-mascota', tamaño)
 router.use('/consultar', consultarS)

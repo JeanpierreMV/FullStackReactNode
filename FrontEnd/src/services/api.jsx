@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 const api = axios.create({
   baseURL: 'http://localhost:1234/KoalaVet', 
   headers: {
@@ -151,14 +152,6 @@ export const registrarAtencion = async (atencionData) => {
   }
 };
 
-export const atencionesget = async (atencionData) => {
-  try {
-      const response = await api.get('/atenciones', atencionData);
-      return response.data;
-  } catch (error) {
-      throw new Error('Error al registrar atención');
-  }
-};
 
 export const obtenerMascotas = async () => {
   const response = await api.get('/mascotas');
@@ -214,15 +207,7 @@ export const obtenerDetallesAtencion = async (atencionId) => {
   }
 };
 
-export const obtenerFacturacionDelDia = async () => {
-  try {
-    const response = await api.get('/boletas/facturacion-dia');
-    return response.data;
-  } catch (error) {
-    console.error('Error al obtener facturación del día:', error);
-    throw new Error('Error al obtener facturación del día');
-  }
-};
+
 // Función para obtener los detalles de una boleta específica
 export const obtenerDetalleBoleta = async (id) => {
   try {
@@ -321,6 +306,64 @@ export const buscarCitas = async (id)=>{
   }
 };
 
+export const obtenerMascotasCliente = async (dni) => {
+  try {
+  const response = await api.get(`/boleta/mascotas/${dni}`);
+  return response.data;
+} catch (error) {
+  throw new Error('Error');
+}
+};
+
+export const obtenerAtencionesPendientes = async (mascotaId) => {
+  try {
+  const response = await api.get(`/boleta/atenciones-pendientes/${mascotaId}`);
+  return response.data;
+} catch (error) {
+  throw new Error('Error');
+}
+};
+
+export const generarBoleta = async (data) => {
+  try {
+  const response = await api.post('/boleta/generar-boleta', data);
+  return response.data;
+} catch (error) {
+  throw new Error('Error');
+}
+};
+
+// Obtener todas las atenciones
+export const atencionesget = async () => {
+  try {
+    const response = await api.get('/atenciones'); // Solo obtén los datos, no necesitas pasar atencionData en este caso
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener atenciones:', error.response || error.message);
+    throw new Error('Error al obtener atenciones');
+  }
+};
+
+// Obtener detalles específicos de una atención
+export const getAtencionDetalle = async (atencionId) => {
+  try {
+      const response = await api.get(`/atenciones/detalles/${atencionId}`);
+      return response.data;
+  } catch (error) {
+      console.error('Error al obtener los detalles de la atención:', error);
+      throw new Error('Error al obtener los detalles de la atención');
+  }
+};
+
+export const obtenerFacturacionDelDia = async () => {
+  try {
+    const response = await api.get('/boleta/facturacion-dia');
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener facturación del día:', error);
+    throw new Error('Error al obtener facturación del día');
+  }
+};
 
 
 

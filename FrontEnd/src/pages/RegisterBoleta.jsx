@@ -47,7 +47,7 @@ const RegisterBoleta = () => {
     <div className="mainContent">
       <Navbar />
     <div className="generar-boleta-container">
-      <h1>Generar Boleta</h1>
+      
       {/* Mensajes de éxito o error según el estado */}
       {success && <p className="success-message">Boleta generada exitosamente</p>}
       {error && <p className="error-message">{error}</p>}
