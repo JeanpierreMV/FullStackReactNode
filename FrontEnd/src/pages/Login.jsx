@@ -21,6 +21,7 @@ const Login = () => {
             localStorage.setItem('token', response.token);
             localStorage.setItem('nombre', payload.nombre);
             localStorage.setItem('rol', payload.rol);
+            localStorage.setItem('userId',payload.userId)
             
             navigate('/registrar-cliente');
         } catch (error) {

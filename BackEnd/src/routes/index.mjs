@@ -14,6 +14,7 @@ import busCliente from './buscarCliente.mjs';
 import analisisRoutes from './analisis.mjs';
 import historialMascotaRoutes from './historialMascota.mjs';
 import analisisAtencionRoutes from './analisisA.mjs';
+import buscarCita from './buscarCitas.mjs'
 
 const router = express.Router();
 
@@ -37,5 +38,6 @@ router.use('/cliente', busCliente)
 router.use('/analisis', analisisRoutes)
 router.use('/historial-mascota', historialMascotaRoutes)
 router.use('/analisis-atencion', analisisAtencionRoutes);
+router.use('/buscar',buscarCita)
 
 export default router;

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/ConsultarCliente.css';
 import { Link } from 'react-router-dom';
-import { listaClientes } from '../services/api';
-import { FaEye, FaEdit } from 'react-icons/fa';
+import { listaClientes, obtenerMascotasPorDni, ActualizarCliente } from '../services/api';
 
 export default function ConsultarCliente() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -16,7 +15,18 @@ export default function ConsultarCliente() {
     const fetchClientes = async () => {
       try {
         const response = await listaClientes();
-        setClientes(response);
+        
+        // Agregar la cantidad de mascotas para cada cliente
+        const clientesConMascotas = await Promise.all(response.map(async (cliente) => {
+          try {
+            const mascotas = await obtenerMascotasPorDni(cliente.dni);
+            return { ...cliente, cantidadMascotas: mascotas.length > 0 ? mascotas.length : "Aún no ha registrado mascotas" };
+          } catch {
+            return { ...cliente, cantidadMascotas: "Error al obtener mascotas" };
+          }
+        }));
+        
+        setClientes(clientesConMascotas);
       } catch (error) {
         setError('Error al cargar los clientes');
       } finally {
@@ -36,13 +46,25 @@ export default function ConsultarCliente() {
     setShowModal(true);
   };
 
-  const handleOpenModal2 = (appointment) => {
-    // Lógica para abrir otro modal o realizar otra acción
-  };
-
   const handleCloseModal = () => {
     setShowModal(false);
     setSelectedCliente(null);
+  };
+
+  const handleUpdateCliente = async (formData) => {
+    try {
+      
+      await ActualizarCliente(selectedCliente.id, formData); 
+      
+      const updatedClientes = clientes.map((cliente) =>
+        cliente.id === selectedCliente.id ? { ...cliente, ...formData } : cliente
+      );
+      setClientes(updatedClientes); 
+      handleCloseModal(); 
+    } catch (error) {
+      console.error('Error al actualizar el cliente:', error);
+      throw error; // Propagar el error al modal
+    }
   };
 
   return (
@@ -82,12 +104,14 @@ export default function ConsultarCliente() {
                 <th className="px-4 py-2">Dirección</th>
                 <th className="px-4 py-2">Distrito</th>
                 <th className="px-4 py-2">Celular</th>
+                <th className="px-4 py-2">Cantidad de Mascotas</th>
                 <th className="px-4 py-2">Acciones</th>
               </tr>
             </thead>
             <tbody>
               {filteredClientes.map((cliente, index) => (
-                <tr key={index} className="border-t">
+                
+                <tr key={cliente.id} className="border-t">
                   <td className="px-4 py-2">{cliente.dni}</td>
                   <td className="px-4 py-2">{cliente.nombre}</td>
                   <td className="px-4 py-2">{cliente.email}</td>
@@ -95,7 +119,9 @@ export default function ConsultarCliente() {
                   <td className="px-4 py-2">{cliente.distrito}</td>
                   <td className="px-4 py-2">{cliente.celular}</td>
                   <td className="px-4 py-2">
-                   {/* <button className="view-button" onClick={() => handleOpenModal2(cliente)}>👁️</button>*/}
+                    {cliente.cantidadMascotas}
+                  </td>
+                  <td className="px-4 py-2">
                     <button className="edit-button" onClick={() => handleEditClick(cliente)}>✏️</button>
                   </td>
                 </tr>
@@ -106,13 +132,14 @@ export default function ConsultarCliente() {
       </div>
 
       {showModal && selectedCliente && (
-        <EditClientModal cliente={selectedCliente} onClose={handleCloseModal} />
+        <EditClientModal cliente={selectedCliente} onClose={handleCloseModal} onSave={handleUpdateCliente} />
       )}
     </div>
   );
 }
 
-function EditClientModal({ cliente, onClose }) {
+
+function EditClientModal({ cliente, onClose, onSave }) {
   const [formData, setFormData] = useState({
     nombre: cliente.nombre,
     apellido: cliente.apellido,
@@ -122,22 +149,42 @@ function EditClientModal({ cliente, onClose }) {
     distrito: cliente.distrito,
     email: cliente.email,
     contrasena: '',
-    rol: cliente.rol || 'ADMIN',
- 
+    rol: cliente.rol,
     numeroMascotas: '1',
   });
+
+  const [mascotas, setMascotas] = useState([]);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    const fetchMascotas = async () => {
+      try {
+        const response = await obtenerMascotasPorDni(cliente.dni);
+        setMascotas(response);
+      } catch (error) {
+        console.error('Error al obtener mascotas:', error);
+      }
+    };
+
+    fetchMascotas();
+  }, [cliente.dni]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSave = () => {
-    // Aquí podrías hacer la llamada para guardar los cambios
-    console.log('Datos guardados:', formData);
-    onClose();
+  const handleSave = async () => {
+    try {
+      setSaving(true);
+      await onSave(formData);  // Solo llamar a onSave, no actualizar aquí
+      // No cerrar el modal aquí, se cerrará en el padre
+    } catch (error) {
+      console.error('Error al actualizar el cliente:', error);
+    } finally {
+      setSaving(false);
+    } 
   };
-
   return (
     <div className="modal-overlay">
       <div className="modal-content">
@@ -167,25 +214,36 @@ function EditClientModal({ cliente, onClose }) {
         <input type="password" name="contrasena" value={formData.contrasena} onChange={handleChange} />
         
         <label>Rol</label>
-        <select className="linea" name="rol" value={formData.rol} onChange={handleChange}>
-          <option value="ADMIN">ADMIN</option>
-          <option value="USER">USER</option>
-        </select>
+          <select
+            name="rol"
+            value={formData.rol}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Selecciona un rol</option>
+            <option value="1">Veterinario</option> {/* Usa el ID del rol en lugar del nombre */}
+            <option value="2">Laboratorista</option>
+            <option value="3">Administrador</option>
+            <option value="4">Cliente</option>
+          </select>
+          
+        
         
               
-        <label>Número de Mascotas</label>
+        <label>Mascotas</label>
         <select name="numeroMascotas" value={formData.numeroMascotas} onChange={handleChange}>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
+          {mascotas.map((mascota, index) => (
+            <option key={index} value={mascota.id}>{mascota.nombre}</option>
+          ))}
         </select>
-        
+
         <div className="modal-actions">
-          <button onClick={onClose}>Cancelar</button>
-          <button onClick={handleSave}>Guardar Cambios</button>
+          <button onClick={onClose} disabled={saving}>
+            Cancelar
+          </button>
+          <button onClick={handleSave} disabled={saving}>
+            {saving ? 'Guardando...' : 'Guardar Cambios'}
+          </button>
         </div>
       </div>
     </div>

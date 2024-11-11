@@ -18,7 +18,7 @@ import ConsultarClientePage from './pages/ConsultarClientePage.jsx';
 import PetAttentionSearchPage from './pages/PetAttentionSearchPage.jsx';
 import BuscarServicios from './pages/BuscarServiciosPage.jsx';
 //import ClientManagement from './pages/ClientManagement.jsx';
-// import BuscarCitaMas from './pages/SeguimientoAtencion.jsx';
+import BuscarCitaMas from './pages/BuscarCitasPage.jsx';
 import CuadreDia from './pages/Dashboard.jsx';
 //import RegisterAtencion from './components/RegistrarAtencion';
 import BuscarAtencionesPage from './pages/BuscarAtencionesPage';
@@ -60,6 +60,8 @@ const App = () => {
         <Route path="/boleta/detalle/:id" element={<PrivateRoute element={<VerDetalleBoletaPage />} />} />
         <Route path="/ver-factura" element={<PrivateRoute element={<ViewDetailsBillPage />} />} />
         <Route path="/ultimo-analisis" element={<PrivateRoute element={<ViewDetailsAnalysis />} />} />
+        <Route path="/buscar-citas" element={<PrivateRoute element={<BuscarCitaMas />} />} />
+
       </Routes>
 
     </Router>

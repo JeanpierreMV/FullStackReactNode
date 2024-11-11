@@ -32,6 +32,15 @@ export const listaClientes = async (clienteData) => {
   }
 };
 
+export const ActualizarCliente = async (id,clienteData) => {
+  try {
+    const response = await api.put(`/clientes/${id}`, clienteData);
+    return response.data;
+  } catch (error) {
+    throw new Error('Error al listar los cliente');
+  }
+};
+
 export const registrarTipoMascota = async (tipoMascotaData) => {
   try {
     const response = await api.post('/tipos-mascota/registrar', tipoMascotaData);
@@ -302,6 +311,15 @@ export const actualizarResultadosAnalisisAtencion = async (analisisAtencionId, d
   }
 };
 
+
+export const buscarCitas = async (id)=>{
+  try {
+    const response = await api.get(`/buscar/citas/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Error al listar los cliente');
+  }
+};
 
 
 
