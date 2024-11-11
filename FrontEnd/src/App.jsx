@@ -31,6 +31,7 @@ import ViewDetailsAnalysis from './pages/ViewDetailsAnalysisPage.jsx';
 import ServiceTa from './pages/ServicePageT.jsx';
 import CitaBuscarT from './pages/CitaBuscarTail.jsx';
 import ConsultaServi from './pages/ClientServicesPageTail.jsx';
+import GenerarBoleta from './pages/GenerarBoleta';
 
 const App = () => {
   return (
@@ -47,7 +48,7 @@ const App = () => {
         <Route path="/consultar-cliente" element={<PrivateRoute element={<ConsultarClientePage />} />} />
         <Route path="/cuadre-dia" element={<PrivateRoute element={<CuadreDia />} />} />
         <Route path="/buscar-clientes" element={<PrivateRoute element={<BuscarClientesPage />} />} />
-        <Route path="/generar-boleta" element={<PrivateRoute element={<RegisterBoleta />} />} />
+       
         <Route path="/filter-mascota" element={<PrivateRoute element={<FilterMascotaPage />} />} />
         <Route path="/filter-atencion" element={<PrivateRoute element={<FilterAtencionPage />} />} />
         <Route path="/pet-attetion" element={<PrivateRoute element={<PetAttentionSearchPage />} />} />
@@ -61,7 +62,7 @@ const App = () => {
         <Route path="/ver-factura" element={<PrivateRoute element={<ViewDetailsBillPage />} />} />
         <Route path="/ultimo-analisis" element={<PrivateRoute element={<ViewDetailsAnalysis />} />} />
         <Route path="/buscar-citas" element={<PrivateRoute element={<BuscarCitaMas />} />} />
-
+        <Route path="/generar-boleta" element={<PrivateRoute element={<RegisterBoleta />} />} />
       </Routes>
 
     </Router>

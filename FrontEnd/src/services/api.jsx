@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 const api = axios.create({
   baseURL: 'http://localhost:1234/KoalaVet', 
   headers: {
@@ -319,6 +320,33 @@ export const buscarCitas = async (id)=>{
   } catch (error) {
     throw new Error('Error al listar los cliente');
   }
+};
+
+export const obtenerMascotasCliente = async (dni) => {
+  try {
+  const response = await api.get(`/boleta/mascotas/${dni}`);
+  return response.data;
+} catch (error) {
+  throw new Error('Error');
+}
+};
+
+export const obtenerAtencionesPendientes = async (mascotaId) => {
+  try {
+  const response = await api.get(`/boleta/atenciones-pendientes/${mascotaId}`);
+  return response.data;
+} catch (error) {
+  throw new Error('Error');
+}
+};
+
+export const generarBoleta = async (data) => {
+  try {
+  const response = await api.post('/boleta/generar-boleta', data);
+  return response.data;
+} catch (error) {
+  throw new Error('Error');
+}
 };
 
 
