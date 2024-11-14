@@ -84,6 +84,7 @@ const ClienteForm = ({ formData, handleChange, handleSubmit }) => {
     e.preventDefault();
     const isValid = Object.keys(formData).every(key => validateInput(key, formData[key]));
     if (isValid) {
+      alert("Cliente Registrado Correctamente");  // Mostrar mensaje de confirmación
       handleSubmit(e);
     }
   };
