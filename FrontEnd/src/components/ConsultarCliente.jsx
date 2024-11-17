@@ -177,8 +177,7 @@ function EditClientModal({ cliente, onClose, onSave }) {
   const handleSave = async () => {
     try {
       setSaving(true);
-      await onSave(formData);  // Solo llamar a onSave, no actualizar aquí
-      // No cerrar el modal aquí, se cerrará en el padre
+      await onSave(formData);        
     } catch (error) {
       console.error('Error al actualizar el cliente:', error);
     } finally {

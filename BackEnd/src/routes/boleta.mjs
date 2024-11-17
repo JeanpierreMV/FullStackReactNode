@@ -52,9 +52,7 @@ router.get('/atenciones-pendientes/:mascotaId', async (req, res) => {
 
 router.post('/generar-boleta', async (req, res) => {
     const { clienteId, mascotaId } = req.body;
-    console.log({ clienteId, mascotaId });
-    console.log('Cliente ID:', clienteId);
-    console.log('Mascota ID:', mascotaId);
+   
 
     try {
         // 1. Obtener las atenciones pendientes de la mascota
@@ -69,7 +67,7 @@ router.post('/generar-boleta', async (req, res) => {
             },
         });
 
-        console.log('Atenciones Pendientes:', atencionesPendientes);  // Log de las atenciones
+        console.log('Atenciones Pendientes:', atencionesPendientes);  
 
         if (atencionesPendientes.length === 0) {
             return res.status(404).json({ message: 'No hay atenciones pendientes para esta mascota.' });

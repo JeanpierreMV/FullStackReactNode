@@ -129,11 +129,25 @@ const Sidebar = () => {
               <Dog size={18} /> Mascotas
             </Link>
             <Link
+              to="/buscar-citas"
+              className={`nav-item ${activeLink === '/buscar-citas' ? 'active' : ''}`}
+              onClick={() => setActiveLink('/buscar-citas')}
+            >
+              <Users size={18} /> Citas del dia
+            </Link>
+            <Link
               to="/seguimiento-atencion"
               className={`nav-item ${activeLink === '/seguimiento-atencion' ? 'active' : ''}`}
               onClick={() => setActiveLink('/seguimiento-atencion')}
             >
               <FileSpreadsheet size={18} /> Seguimiento de atención
+            </Link>
+            <Link
+              to="/Buscar-Historial-Mascota"
+              className={`nav-item ${activeLink === '/Buscar-Historial-Mascota' ? 'active' : ''}`}
+              onClick={() => setActiveLink('/Buscar-Historial-Mascota')}
+            >
+              <FileSpreadsheet size={18} /> Historial Clinico
             </Link>
             <h2>EMPRESA</h2>
             <Link

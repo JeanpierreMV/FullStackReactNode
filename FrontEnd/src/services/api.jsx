@@ -274,6 +274,16 @@ export const obtenerHistorialMascota = async (mascotaId) => {
   }
 };
 
+export const HistorialMascotaPDF = async (mascotaId) => {
+  try {
+    const response = await api.get(`/historial-mascota/historial-pdf/${mascotaId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al generar el pdf:', error);
+    throw error;
+  }
+};
+
 // Función para obtener el listado de atenciones
 export const obtenerListadoAtenciones = async () => {
   try {

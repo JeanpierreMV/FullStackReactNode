@@ -31,6 +31,7 @@ import ServiceTa from './pages/ServicePageT.jsx';
 import CitaBuscarT from './pages/CitaBuscarTail.jsx';
 import ConsultaServi from './pages/ClientServicesPageTail.jsx';
 import ListarFacturacionPage from './pages/ListarFacturacionPage';
+import HistoriaMascota from './pages/BuscarHistoriaMascotaPage';
 
 const App = () => {
   return (
@@ -62,6 +63,8 @@ const App = () => {
         <Route path="/ultimo-analisis" element={<PrivateRoute element={<ViewDetailsAnalysis />} />} />
         <Route path="/buscar-citas" element={<PrivateRoute element={<BuscarCitaMas />} />} />
         <Route path="/generar-boleta" element={<PrivateRoute element={<RegisterBoleta />} />} />
+        <Route path="/Buscar-Historial-Mascota" element={<PrivateRoute element={<HistoriaMascota />} />} />
+
       </Routes>
 
     </Router>
