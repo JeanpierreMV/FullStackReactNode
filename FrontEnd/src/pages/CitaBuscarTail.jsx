@@ -1,15 +1,15 @@
 import React from "react";
 import Navbar from "../components/SideBar";
-import AppointmentList from "../components/BuscarCitaTail";
+import AppointmentList from "../components/BuscarCitaTail"; // Cambié el nombre del componente si corresponde
 
 const Page = () => {
   return (
-    <div className="min-h-screen flex">
+    <div className="page-container">
       {/* Sidebar */}
-      <Navbar />
+      <Navbar className="sidebar" />
 
       {/* Contenido Principal */}
-      <div className="flex-1 p-6 bg-gray-100">
+      <div className="appointment-list-container">
         <AppointmentList />
       </div>
     </div>

@@ -1,0 +1,100 @@
+/* Estilos para el contenedor principal de la página */
+.service-page {
+    display: flex; /* Utilizamos flexbox para alinear los elementos lado a lado */
+    min-height: 100vh; /* Asegura que el contenedor ocupe toda la altura de la pantalla */
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    width: 200px; /* Asegura que el sidebar tenga un ancho fijo */
+    background-color: #343a40;
+    height: 100vh; /* Hace que el sidebar ocupe toda la altura */
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    align-items: center;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+  }
+  
+  /* Estilos para el ServiceList */
+  .service-list {
+    flex-grow: 1; /* Permite que el service-list ocupe todo el espacio disponible */
+    background-color: white;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-left: 20px; /* Espacio entre el sidebar y el contenido */
+    height: 100vh; /* Asegura que el contenido tenga la misma altura que el sidebar */
+    overflow-y: auto; /* Permite el desplazamiento si el contenido es más alto que la pantalla */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Título de la lista de servicios */
+  .service-list__title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  
+  /* Filtros para la lista de servicios */
+  .service-list__filters {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  
+  /* Estilo para los campos de filtro */
+  .service-list__filter-input,
+  .service-list__filter-select {
+    padding: 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+  }
+  
+  /* Botón para agregar nuevo servicio */
+  .service-list__new-service-btn {
+    background-color: #343a40;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+  }
+  
+  /* Estilos para la tabla de la lista de servicios */
+  .service-list__table {
+    width: 100%;
+    text-align: left;
+  }
+  
+  /* Cabecera de la tabla */
+  .service-list__table-header,
+  .service-list__table-cell {
+    padding: 8px 16px;
+    border: 1px solid #e5e7eb;
+  }
+  
+  /* Cabecera de la tabla con fondo gris */
+  .service-list__table-header {
+    font-weight: bold;
+    background-color: #f3f4f6;
+  }
+  
+  /* Estilo de los botones de edición y eliminación */
+  .service-list__edit-btn {
+    background-color: #343a40;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-right: 8px;
+  }
+  
+  .service-list__delete-btn {
+    background-color: #343a40;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+  

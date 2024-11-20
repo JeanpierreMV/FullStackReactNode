@@ -1,0 +1,98 @@
+/* Estilo para la página principal (Page) */
+.page-container {
+    display: flex; /* Usamos flexbox para alinear los elementos lado a lado */
+    min-height: 100vh; /* Asegura que el contenedor ocupe toda la altura de la pantalla */
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    width: 200px; /* Ancho fijo del sidebar */
+    background-color: #343a40;
+    height: 100vh; /* Hace que el sidebar ocupe toda la altura */
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alinea los elementos desde la parte superior */
+    align-items: flex-start; /* Alinea los elementos al inicio del contenedor */
+    overflow-y: auto;
+  }
+  
+  /* Contenedor principal para AppointmentList */
+  .appointment-list-container {
+    flex-grow: 1; /* Toma todo el espacio restante */
+    padding: 24px;
+    background-color: #f3f4f6;
+    overflow-y: auto;
+    height: 100vh; /* Hace que el contenido tenga la misma altura que el sidebar */
+  }
+  
+  /* Estilo para el contenedor de AppointmentList */
+  .appointment-list {
+    background-color: white;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Título de la lista de citas */
+  .appointment-list h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  
+  /* Estilo del input de búsqueda */
+  .appointment-list input[type="text"] {
+    margin-bottom: 16px;
+    padding: 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    width: 100%;
+  }
+  
+  /* Estilos para la tabla */
+  .appointment-list table {
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+  }
+  
+  /* Estilo para las celdas de la tabla */
+  .appointment-list th,
+  .appointment-list td {
+    padding: 12px 16px;
+    border: 1px solid #e5e7eb;
+  }
+  
+  /* Estilo para la cabecera de la tabla */
+  .appointment-list th {
+    background-color: #f3f4f6;
+    font-weight: bold;
+  }
+  
+  /* Estilo para los botones */
+  .appointment-list button {
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+  }
+  
+  .appointment-list button.bg-green {
+    background-color: #10b981;
+    color: white;
+  }
+  
+  .appointment-list button.bg-blue {
+    background-color: #3b82f6;
+    color: white;
+  }
+  
+  /* Estilos del select */
+  .appointment-list select {
+    padding: 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+  }
+  

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import '../styles/FormularioRegistro.css'; // Importa el archivo CSS
 
-const FormularioRegistro = ({ onClose, clientes, onGuardarCliente }) => {
+const FormularioRegistro = ({ cliente, onClose, clientes, onGuardarCliente }) => {
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
@@ -14,21 +15,25 @@ const FormularioRegistro = ({ onClose, clientes, onGuardarCliente }) => {
 
   const [errors, setErrors] = useState({});
 
+  // Rellena el formulario con los datos del cliente si está editando
+  useEffect(() => {
+    if (cliente) {
+      setFormData(cliente);
+    }
+  }, [cliente]);
+
   const validarFormulario = () => {
     const nuevosErrores = {};
 
-    // Verificar si el cliente ya está registrado (por DNI)
     const clienteExistente = clientes.find((cliente) => cliente.dni === formData.dni);
-    if (clienteExistente) {
+    if (clienteExistente && clienteExistente.id !== formData.id) {
       nuevosErrores.dni = 'Este cliente ya está registrado.';
     }
 
-    // Validar que el DNI tenga exactamente 8 dígitos numéricos
     if (!/^\d{8}$/.test(formData.dni)) {
       nuevosErrores.dni = 'El DNI debe tener exactamente 8 dígitos numéricos.';
     }
 
-    // Validar que el correo sea obligatorio y tenga un formato válido
     if (!formData.email) {
       nuevosErrores.email = 'El correo electrónico es obligatorio.';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
@@ -37,7 +42,6 @@ const FormularioRegistro = ({ onClose, clientes, onGuardarCliente }) => {
 
     setErrors(nuevosErrores);
 
-    // Si no hay errores, devuelve true
     return Object.keys(nuevosErrores).length === 0;
   };
 
@@ -51,23 +55,22 @@ const FormularioRegistro = ({ onClose, clientes, onGuardarCliente }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validarFormulario()) {
-      // Si no hay errores, guardamos el cliente
       onGuardarCliente(formData);
-      onClose(); // Cerramos el formulario al guardar
+      onClose();
     }
   };
 
   return (
-    <div className="bg-white p-6 rounded shadow mt-4">
-      <h2 className="text-xl font-bold mb-4">Registrar Cliente</h2>
+    <div className="form-container">
+      <h2 className="form-title">{cliente ? 'Editar Cliente' : 'Registrar Cliente'}</h2>
       <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="form-grid">
           <div>
             <input
               type="text"
               name="nombre"
               placeholder="Ingresar Nombre"
-              className="border p-2 rounded w-full"
+              className="form-input"
               value={formData.nombre}
               onChange={handleChange}
             />
@@ -77,7 +80,7 @@ const FormularioRegistro = ({ onClose, clientes, onGuardarCliente }) => {
               type="text"
               name="apellido"
               placeholder="Ingresar Apellido"
-              className="border p-2 rounded w-full"
+              className="form-input"
               value={formData.apellido}
               onChange={handleChange}
             />
@@ -87,18 +90,18 @@ const FormularioRegistro = ({ onClose, clientes, onGuardarCliente }) => {
               type="text"
               name="dni"
               placeholder="Ingresar DNI"
-              className="border p-2 rounded w-full"
+              className="form-input"
               value={formData.dni}
               onChange={handleChange}
             />
-            {errors.dni && <p className="text-red-500 text-sm">{errors.dni}</p>}
+            {errors.dni && <p className="error-text">{errors.dni}</p>}
           </div>
           <div>
             <input
               type="text"
               name="celular"
               placeholder="Ingresar Celular"
-              className="border p-2 rounded w-full"
+              className="form-input"
               value={formData.celular}
               onChange={handleChange}
             />
@@ -108,18 +111,18 @@ const FormularioRegistro = ({ onClose, clientes, onGuardarCliente }) => {
               type="email"
               name="email"
               placeholder="Ingresar Email"
-              className="border p-2 rounded w-full"
+              className="form-input"
               value={formData.email}
               onChange={handleChange}
             />
-            {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+            {errors.email && <p className="error-text">{errors.email}</p>}
           </div>
           <div>
             <input
               type="text"
               name="direccion"
               placeholder="Ingresar Dirección"
-              className="border p-2 rounded w-full"
+              className="form-input"
               value={formData.direccion}
               onChange={handleChange}
             />
@@ -129,7 +132,7 @@ const FormularioRegistro = ({ onClose, clientes, onGuardarCliente }) => {
               type="text"
               name="distrito"
               placeholder="Ingresar Distrito"
-              className="border p-2 rounded w-full"
+              className="form-input"
               value={formData.distrito}
               onChange={handleChange}
             />
@@ -138,24 +141,16 @@ const FormularioRegistro = ({ onClose, clientes, onGuardarCliente }) => {
             <input
               type="password"
               name="contraseña"
-              placeholder="Ingresar Contraseña"
-              className="border p-2 rounded w-full"
+              placeholder="Contraseña"
+              className="form-input"
               value={formData.contraseña}
               onChange={handleChange}
             />
           </div>
         </div>
-        <div className="flex justify-end mt-4">
-          <button
-            type="button"
-            className="bg-red-500 text-white px-4 py-2 rounded mr-2"
-            onClick={onClose}
-          >
-            Cancelar
-          </button>
-          <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-            Guardar
-          </button>
+        <div className="form-buttons">
+          <button type="submit" className="save-btn">Guardar Cliente</button>
+          <button type="button" className="cancel-btn" onClick={onClose}>Cancelar</button>
         </div>
       </form>
     </div>

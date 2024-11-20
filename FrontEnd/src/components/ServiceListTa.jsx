@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Modal from "./ServiceFormT";
+import "../styles/ServiceList.css"; // Importamos el archivo CSS
 
 const ServiceList = () => {
   const [services, setServices] = useState([
@@ -54,24 +55,24 @@ const ServiceList = () => {
   });
 
   return (
-    <div className="bg-white p-4 rounded shadow">
-      <h2 className="text-2xl font-bold mb-4">Consultar Servicios</h2>
+    <div className="service-list">
+      <h2 className="service-list__title">Consultar Servicios</h2>
 
       {/* Filtros */}
-      <div className="flex space-x-4 mb-4">
+      <div className="service-list__filters">
         <input
           type="text"
           placeholder="Filtrar por servicio"
           name="service"
           value={filters.service}
           onChange={handleFilterChange}
-          className="border p-2 rounded"
+          className="service-list__filter-input"
         />
         <select
           name="size"
           value={filters.size}
           onChange={handleFilterChange}
-          className="border p-2 rounded"
+          className="service-list__filter-select"
         >
           <option value="">Tamaño</option>
           <option value="Grande">Grande</option>
@@ -82,7 +83,7 @@ const ServiceList = () => {
           name="type"
           value={filters.type}
           onChange={handleFilterChange}
-          className="border p-2 rounded"
+          className="service-list__filter-select"
         >
           <option value="">Tipo de Mascota</option>
           <option value="Perro">Perro</option>
@@ -92,39 +93,39 @@ const ServiceList = () => {
 
       {/* Botón para abrir modal */}
       <button
-        className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
+        className="service-list__new-service-btn"
         onClick={handleOpenModal}
       >
         Nuevo Servicio
       </button>
 
       {/* Lista de servicios */}
-      <table className="w-full text-left">
+      <table className="service-list__table">
         <thead>
           <tr>
-            <th className="border px-4 py-2">Servicio</th>
-            <th className="border px-4 py-2">Descripción</th>
-            <th className="border px-4 py-2">Tamaño Mascota</th>
-            <th className="border px-4 py-2">Costo</th>
-            <th className="border px-4 py-2">Opciones</th>
+            <th className="service-list__table-header">Servicio</th>
+            <th className="service-list__table-header">Descripción</th>
+            <th className="service-list__table-header">Tamaño Mascota</th>
+            <th className="service-list__table-header">Costo</th>
+            <th className="service-list__table-header">Opciones</th>
           </tr>
         </thead>
         <tbody>
           {filteredServices.map(service => (
             <tr key={service.id}>
-              <td className="border px-4 py-2">{service.name}</td>
-              <td className="border px-4 py-2">{service.description}</td>
-              <td className="border px-4 py-2">{service.size}</td>
-              <td className="border px-4 py-2">{service.cost}</td>
-              <td className="border px-4 py-2">
+              <td className="service-list__table-cell">{service.name}</td>
+              <td className="service-list__table-cell">{service.description}</td>
+              <td className="service-list__table-cell">{service.size}</td>
+              <td className="service-list__table-cell">{service.cost}</td>
+              <td className="service-list__table-cell">
                 <button
-                  className="bg-yellow-500 text-white px-2 py-1 rounded mr-2"
+                  className="service-list__edit-btn"
                   onClick={() => handleEditService(service)}
                 >
                   Editar
                 </button>
                 <button
-                  className="bg-red-500 text-white px-2 py-1 rounded"
+                  className="service-list__delete-btn"
                   onClick={() => handleDeleteService(service.id)}
                 >
                   Eliminar

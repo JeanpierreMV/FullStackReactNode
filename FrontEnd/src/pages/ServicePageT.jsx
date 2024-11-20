@@ -1,19 +1,17 @@
-import React from "react";
-import Navbar from "../components/SideBar";
-import ServiceList from "../components/ServiceListTa"
+import React from 'react';
+import Navbar from '../components/SideBar';  // Asegúrate de ajustar el path al componente Navbar
+import ClientServiceList from '../components/ClientServiceTail';  // Ajusta el path
 
-const ServicePage = () => {
+const ClientServicesPage = () => {
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Navbar */}
+    <div className="page-container">
       <Navbar />
-
-      {/* Contenido principal */}
-      <div className="flex-grow p-8 bg-gray-100">
-        <ServiceList />
+      <div className="main-content">
+        <h1>Servicios Disponibles</h1>
+        <ClientServiceList />
       </div>
     </div>
   );
 };
 
-export default ServicePage;
+export default ClientServicesPage;

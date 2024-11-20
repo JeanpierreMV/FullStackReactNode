@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../styles/ClientServiceList.css'; // Importamos el archivo CSS
 
 const ClientServiceList = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -23,22 +24,21 @@ const ClientServiceList = () => {
   });
 
   return (
-    <div className="w-full max-w-7xl mx-auto">
-      <div className="mb-4 grid grid-cols-3 gap-4">
+    <div className="client-service-list-container">
+      {/* Filtros */}
+      <div className="filters-container">
         {/* Filtro por nombre de servicio */}
         <input
           type="text"
           placeholder="Buscar servicio..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="p-2 border border-gray-300 rounded w-full"
         />
         
         {/* Filtro por tamaño de mascota */}
         <select
           value={selectedSize}
           onChange={(e) => setSelectedSize(e.target.value)}
-          className="p-2 border border-gray-300 rounded w-full"
         >
           <option value="">Filtrar por tamaño</option>
           <option value="Grande">Grande</option>
@@ -50,7 +50,6 @@ const ClientServiceList = () => {
         <select
           value={selectedType}
           onChange={(e) => setSelectedType(e.target.value)}
-          className="p-2 border border-gray-300 rounded w-full"
         >
           <option value="">Filtrar por tipo</option>
           <option value="Perro">Perro</option>
@@ -59,31 +58,31 @@ const ClientServiceList = () => {
       </div>
 
       {/* Tabla de servicios */}
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border border-gray-300">
+      <div className="table-container">
+        <table>
           <thead>
             <tr>
-              <th className="py-3 px-6 border-b text-left text-lg">Nombre</th>
-              <th className="py-3 px-6 border-b text-left text-lg">Descripción</th>
-              <th className="py-3 px-6 border-b text-left text-lg">Costo</th>
-              <th className="py-3 px-6 border-b text-left text-lg">Tamaño</th>
-              <th className="py-3 px-6 border-b text-left text-lg">Tipo de Mascota</th>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Costo</th>
+              <th>Tamaño</th>
+              <th>Tipo de Mascota</th>
             </tr>
           </thead>
           <tbody>
             {filteredServices.length > 0 ? (
               filteredServices.map((service, index) => (
                 <tr key={index}>
-                  <td className="py-4 px-6 border-b text-lg">{service.name}</td>
-                  <td className="py-4 px-6 border-b text-lg">{service.description}</td>
-                  <td className="py-4 px-6 border-b text-lg">{service.cost}</td>
-                  <td className="py-4 px-6 border-b text-lg">{service.size}</td>
-                  <td className="py-4 px-6 border-b text-lg">{service.type}</td>
+                  <td>{service.name}</td>
+                  <td>{service.description}</td>
+                  <td>{service.cost}</td>
+                  <td>{service.size}</td>
+                  <td>{service.type}</td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="5" className="py-4 px-6 text-center text-lg">No se encontraron servicios.</td>
+                <td colSpan="5" className="no-services">No se encontraron servicios.</td>
               </tr>
             )}
           </tbody>

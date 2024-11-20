@@ -1,0 +1,27 @@
+/* Flex container para la sección de la lista y el botón */
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.5rem; /* Espacio entre los elementos */
+  }
+  
+  /* Para asegurar que la lista de clientes no se expanda más de lo necesario */
+  .cliente-list {
+    flex: 1; /* Toma todo el espacio disponible */
+  }
+  
+  /* Ajuste del botón para que se alinee correctamente */
+  .register-btn {
+    align-self: flex-start; /* Alineación en la parte superior */
+    background-color: #4299e1; /* Color de fondo azul */
+    color: white;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
+  .register-btn:hover {
+    background-color: #2b6cb0; /* Color de fondo cuando pasa el mouse */
+  }
+  

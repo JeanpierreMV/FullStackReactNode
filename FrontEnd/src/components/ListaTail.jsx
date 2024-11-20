@@ -1,40 +1,40 @@
 import React from 'react';
+import '../styles/ListaClientes.css'; // Importa el archivo CSS
 
 const ListaClientes = ({ clientes, onEdit, onDelete }) => {
   return (
-    <div className="bg-white p-6 rounded shadow">
-      <h2 className="text-xl font-bold mb-4">Clientes Registrados</h2>
-      <table className="w-full table-auto">
+    <div className="cliente-list">
+      <table>
         <thead>
           <tr>
-            <th className="px-4 py-2">Nombre</th>
-            <th className="px-4 py-2">DNI</th>
-            <th className="px-4 py-2">Correo</th>
-            <th className="px-4 py-2">Celular</th>
-            <th className="px-4 py-2">Dirección</th>
-            <th className="px-4 py-2">Distrito</th>
-            <th className="px-4 py-2">Acciones</th> {/* Nueva columna para acciones */}
+            <th>Nombre</th>
+            <th>DNI</th>
+            <th>Email</th>
+            <th>Celular</th>
+            <th>Dirección</th>
+            <th>Distrito</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
-          {clientes.map((cliente) => (
-            <tr key={cliente.dni}>
-              <td className="border px-4 py-2">{cliente.nombre} {cliente.apellido}</td>
-              <td className="border px-4 py-2">{cliente.dni}</td>
-              <td className="border px-4 py-2">{cliente.email}</td>
-              <td className="border px-4 py-2">{cliente.celular}</td>
-              <td className="border px-4 py-2">{cliente.direccion}</td>
-              <td className="border px-4 py-2">{cliente.distrito}</td>
-              <td className="border px-4 py-2">
-                <button 
-                  className="text-blue-500 hover:underline mx-2" 
-                  onClick={() => onEdit(cliente)}
+          {clientes.map(cliente => (
+            <tr key={cliente.id}>
+              <td>{cliente.nombre}</td>
+              <td>{cliente.dni}</td>
+              <td>{cliente.email}</td>
+              <td>{cliente.celular}</td>
+              <td>{cliente.direccion}</td>
+              <td>{cliente.distrito}</td>
+              <td>
+                <button
+                  className="action-btn edit-btn"
+                  onClick={() => onEdit(cliente)} // Pasamos el cliente a editar
                 >
                   Editar
                 </button>
-                <button 
-                  className="text-red-500 hover:underline" 
-                  onClick={() => onDelete(cliente.dni)}
+                <button
+                  className="action-btn delete-btn"
+                  onClick={() => onDelete(cliente.dni)} // Eliminamos el cliente por DNI
                 >
                   Eliminar
                 </button>
