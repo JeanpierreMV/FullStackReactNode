@@ -7,16 +7,16 @@ import Navbar from '../components/Navbar'; // Importamos el Navbar
 const ListarFacturacionPage = () => {
   const [facturas, setFacturas] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchFacturacion = async () => {
       try {
         const facturasDelDia = await obtenerFacturacionDelDia();
         setFacturas(facturasDelDia);
-        setLoading(false);
       } catch (err) {
-        setError('Error al obtener la facturación del día');
+        // Si hay un error, solo asegúrate de que loading sea false
+        setFacturas([]);  // Asegúrate de vaciar las facturas en caso de error
+      } finally {
         setLoading(false);
       }
     };
@@ -24,8 +24,7 @@ const ListarFacturacionPage = () => {
     fetchFacturacion();
   }, []);
 
- 
-  if (error) return <div>{error}</div>;
+  
 
   return (
     <div className="container">
@@ -33,7 +32,12 @@ const ListarFacturacionPage = () => {
       <div className="mainContent">
         <Navbar /> {/* Navbar arriba */}
         <main className="formContainer">
-          <ListarFacturas facturas={facturas} /> {/* Aquí renderizas las facturas */}
+          {facturas.length === 0 ? (
+            
+            <p>No se han generado facturas hoy.</p>
+          ) : (
+            <ListarFacturas facturas={facturas} /> 
+          )}
         </main>
       </div>
     </div>

@@ -52,7 +52,7 @@ router.get('/atenciones-pendientes/:mascotaId', async (req, res) => {
 
 router.post('/generar-boleta', async (req, res) => {
     const { clienteId, mascotaId } = req.body;
-   
+
 
     try {
         // 1. Obtener las atenciones pendientes de la mascota
@@ -67,7 +67,7 @@ router.post('/generar-boleta', async (req, res) => {
             },
         });
 
-        console.log('Atenciones Pendientes:', atencionesPendientes);  
+        console.log('Atenciones Pendientes:', atencionesPendientes);
 
         if (atencionesPendientes.length === 0) {
             return res.status(404).json({ message: 'No hay atenciones pendientes para esta mascota.' });
@@ -119,33 +119,37 @@ router.post('/generar-boleta', async (req, res) => {
 // Ruta para obtener facturación del día
 router.get('/facturacion-dia', async (req, res) => {
     try {
-      // Obtener la fecha actual
-      const today = new Date().toISOString().split('T')[0]; // 'YYYY-MM-DD'
-  
-      // Obtener las boletas generadas en el día actual
-      const facturacionDia = await prisma.boleta.findMany({
-        where: {
-          fecha: {
-            gte: new Date("2024-11-11T00:00:00.000Z"),  // Desde el inicio del día
-            lt: new Date("2024-11-11T23:59:59.999Z")   // Hasta el final del día
-          }
-        },
-        include: {
-          detallesBoleta: true,
-          cliente: true
+        // Obtener la fecha actual con hora cero (00:00:00) y el final del día (23:59:59)
+        const startOfDay = new Date();
+        startOfDay.setHours(0, 0, 0, 0);
+    
+        const endOfDay = new Date();
+        endOfDay.setHours(23, 59, 59, 999);
+    
+        // Consultar las boletas generadas en el día actual
+        const facturacionDia = await prisma.boleta.findMany({
+          where: {
+            fecha: {
+              gte: startOfDay, // Inicio del día
+              lt: endOfDay,    // Fin del día
+            },
+          },
+          include: {
+            detallesBoleta: true, // Incluye detalles de las boletas
+            cliente: true,        // Incluye datos del cliente
+          },
+        });
+    
+        if (facturacionDia.length > 0) {
+          res.status(200).json(facturacionDia);
+        } else {
+          res.status(404).json({ message: 'No hay facturación generada hoy' });
         }
-      });
-  
-      if (facturacionDia.length > 0) {
-        res.status(200).json(facturacionDia);
-      } else {
-        res.status(404).json({ message: 'No hay facturación generada hoy' });
-      }
-    } catch (error) {
-      console.error('Error al obtener facturación del día:', error);
-      res.status(500).json({ error: 'Error al obtener facturación del día' });
+      } catch (error) {
+        console.error('Error al obtener facturación del día:', error);
+        res.status(500).json({ error: 'Error al obtener facturación del día' });
     }
-  });
+});
 
 
 export default router;

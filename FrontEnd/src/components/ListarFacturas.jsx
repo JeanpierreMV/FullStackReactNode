@@ -1,7 +1,15 @@
 import React from 'react';
 
-
 const ListarFacturas = ({ facturas }) => {
+  // Función para formatear la fecha
+  const formatFecha = (fecha) => {
+    const date = new Date(fecha);
+    const dia = String(date.getDate()).padStart(2, '0'); // Día con dos dígitos
+    const mes = String(date.getMonth() + 1).padStart(2, '0'); // Mes con dos dígitos
+    const año = date.getFullYear(); // Año
+    return `${dia}/${mes}/${año}`;
+  };
+
   return (
     <div>
       <h1>Facturación del Día</h1>
@@ -21,7 +29,7 @@ const ListarFacturas = ({ facturas }) => {
             {facturas.map((factura) => (
               <tr key={factura.id}>
                 <td>{factura.codigo}</td>
-                <td>{new Date(factura.fecha).toLocaleDateString()}</td>
+                <td>{formatFecha(factura.fecha)}</td> {/* Formateo de la fecha */}
                 <td>
                   {factura.detallesBoleta.map((detalle) => (
                     <div key={detalle.id}>{detalle.descripcion}</div>
