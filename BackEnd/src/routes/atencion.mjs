@@ -57,6 +57,7 @@ router.get('/', async (req, res) => {
     try {
         const atenciones = await prisma.atencion.findMany({
             include: {
+                
                 cliente: {
                     select: {
                         dni: true,
@@ -95,6 +96,7 @@ router.get('/', async (req, res) => {
             const hora = fechaCita.toTimeString().split(' ')[0]; // Extrae la hora en formato 'HH:MM:SS'
 
             return {
+                id: atencion.id,
                 dni: atencion.cliente.dni,
                 nombreDuenio: atencion.cliente.nombre,
                 nombreMascota: atencion.mascota.nombre,
@@ -206,7 +208,26 @@ router.get('/detalles/:atencionId', async (req, res) => {
     }
 });
 
+router.put('/Actualizar_cita/:atencionId', async(req,res)=>{
+    const { atencionId } = req.params;
+    const { fechaCita } = req.body;
 
+
+    try{
+
+        const CitaActualizada = await prisma.atencion.update({
+            where: { id: parseInt(atencionId) }, 
+            data: { fechaCita: new Date(fechaCita) },
+        });
+
+        res.status(200).json({ message: 'Cita actualizada con éxito'});
+       
+
+    }catch(error){
+        console.error('Error al actualizar la cita: ', error);
+        res.status(500).json({error:'Error al actualizar la cita'});
+    }
+})
 
 
 export default router;

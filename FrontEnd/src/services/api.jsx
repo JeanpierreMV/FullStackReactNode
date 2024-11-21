@@ -305,6 +305,16 @@ export const obtenerAtencionCLiente = async (clienteId) => {
   }
 };
 
+export const ActualizarCita = async(atencionId, cita)=>{
+  try{
+    const response = await api.put(`/atenciones/Actualizar_cita/${atencionId}`, cita)
+    return response.data;
+  }catch(error){
+    console.error('Error al actualizar la cita', error);
+    throw new Error('Error al actualizar');
+  }
+}
+
 
 
 // Función para actualizar resultados de la atención de análisis

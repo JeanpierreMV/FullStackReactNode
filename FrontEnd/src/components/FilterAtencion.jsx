@@ -1,75 +1,57 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/FilterAtencion.css';
 import { Link } from 'react-router-dom';
-import { atencionesget } from '../services/api'; // Asegúrate de que la ruta es correcta
-import mascotaImage from '../assets/mascota.jpg'; // Asegúrate de tener esta imagen en tu proyecto
-import { getAtencionDetalle } from '../services/api'; // Asegúrate de que la ruta es correcta
-
+import { atencionesget, getAtencionDetalle, ActualizarCita } from '../services/api';
+import mascotaImage from '../assets/mascota.jpg';
 
 export default function FilterAtencion() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [appointments, setAppointments] = useState([]); // Cambia a un estado vacío inicialmente
-  const [showModal1, setShowModal1] = useState(false); // Primer modal
-  const [showModal2, setShowModal2] = useState(false); // Segundo modal
-  const [selectedDate, setSelectedDate] = useState(''); // Fecha de cita seleccionada
-  const [selectedAppointment, setSelectedAppointment] = useState(null); // Cita seleccionada para el segundo modal
+  const [appointments, setAppointments] = useState([]);
+  const [showModal1, setShowModal1] = useState(false);
+  const [showModal2, setShowModal2] = useState(false);
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
 
-  // Efecto para obtener atenciones
   useEffect(() => {
     const fetchAtenciones = async () => {
       try {
         const response = await atencionesget();
-        console.log('Atenciones obtenidas:', response);  // Verifica la estructura de la respuesta
-        setAppointments(response); // Asigna la respuesta al estado
+        setAppointments(response);
       } catch (error) {
         console.error('Error al obtener atenciones:', error);
       }
     };
 
     fetchAtenciones();
-  }, []); // Se ejecuta una vez al montar el componente
+  }, []);
 
-  // Función para obtener los detalles de la atención
   const fetchAtencionDetalles = async (atencionId) => {
     try {
-      // Usa la función importada para obtener los detalles de la atención
-      
       const response = await getAtencionDetalle(atencionId);
-      console.log('Datos obtenidos desde la API:', response); // Verifica los datos
-      setSelectedAppointment(response); 
-      console.log('Cita seleccionada después de asignar:', response); // Guarda los datos en el estado
+      setSelectedAppointment(response);
     } catch (error) {
       console.error('Error al obtener los detalles de la atención:', error);
     }
   };
 
-
-  // Filtrar solo por DNI
   const filteredAppointments = appointments.filter(appointment =>
     appointment.dni.includes(searchTerm)
   );
 
-  const handleOpenModal1 = (fechaCita) => {
-    setSelectedDate(fechaCita);
-    setShowModal1(true);
+  const handleOpenModal1 = (appointment) => {
+    setSelectedAppointment(appointment);
+    const localDateTime = new Date(appointment.fechaCita).toISOString().slice(0, 16);
+  setSelectedDate(localDateTime);
+  setShowModal1(true);
   };
 
-  const handleOpenModal2 = async (appointment, index) => {
-    console.log('Cita seleccionada:', appointment); // Verifica los datos de la cita seleccionada
-  
+  const handleOpenModal2 = async (appointment) => {
     if (appointment) {
-      setSelectedAppointment(appointment);  // Asigna la cita seleccionada
-      setShowModal2(true);  // Muestra el modal
-  
-      // Llama a la función para obtener los detalles de la atención pasando el índice como ID
-      await fetchAtencionDetalles(index + 1); // El índice es 0-based, así que sumamos 1
-    } else {
-      console.log('Cita no encontrada');
+      setSelectedAppointment(appointment);
+      setShowModal2(true);
+      await fetchAtencionDetalles(appointment.id); // Usar appointment.id directamente
     }
   };
-  
-  
-  
 
   const handleCloseModal1 = () => {
     setShowModal1(false);
@@ -79,9 +61,26 @@ export default function FilterAtencion() {
     setShowModal2(false);
   };
 
-  const handleSaveChanges = () => {
-    console.log('Fecha de Cita guardada:', selectedDate);
-    setShowModal1(false);
+  const handleSaveChanges = async () => {
+    try {
+     
+      const payload = {
+        fechaCita: new Date(selectedDate).toISOString(), // Formato ISO
+      };
+  
+      await ActualizarCita(selectedAppointment.id, payload);
+      const updatedAppointments = await atencionesget();
+      setAppointments(updatedAppointments);
+  
+    
+        console.log('Cita actualizada exitosamente:');
+        alert('Cita actualizada correctamente');
+        setShowModal1(false);
+      
+    } catch (error) {
+      console.error('Error al guardar los cambios:', error);
+      alert('Error al guardar la cita');
+    }
   };
 
   return (
@@ -120,26 +119,33 @@ export default function FilterAtencion() {
             </tr>
           </thead>
           <tbody>
-  {filteredAppointments.map((appointment, index) => (
-    <tr key={index}>
-      <td>{appointment.dni}</td>
-      <td>{appointment.nombreDuenio}</td>
-      <td>{appointment.nombreMascota}</td>
-      <td>{appointment.nombreVeterinario}</td>
-      <td>{appointment.fechaCita}</td>
-      <td>{appointment.consideraciones}</td> {/* Cambia a consideraciones */}
-      <td>
-        <button
-          className="view-button"
-          onClick={() => handleOpenModal2(appointment, index)} // Pasar el índice aquí
-        >
-          👁️
-        </button>
-        <button className="edit-button" onClick={() => handleOpenModal1(appointment.fechaCita)}>✏️</button>
-      </td>
-    </tr>
-  ))}
-</tbody>
+        {  [...filteredAppointments]
+        .sort((a, b) => a.id - b.id) 
+        .map((appointment, index) => (
+          <tr key={appointment.id}> 
+                <td>{appointment.dni}</td>
+                <td>{appointment.nombreDuenio}</td>
+                <td>{appointment.nombreMascota}</td>
+                <td>{appointment.nombreVeterinario}</td>
+                <td>{appointment.fechaCita.split('T')[0]}</td>
+                <td>{appointment.consideraciones}</td>
+                <td>
+                  <button
+                    className="view-button"
+                    onClick={() => handleOpenModal2(appointment, index)}
+                  >
+                    👁️
+                  </button>
+                  <button
+                    className="edit-button"
+                    onClick={() => handleOpenModal1(appointment)}
+                  >
+                    ✏️
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
 
@@ -150,11 +156,11 @@ export default function FilterAtencion() {
             <h2>Editar Fecha de Cita</h2>
             <div className="modal-body">
               <div className="form-group">
-                <label htmlFor="fechaCita">Fecha de Cita</label>
+                <label htmlFor="fechaCita">Fecha y Hora de la Cita</label>
               </div>
               <div className="form-group">
                 <input
-                  type="date"
+                  type="datetime-local" // Cambiado de date a datetime-local
                   id="fechaCita"
                   value={selectedDate}
                   onChange={(e) => setSelectedDate(e.target.value)}
@@ -172,33 +178,27 @@ export default function FilterAtencion() {
 
       {/* Segundo Modal - Detalles de la Cita */}
       {showModal2 && selectedAppointment && (
-  <div className="modal-overlay">
-    <div className="modal-content">
-      <h2>Detalle de la Cita</h2>
-      <div className="modal-body">
-        {/* Columna izquierda: Imagen */}
-        <img src={mascotaImage} alt="Mascota" className="mascota-image" />
-        
-        {/* Columna derecha: Información */}
-        <div className="info-container">
-          <h3>Información de la Cita</h3>
-          {/* Mostrar los detalles de la cita */}
-          <div className="info-row"><strong>Nombre del Servicio:</strong> {selectedAppointment.nombreServicio || 'No disponible'}</div>
-          <div className="info-row"><strong>Descripción:</strong> {selectedAppointment.descripcion || 'No disponible'}</div>
-          <div className="info-row"><strong>Especie:</strong> {selectedAppointment.especie || 'No disponible'}</div>
-          <div className="info-row"><strong>Tamaño:</strong> {selectedAppointment.tamaño || 'No disponible'}</div>
-          <div className="info-row"><strong>Costo:</strong> {selectedAppointment.costo || 'No disponible'}</div>
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Detalle de la Cita</h2>
+            <div className="modal-body">
+              <img src={mascotaImage} alt="Mascota" className="mascota-image" />
+              <div className="info-container">
+                <h3>Información de la Cita</h3>
+                <div className="info-row"><strong>Nombre del Servicio:</strong> {selectedAppointment.nombreServicio || 'No disponible'}</div>
+                <div className="info-row"><strong>Descripción:</strong> {selectedAppointment.descripcion || 'No disponible'}</div>
+                <div className="info-row"><strong>Especie:</strong> {selectedAppointment.especie || 'No disponible'}</div>
+                <div className="info-row"><strong>Tamaño:</strong> {selectedAppointment.tamaño || 'No disponible'}</div>
+                <div className="info-row"><strong>Costo:</strong> {selectedAppointment.costo || 'No disponible'}</div>
+              </div>
+            </div>
+            <hr />
+            <div className="modal-actions">
+              <button onClick={handleCloseModal2} className="modal-button close-button">Cerrar</button>
+            </div>
+          </div>
         </div>
-      </div>
-      <hr />
-      <div className="modal-actions">
-        <button onClick={handleCloseModal2} className="modal-button close-button">Cerrar</button>
-      </div>
-    </div>
-  </div>
-)}
-
-
+      )}
     </div>
   );
 }
