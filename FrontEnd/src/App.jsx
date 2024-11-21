@@ -32,7 +32,8 @@ import CitaBuscarT from './pages/CitaBuscarTail.jsx';
 import ConsultaServi from './pages/ClientServicesPageTail.jsx';
 import ListarFacturacionPage from './pages/ListarFacturacionPage';
 import HistoriaMascota from './pages/BuscarHistoriaMascotaPage';
-
+import BillingSummary from './pages/BillingSummary.jsx';
+import RegistrarServicio from './pages/RegistrarServicio.jsx';
 const App = () => {
   return (
     <Router>
@@ -64,6 +65,8 @@ const App = () => {
         <Route path="/buscar-citas" element={<PrivateRoute element={<BuscarCitaMas />} />} />
         <Route path="/generar-boleta" element={<PrivateRoute element={<RegisterBoleta />} />} />
         <Route path="/Buscar-Historial-Mascota" element={<PrivateRoute element={<HistoriaMascota />} />} />
+        <Route path="/ver-facturacion" element={<PrivateRoute element={<BillingSummary />} />} />
+        <Route path="/registrar-servicio" element={<PrivateRoute element={<RegistrarServicio />} />} />
 
       </Routes>
 

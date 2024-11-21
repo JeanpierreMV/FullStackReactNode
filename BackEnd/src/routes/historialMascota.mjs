@@ -29,8 +29,8 @@ router.get('/:mascotaId', async (req, res) => {
     const atencionesConVeterinario = await Promise.all(
       atenciones.map(async (atencion) => {
         const veterinario = await prisma.cliente.findUnique({
-          where: { id: atencion.veterinarioId }, // Busca el veterinario usando veterinarioId
-          select: { nombre: true }, // Solo necesitamos el nombre
+          where: { id: atencion.veterinarioId }, 
+          select: { nombre: true }, 
         });
         return {
           ...atencion,

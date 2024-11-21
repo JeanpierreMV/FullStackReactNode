@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/SegumientoAtencion.css';
-import mascotaImage from '../assets/mascota.jpg'; // Asegúrate de tener esta imagen en tu proyecto
+import mascotaImage from '../assets/mascota.jpg'; 
+import {obtenerAtencionCLiente} from '../services/api'
 
 export default function SeguimientoAtencion() {
   const [searchTerm, setSearchTerm] = useState('');

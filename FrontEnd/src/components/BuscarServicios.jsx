@@ -85,8 +85,7 @@ const BuscarServicios = ({ formData, handleChange }) => {
               resultados.map((servicio, index) => (
                 <tr key={index}>
                   <td>{servicio.nombre}</td>
-                  <td>{servicio.descripcion}</td>
-                  {/* Redondeo el costo hacia el entero superior */}
+                  <td>{servicio.descripcion}</td>             
                   <td>{Math.ceil(servicio.costo)}</td>
                   <td>{servicio.consideraciones}</td>
                 </tr>
@@ -99,7 +98,7 @@ const BuscarServicios = ({ formData, handleChange }) => {
           </tbody>
         </table>
 
-        <button className="siguiente-button">Siguiente</button>
+        <button className="siguiente-button">Registrar Nuevo Servicio</button>
       </div>
     </div>
   );

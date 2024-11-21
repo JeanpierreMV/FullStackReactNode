@@ -295,6 +295,18 @@ export const obtenerListadoAtenciones = async () => {
   }
 };
 
+export const obtenerAtencionCLiente = async (clienteId) => {
+  try {
+    const response = await api.get(`/atenciones/cliente/${clienteId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener el listado de atenciones:', error);
+    throw new Error('Error al obtener el listado de atenciones');
+  }
+};
+
+
+
 // Función para actualizar resultados de la atención de análisis
 export const actualizarResultadosAnalisisAtencion = async (analisisAtencionId, data) => {
   try {
